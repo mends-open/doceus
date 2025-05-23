@@ -13,12 +13,13 @@ class UserEmailBlindIndexTest extends TestCase
 
     public function test_find_by_email_returns_user()
     {
-        // Given
-        $plaintextEmail = 'Dominik.Mukrecki@example.com';
+        // Given: generate a random but reproducible test email
+        $plaintextEmail = fake()->unique()->safeEmail();
+        $userName = fake()->name();
 
         // When
         $user = User::create([
-            'name' => 'Dominik Mukrecki',
+            'name' => $userName,
             'email' => $plaintextEmail,
             'password' => bcrypt('password'),
         ]);
@@ -33,7 +34,10 @@ class UserEmailBlindIndexTest extends TestCase
         // The email in the DB should not be plaintext
         $rawDbUser = \DB::table('users')->find($user->id);
         $this->assertNotEquals($plaintextEmail, $rawDbUser->email);
-        $this->assertStringNotContainsStringIgnoringCase('dominik', $rawDbUser->email);
+        $this->assertStringNotContainsStringIgnoringCase(
+            explode('@', $plaintextEmail)[0],
+            $rawDbUser->email
+        );
 
         // Blind index is correctly set (optional, for full test coverage)
         $normalized = Str::of($plaintextEmail)->lower()->trim();
