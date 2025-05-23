@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->text('name');
             $table->text('email');
             $table->char('email_blind_index', 64)->unique();
             $table->timestamp('email_verified_at')->nullable();
@@ -23,8 +23,7 @@ return new class extends Migration
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
-            // Store only the blind index here, not the real email
-            $table->text('email'); // or string, but text is safer for encrypted blobs
+            $table->string('email'); // unencrypted
             $table->string('token');
             $table->timestamp('created_at')->nullable();
         });
