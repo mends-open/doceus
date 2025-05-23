@@ -28,5 +28,6 @@ class AppServiceProvider extends ServiceProvider
         Auth::provider('blindindex', function ($app, array $config) {
             return new EloquentBlindIndexUserProvider($app['hash'], $config['model']);
         });
+
     }
 }
