@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            // Store encrypted email, and blind index for fast lookup and uniqueness
-            $table->text('email'); // or string, but text is safer for encrypted blobs
+            $table->text('email');
             $table->char('email_blind_index', 64)->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
@@ -25,7 +24,7 @@ return new class extends Migration
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             // Store only the blind index here, not the real email
-            $table->char('email_blind_index', 64)->primary();
+            $table->text('email'); // or string, but text is safer for encrypted blobs
             $table->string('token');
             $table->timestamp('created_at')->nullable();
         });
