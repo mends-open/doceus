@@ -109,4 +109,8 @@ return [
         'table' => 'failed_jobs',
     ],
 
+    'encrypt' => env('QUEUE_ENCRYPT', true),
+    'encryption_key' => env('QUEUE_ENCRYPTION_KEY'),
+
+
 ];

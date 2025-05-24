@@ -1,25 +1,4 @@
 services:
-  frankenphp:
-    build:
-      context: .
-    entrypoint: /bin/sh -c "php artisan migrate && php artisan octane:frankenphp --workers=1 --max-requests=1"
-    ports:
-      - "8000:8000"
-    volumes:
-      - .:/app
-    depends_on:
-      - postgres
-      - valkey
-
-  horizon:
-    build:
-      context: .
-    entrypoint: php artisan horizon
-    volumes:
-      - .:/app
-    depends_on:
-      - postgres
-      - valkey
 
   postgres:
     image: postgres:17
