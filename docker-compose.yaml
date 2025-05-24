@@ -1,0 +1,45 @@
+services:
+  frankenphp:
+    build:
+      context: .
+    entrypoint: /bin/sh -c "php artisan migrate && php artisan octane:frankenphp --workers=1 --max-requests=1"
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - postgres
+      - valkey
+
+  horizon:
+    build:
+      context: .
+    entrypoint: php artisan horizon
+    volumes:
+      - .:/app
+    depends_on:
+      - postgres
+      - valkey
+
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: laravel
+      POSTGRES_USER: postgres
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  valkey:
+    image: valkey/valkey:8
+    command: valkey-server --save "" --appendonly no
+    ports:
+      - "6379:6379"
+    volumes:
+      - valkeydata:/data
+
+volumes:
+  pgdata:
+  valkeydata:
