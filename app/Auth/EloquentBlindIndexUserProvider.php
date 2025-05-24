@@ -14,9 +14,8 @@ class EloquentBlindIndexUserProvider extends EloquentUserProvider
             return null;
         }
         $model = $this->createModel();
-        // Use the model's blind-index-based lookup
-        if (method_exists($model, 'findByEmail')) {
-            return $model->findByEmail($email);
+        if (method_exists($model, 'findByBlind')) {
+            return $model->findByBlind('email', $email);
         }
 
         // fallback
