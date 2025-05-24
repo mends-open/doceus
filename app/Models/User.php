@@ -38,8 +38,8 @@ class User extends Authenticatable
     {
         static::saving(function ($user) {
             if ($user->isDirty('email')) {
-                $normalized = \Illuminate\Support\Str::of($user->email)->lower()->trim();
-                $hmacKey = base64_decode(\Illuminate\Support\Str::after(env('APP_BLIND_INDEX_KEY'), 'base64:'));
+                $normalized = Str::of($user->email)->lower()->trim();
+                $hmacKey = base64_decode(Str::after(env('APP_BLIND_INDEX_KEY'), 'base64:'));
                 $user->email_blind_index = hash_hmac('sha256', $normalized, $hmacKey);
             }
         });
