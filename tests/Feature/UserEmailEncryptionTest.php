@@ -49,7 +49,7 @@ class UserEmailEncryptionTest extends TestCase
         $this->assertEquals($expectedBlindIndex, $rawDbUser->email_blind_index);
 
         // Can retrieve user via findByEmail
-        $found = User::findByEmail($plaintextEmail);
+        $found = User::findByBlind('email', $plaintextEmail);
         $this->assertNotNull($found);
         $this->assertEquals($user->id, $found->id);
     }

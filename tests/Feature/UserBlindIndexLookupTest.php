@@ -23,7 +23,7 @@ class UserBlindIndexLookupTest extends TestCase
         ]);
 
         // Lookup by blind index
-        $found = User::findByEmail($email);
+        $found = User::findByBlind('email', $email);
 
         // Should be found, and email should match
         $this->assertNotNull($found);

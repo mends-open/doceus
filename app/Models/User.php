@@ -8,11 +8,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
-    use HasFactory, HasUuids, Notifiable, SoftDeletes, HasBlindIndex;
+    use HasBlindIndex, HasFactory, HasUuids, Notifiable, SoftDeletes;
 
     protected $fillable = [
         'email',
@@ -32,7 +31,7 @@ class User extends Authenticatable
     ];
 
     protected $blind = [
-        'email', 'name'
+        'email', 'name',
     ];
 
     // Mutator: set email and blind index
