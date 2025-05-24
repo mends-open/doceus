@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, SoftDeletes, HasUuids;
+    use HasFactory, HasUuids, Notifiable, SoftDeletes;
 
     protected $fillable = [
         'name',

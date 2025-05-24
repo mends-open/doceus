@@ -9,8 +9,8 @@ use Filament\Facades\Filament;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Pages\Auth\PasswordReset\RequestPasswordReset as BasePage;
 use Illuminate\Auth\Events\PasswordResetLinkSent;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Contracts\Auth\CanResetPassword;
+use Illuminate\Support\Facades\Password;
 
 class RequestPasswordReset extends BasePage
 {
@@ -63,5 +63,4 @@ class RequestPasswordReset extends BasePage
 
         $this->form->fill();
     }
-
 }
