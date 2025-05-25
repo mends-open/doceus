@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\GenerateName;
 use App\Models\Traits\HasBlindIndex;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,13 +10,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @property mixed $email
+ */
 class User extends Authenticatable
 {
-    use HasBlindIndex, HasFactory, HasUuids, Notifiable, SoftDeletes;
+    use GenerateName, HasBlindIndex, HasFactory, HasUuids, Notifiable, SoftDeletes;
 
     protected $fillable = [
         'email',
-        'name',
         'password',
     ];
 
@@ -31,9 +34,6 @@ class User extends Authenticatable
     ];
 
     protected $blind = [
-        'email', 'name',
+        'email',
     ];
-
-    // Mutator: set email and blind index
-
 }

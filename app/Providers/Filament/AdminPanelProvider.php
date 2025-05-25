@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Auth\Register;
 use App\Filament\Pages\Auth\RequestPasswordReset;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -28,7 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('')
             ->passwordReset(RequestPasswordReset::class)
-            ->registration()
+            ->registration(Register::class)
             ->login()
             ->colors([
                 'primary' => Color::Slate,

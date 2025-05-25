@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->text('name');
-            $table->char('name_blind_index', 64)->unique();
             $table->text('email');
             $table->char('email_blind_index', 64)->unique();
             $table->timestamp('email_verified_at')->nullable();
