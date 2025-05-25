@@ -25,7 +25,7 @@ class UserEmailBlindIndexTest extends TestCase
         ]);
 
         // Then: findByEmail should return the same user
-        $found = User::findByBlind('email', $plaintextEmail);
+        $found = User::findByBlindIndex('email', $plaintextEmail);
 
         $this->assertNotNull($found);
         $this->assertEquals($user->id, $found->id);

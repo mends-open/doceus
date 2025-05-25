@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Auth\EloquentBlindIndexUserProvider;
+use App\Auth\BlindIndexUserProvider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 
@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
          * Used for all user lookups in auth (including Filament).
          */
         Auth::provider('blindindex', function ($app, array $config) {
-            return new EloquentBlindIndexUserProvider($app['hash'], $config['model']);
+            return new BlindIndexUserProvider($app['hash'], $config['model']);
         });
 
     }
