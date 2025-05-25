@@ -15,6 +15,10 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->text('email');
             $table->char('email_blind_index', 64)->unique();
+            $table->text('first_name')->nullable();
+            $table->char('first_name_blind_index', 64)->index()->nullable();
+            $table->text('last_name')->nullable();
+            $table->char('last_name_blind_index', 64)->index()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

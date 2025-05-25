@@ -13,11 +13,13 @@ class UserBlindIndexLookupTest extends TestCase
     public function test_find_by_email_works_with_blind_index()
     {
         $email = fake()->unique()->safeEmail();
-        $name = fake()->name();
+        $firstName = 'John';
+        $lastName = 'Doe';
 
         // Create user as normal
         $user = User::create([
-            'name' => $name,
+            'first_name' => $firstName,
+            'last_name' => $lastName,
             'email' => $email,
             'password' => bcrypt('password'),
         ]);

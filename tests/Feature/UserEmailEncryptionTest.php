@@ -16,14 +16,16 @@ class UserEmailEncryptionTest extends TestCase
     {
         // Given (use Faker for dynamic values)
         $plaintextEmail = fake()->unique()->safeEmail();
-        $userName = fake()->name();
+        $firstName = 'John';
+        $lastName = 'Doe';
         $normalized = Str::of($plaintextEmail)->lower()->trim();
         $hmacKey = base64_decode(Str::after(env('APP_BLIND_INDEX_KEY'), 'base64:'));
         $expectedBlindIndex = hash_hmac('sha256', $normalized, $hmacKey);
 
         // When
         $user = User::create([
-            'name' => $userName,
+            'first_name' => $firstName,
+            'last_name' => $lastName,
             'email' => $plaintextEmail,
             'password' => bcrypt('password'),
         ]);
@@ -38,7 +40,7 @@ class UserEmailEncryptionTest extends TestCase
             $rawDbUser->email
         );
         $this->assertStringNotContainsStringIgnoringCase(
-            explode(' ', strtolower($userName))[0],
+            strtolower($firstName),
             $rawDbUser->email
         );
 

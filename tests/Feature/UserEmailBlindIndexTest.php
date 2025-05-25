@@ -15,11 +15,13 @@ class UserEmailBlindIndexTest extends TestCase
     {
         // Given: generate a random but reproducible test email
         $plaintextEmail = fake()->unique()->safeEmail();
-        $userName = fake()->name();
+        $firstName = 'John';
+        $lastName = 'Doe';
 
         // When
         $user = User::create([
-            'name' => $userName,
+            'first_name' => $firstName,
+            'last_name' => $lastName,
             'email' => $plaintextEmail,
             'password' => bcrypt('password'),
         ]);
