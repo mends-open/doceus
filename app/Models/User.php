@@ -20,6 +20,8 @@ class User extends Authenticatable
     protected $fillable = [
         'email',
         'password',
+        'first_name',
+        'last_name',
     ];
 
     protected $hidden = [
@@ -31,9 +33,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
         'email' => 'encrypted', // This handles encryption/decryption
+        'first_name' => 'encrypted',
+        'last_name' => 'encrypted',
     ];
 
     protected $blind = [
         'email',
+        'first_name',
+        'last_name',
     ];
 }
