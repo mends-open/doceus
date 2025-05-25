@@ -4,11 +4,13 @@ namespace Tests\Feature;
 
 use App\Auth\BlindIndexUserProvider;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class BlindIndexUserProviderTest extends TestCase
 {
+    use RefreshDatabase;
     public function test_retrieve_by_credentials_uses_blind_index(): void
     {
         $email = fake()->unique()->safeEmail();
