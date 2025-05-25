@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Traits\GenerateName;
 use App\Models\Traits\HasBlindIndex;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -13,7 +14,7 @@ use Illuminate\Notifications\Notifiable;
 /**
  * @property mixed $email
  */
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use GenerateName, HasBlindIndex, HasFactory, HasUuids, Notifiable, SoftDeletes;
 
@@ -22,6 +23,7 @@ class User extends Authenticatable
         'password',
         'first_name',
         'last_name',
+        'pesel',
     ];
 
     protected $hidden = [
@@ -35,11 +37,13 @@ class User extends Authenticatable
         'email' => 'encrypted', // This handles encryption/decryption
         'first_name' => 'encrypted',
         'last_name' => 'encrypted',
+        'pesel' => 'encrypted',
     ];
 
     protected $blind = [
         'email',
         'first_name',
         'last_name',
+        'pesel'
     ];
 }
