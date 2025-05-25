@@ -32,7 +32,7 @@ trait HasBlindIndex
         return hash_hmac('sha256', $normalized, $hmacKey);
     }
 
-    public static function findByBlind(string $field, string $value): ?self
+    public static function findByBlindIndex(string $field, string $value): ?self
     {
         $indexField = $field.'_blind_index';
         $instance = new static;
