@@ -16,8 +16,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
-            // instruction - create reusable trait; every blind indexed field could be unique or not - distinguish them in the array; for ever one of them create encrypted db text, but without _blind_index suffix
-            $this->addBlindIndexColumns($table, [
+          $this->addBlindIndexColumns($table, [
                 'email' => ['unique' => true],
                 'first_name' => ['nullable' => true],
                 'last_name' => ['nullable' => true],
