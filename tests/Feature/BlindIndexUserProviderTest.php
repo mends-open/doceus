@@ -11,6 +11,7 @@ use Tests\TestCase;
 class BlindIndexUserProviderTest extends TestCase
 {
     use RefreshDatabase;
+
     public function test_retrieve_by_credentials_uses_blind_index(): void
     {
         $email = fake()->unique()->safeEmail();

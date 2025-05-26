@@ -19,7 +19,7 @@ class EditProfile extends BaseEditProfile
                 TextInput::make('last_name')
                     ->maxLength(255),
                 TextInput::make('pesel')
-                    ->rule(new ValidPesel())
+                    ->rule(new ValidPesel),
             ]);
     }
 }

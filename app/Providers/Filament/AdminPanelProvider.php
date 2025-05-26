@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\Auth\EditProfile;
+use App\Filament\Pages\Auth\EmailVerificationPrompt;
 use App\Filament\Pages\Auth\Register;
 use App\Filament\Pages\Auth\RequestPasswordReset;
 use Filament\Http\Middleware\Authenticate;
@@ -10,7 +11,6 @@ use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages;
-use Filament\Pages\Auth\EmailVerification\EmailVerificationPrompt;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -32,7 +32,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('')
             ->passwordReset(RequestPasswordReset::class)
             ->registration(Register::class)
-            ->emailVerification()
+            ->emailVerification(EmailVerificationPrompt::class)
             ->login()
             ->profile(EditProfile::class)
             ->colors([
