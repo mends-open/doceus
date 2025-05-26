@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use App\Models\User;
 use Tests\TestCase;
 
-class UserGenerateNameTest extends TestCase
+class UserDisplayNameTest extends TestCase
 {
     public function test_generates_name_from_first_and_last_name(): void
     {
