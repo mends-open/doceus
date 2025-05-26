@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Traits\GenerateName;
+use App\Models\Traits\HasDisplayName;
 use App\Models\Traits\HasBlindIndex;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -16,7 +16,7 @@ use Illuminate\Notifications\Notifiable;
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use GenerateName, HasBlindIndex, HasFactory, HasUuids, Notifiable, SoftDeletes;
+    use HasDisplayName, HasBlindIndex, HasFactory, HasUuids, Notifiable, SoftDeletes;
 
     protected $fillable = [
         'email',
