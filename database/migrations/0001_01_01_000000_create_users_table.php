@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->text('email');
+            $table->text('email'); //instruction - create reusable trait; every blind indexed field could be unique or not - distinguish them in the array; for ever one of them create encrypted db text, but without _blind_index suffix
             $table->char('email_blind_index', 64)->unique();
             $table->text('first_name')->nullable();
             $table->char('first_name_blind_index', 64)->index()->nullable();
