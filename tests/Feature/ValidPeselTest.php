@@ -11,7 +11,7 @@ class ValidPeselTest extends TestCase
     public function test_valid_pesel_passes(): void
     {
         $data = ['pesel' => '44051401359'];
-        $rule = ['pesel' => [new ValidPesel()]];
+        $rule = ['pesel' => [new ValidPesel]];
 
         $validator = Validator::make($data, $rule);
         $this->assertTrue($validator->passes());
@@ -20,7 +20,7 @@ class ValidPeselTest extends TestCase
     public function test_invalid_checksum_fails(): void
     {
         $data = ['pesel' => '44051401358'];
-        $rule = ['pesel' => [new ValidPesel()]];
+        $rule = ['pesel' => [new ValidPesel]];
 
         $validator = Validator::make($data, $rule);
         $this->assertFalse($validator->passes());
@@ -29,7 +29,7 @@ class ValidPeselTest extends TestCase
     public function test_incorrect_length_fails(): void
     {
         $data = ['pesel' => '1234567890'];
-        $rule = ['pesel' => [new ValidPesel()]];
+        $rule = ['pesel' => [new ValidPesel]];
 
         $validator = Validator::make($data, $rule);
         $this->assertFalse($validator->passes());

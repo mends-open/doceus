@@ -46,7 +46,7 @@ class UserGenerateNameTest extends TestCase
 
     public function test_generates_default_name_when_no_fields_present(): void
     {
-        $user = new User();
+        $user = new User;
 
         $this->assertSame('User', $user->name);
     }

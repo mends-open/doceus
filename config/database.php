@@ -45,7 +45,7 @@ return [
             'search_path' => 'public',
             'sslmode' => 'prefer',
         ],
-//for testing
+        // for testing
         'sqlite' => [
             'driver' => 'sqlite',
             'url' => env('DB_URL'),
@@ -56,7 +56,6 @@ return [
             'journal_mode' => null,
             'synchronous' => null,
         ],
-
 
     ],
 

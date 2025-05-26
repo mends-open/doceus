@@ -9,8 +9,9 @@ class ValidPesel implements ValidationRule
 {
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (!preg_match('/^\d{11}$/', $value)) {
+        if (! preg_match('/^\d{11}$/', $value)) {
             $fail(__('doceus.pesel-exact-eleven-digits'));
+
             return;
         }
         $weights = [1, 3, 7, 9, 1, 3, 7, 9, 1, 3];
