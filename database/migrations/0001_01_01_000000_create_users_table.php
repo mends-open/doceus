@@ -3,9 +3,11 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Database\Migrations\Traits\HasBlindIndexColumns;
 
 return new class extends Migration
 {
+    use HasBlindIndexColumns;
     /**
      * Run the migrations.
      */
@@ -13,14 +15,14 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->text('email'); //instruction - create reusable trait; every blind indexed field could be unique or not - distinguish them in the array; for ever one of them create encrypted db text, but without _blind_index suffix
-            $table->char('email_blind_index', 64)->unique();
-            $table->text('first_name')->nullable();
-            $table->char('first_name_blind_index', 64)->index()->nullable();
-            $table->text('last_name')->nullable();
-            $table->char('last_name_blind_index', 64)->index()->nullable();
-            $table->text('pesel')->nullable();
-            $table->char('pesel_blind_index', 64)->unique()->nullable();
+
+            $this->addBlindIndexColumns($table, [
+                'email' => ['unique' => true],
+                'first_name' => ['nullable' => true],
+                'last_name' => ['nullable' => true],
+                'pesel' => ['unique' => true, 'nullable' => true],
+            ]);
+
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

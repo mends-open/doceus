@@ -21,7 +21,13 @@ trait HasBlindIndex
      */
     public function getBlindIndexAttributes(): array
     {
-        return property_exists($this, 'blind') ? $this->blind : [];
+        if (! property_exists($this, 'blind')) {
+            return [];
+        }
+
+        $blind = $this->blind;
+
+        return array_is_list($blind) ? $blind : array_keys($blind);
     }
 
     public static function makeBlindIndex(string $value): string
