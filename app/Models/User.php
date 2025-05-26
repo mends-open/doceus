@@ -41,9 +41,9 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     protected $blind = [
-        'email',
-        'first_name',
-        'last_name',
-        'pesel',
+        'email' => ['unique' => true],
+        'first_name' => ['nullable' => true],
+        'last_name' => ['nullable' => true],
+        'pesel' => ['unique' => true, 'nullable' => true],
     ];
 }
