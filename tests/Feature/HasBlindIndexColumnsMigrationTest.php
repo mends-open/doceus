@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
 use App\Database\Migrations\Traits\HasBlindIndexColumns;
+use App\Database\Migrations\Enums\BlindIndexType;
 
 class HasBlindIndexColumnsMigrationTest extends TestCase
 {
@@ -20,11 +21,13 @@ class HasBlindIndexColumnsMigrationTest extends TestCase
 
         $migration = new class {
             use HasBlindIndexColumns;
+
             public function build(Blueprint $table): void
             {
                 $this->addBlindIndexColumns($table, [
-                    'secret' => ['unique' => true],
-                    'note' => ['nullable' => true],
+                    'secret' => BlindIndexType::NOT_NULL_UNIQUE,
+                    'note' => BlindIndexType::NULLABLE,
+                    'data' => BlindIndexType::NOT_NULL,
                 ]);
             }
         };
@@ -47,10 +50,19 @@ class HasBlindIndexColumnsMigrationTest extends TestCase
         $this->assertTrue(Schema::hasColumn('temp_records', 'secret_blind_index'));
         $this->assertTrue(Schema::hasColumn('temp_records', 'note'));
         $this->assertTrue(Schema::hasColumn('temp_records', 'note_blind_index'));
+        $this->assertTrue(Schema::hasColumn('temp_records', 'data'));
+        $this->assertTrue(Schema::hasColumn('temp_records', 'data_blind_index'));
 
         DB::table('temp_records')->insert([
             'secret' => 'abc',
             'note' => null,
+            'data' => 'foo',
+        ]);
+
+        DB::table('temp_records')->insert([
+            'secret' => 'def',
+            'note' => null,
+            'data' => 'foo',
         ]);
 
         $this->expectException(QueryException::class);
@@ -58,6 +70,7 @@ class HasBlindIndexColumnsMigrationTest extends TestCase
         DB::table('temp_records')->insert([
             'secret' => 'abc',
             'note' => null,
+            'data' => 'bar',
         ]);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Database\Migrations\Traits;
 
 use Illuminate\Database\Schema\Blueprint;
+use App\Database\Migrations\Enums\BlindIndexType;
 
 trait HasBlindIndexColumns
 {
@@ -12,7 +13,10 @@ trait HasBlindIndexColumns
             $unique = false;
             $nullable = false;
 
-            if (is_bool($options)) {
+            if ($options instanceof BlindIndexType) {
+                $unique = $options->isUnique();
+                $nullable = $options->isNullable();
+            } elseif (is_bool($options)) {
                 $unique = $options;
             } elseif (is_array($options)) {
                 $unique = $options['unique'] ?? false;

@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Database\Migrations\Traits\HasBlindIndexColumns;
+use App\Database\Migrations\Enums\BlindIndexType;
 
 return new class extends Migration
 {
@@ -17,10 +18,10 @@ return new class extends Migration
             $table->uuid('id')->primary();
 
           $this->addBlindIndexColumns($table, [
-                'email' => ['unique' => true],
-                'first_name' => ['nullable' => true],
-                'last_name' => ['nullable' => true],
-                'pesel' => ['unique' => true, 'nullable' => true],
+                'email' => BlindIndexType::NOT_NULL_UNIQUE,
+                'first_name' => BlindIndexType::NULLABLE,
+                'last_name' => BlindIndexType::NULLABLE,
+                'pesel' => BlindIndexType::NULLABLE_UNIQUE,
             ]);
 
             $table->timestamp('email_verified_at')->nullable();
