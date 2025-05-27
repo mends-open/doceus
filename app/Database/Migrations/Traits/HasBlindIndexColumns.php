@@ -24,7 +24,7 @@ trait HasBlindIndexColumns
                 $textColumn->nullable();
             }
 
-            $indexColumn = $table->char($field . '_blind_index', 64);
+            $indexColumn = $table->char($field . '_blind_index', 64)->default('');
             if ($nullable) {
                 $indexColumn->nullable();
             }
