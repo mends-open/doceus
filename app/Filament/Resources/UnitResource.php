@@ -41,7 +41,6 @@ class UnitResource extends Resource
                 Tables\Columns\TextColumn::make('id')->sortable(),
                 Tables\Columns\TextColumn::make('organization_id')->sortable(),
                 Tables\Columns\TextColumn::make('type')
-                    ->enum(UnitType::class)
                     ->sortable(),
             ])
             ->filters([
