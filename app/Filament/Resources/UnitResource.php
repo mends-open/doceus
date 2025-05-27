@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\UnitType;
 use App\Filament\Resources\UnitResource\Pages;
 use App\Filament\Resources\UnitResource\RelationManagers;
 use App\Models\Unit;
@@ -23,7 +24,13 @@ class UnitResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Select::make('organization_id')
+                    ->relationship('organization', 'id')
+                    ->required(),
+                Forms\Components\Select::make('type')
+                    ->options(self::enumOptions(UnitType::class))
+                    ->enum(UnitType::class)
+                    ->required(),
             ]);
     }
 
@@ -31,7 +38,11 @@ class UnitResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('id')->sortable(),
+                Tables\Columns\TextColumn::make('organization_id')->sortable(),
+                Tables\Columns\TextColumn::make('type')
+                    ->enum(UnitType::class)
+                    ->sortable(),
             ])
             ->filters([
                 //
@@ -60,5 +71,12 @@ class UnitResource extends Resource
             'create' => Pages\CreateUnit::route('/create'),
             'edit' => Pages\EditUnit::route('/{record}/edit'),
         ];
+    }
+
+    protected static function enumOptions(string $enum): array
+    {
+        return collect($enum::cases())
+            ->mapWithKeys(fn ($case) => [$case->value => str($case->name)->headline()->toString()])
+            ->all();
     }
 }
