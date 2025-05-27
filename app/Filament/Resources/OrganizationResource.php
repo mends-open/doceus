@@ -37,7 +37,6 @@ class OrganizationResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('id')->sortable(),
                 Tables\Columns\TextColumn::make('type')
-                    ->enum(OrganizationType::class)
                     ->sortable(),
             ])
             ->filters([
