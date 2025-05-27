@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\OrganizationType;
 use App\Filament\Resources\OrganizationResource\Pages;
 use App\Filament\Resources\OrganizationResource\RelationManagers;
 use App\Models\Organization;
@@ -23,7 +24,10 @@ class OrganizationResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Select::make('type')
+                    ->options(self::enumOptions(OrganizationType::class))
+                    ->enum(OrganizationType::class)
+                    ->required(),
             ]);
     }
 
@@ -31,7 +35,10 @@ class OrganizationResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('id')->sortable(),
+                Tables\Columns\TextColumn::make('type')
+                    ->enum(OrganizationType::class)
+                    ->sortable(),
             ])
             ->filters([
                 //
@@ -60,5 +67,12 @@ class OrganizationResource extends Resource
             'create' => Pages\CreateOrganization::route('/create'),
             'edit' => Pages\EditOrganization::route('/{record}/edit'),
         ];
+    }
+
+    protected static function enumOptions(string $enum): array
+    {
+        return collect($enum::cases())
+            ->mapWithKeys(fn ($case) => [$case->value => str($case->name)->headline()->toString()])
+            ->all();
     }
 }
