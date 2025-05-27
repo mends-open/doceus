@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('personnel', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->enum('type', ['medical_doctor', 'dentistry_doctor', 'medical_assistant']);
+            $table->enum('type', ['medical_doctor', 'dentistry_doctor', 'medical_assistant'])->default('medical_doctor');
             $table->foreignUuid('unit_id')->constrained('units', 'id');
             $table->foreignUuid('user_id')->constrained('users', 'id');
             $table->softDeletes();
