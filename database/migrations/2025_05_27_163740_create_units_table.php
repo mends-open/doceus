@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('units', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->enum('type', ['without-practice']);
             $table->foreignUuid('organization_id')->constrained('organizations', 'id');
             $table->softDeletes();
             $table->timestamps();
