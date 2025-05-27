@@ -6,6 +6,7 @@ use App\Filament\Resources\PersonnelResource\Pages;
 use App\Filament\Resources\PersonnelResource\RelationManagers;
 use App\Models\Personnel;
 use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Components\Select;
 use Filament\Resources\Resource;
@@ -26,11 +27,12 @@ class PersonnelResource extends Resource
         return $form
             ->schema([
                 Select::make('unit_id')
-                    ->relationship('unit', 'id')
+                    ->relationship('unit', 'name')
                     ->required(),
                 Select::make('user_id')
-                    ->relationship('user', 'id')
+                    ->relationship('user', 'email')
                     ->required(),
+                TextInput::make('name')
             ]);
     }
 
@@ -38,9 +40,8 @@ class PersonnelResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id')->label('ID'),
-                TextColumn::make('unit.id')->label('Unit ID'),
-                TextColumn::make('user.id')->label('User ID'),
+                TextColumn::make('unit.name')->label('Unit Name'),
+                TextColumn::make('user.email')->label('User Email'),
             ])
             ->filters([
                 //

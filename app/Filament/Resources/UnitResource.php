@@ -6,6 +6,7 @@ use App\Filament\Resources\UnitResource\Pages;
 use App\Filament\Resources\UnitResource\RelationManagers;
 use App\Models\Unit;
 use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Components\Select;
 use Filament\Resources\Resource;
@@ -26,8 +27,9 @@ class UnitResource extends Resource
         return $form
             ->schema([
                 Select::make('organization_id')
-                    ->relationship('organization', 'id')
+                    ->relationship('organization', 'name')
                     ->required(),
+                TextInput::make('name')
             ]);
     }
 
@@ -35,8 +37,8 @@ class UnitResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id')->label('ID'),
-                TextColumn::make('organization.id')->label('Organization ID'),
+                TextColumn::make('name')->label('Name'),
+                TextColumn::make('organization.name')->label('Organization Name'),
             ])
             ->filters([
                 //
