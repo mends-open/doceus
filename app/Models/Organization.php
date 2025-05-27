@@ -12,4 +12,12 @@ class Organization extends Model
     use HasFactory, HasUuids, SoftDeletes;
 
     protected $guarded = [];
+
+    /**
+     * Get the units that belong to the organization.
+     */
+    public function units()
+    {
+        return $this->hasMany(Unit::class);
+    }
 }

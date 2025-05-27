@@ -12,4 +12,20 @@ class Unit extends Model
     use HasFactory, HasUuids, SoftDeletes;
 
     protected $guarded = [];
+
+    /**
+     * Get the organization that owns the unit.
+     */
+    public function organization()
+    {
+        return $this->belongsTo(Organization::class);
+    }
+
+    /**
+     * Get the personnel assigned to the unit.
+     */
+    public function personnel()
+    {
+        return $this->hasMany(Personnel::class);
+    }
 }

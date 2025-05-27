@@ -13,4 +13,20 @@ class Personnel extends Model
 
     protected $table = 'personnel';
     protected $guarded = [];
+
+    /**
+     * Get the unit that this personnel belongs to.
+     */
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class);
+    }
+
+    /**
+     * Get the user associated with this personnel record.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

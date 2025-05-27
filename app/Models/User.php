@@ -46,4 +46,12 @@ class User extends Authenticatable implements MustVerifyEmail
         'last_name' => ['nullable' => true],
         'pesel' => ['unique' => true, 'nullable' => true],
     ];
+
+    /**
+     * Get the personnel record associated with the user.
+     */
+    public function personnel()
+    {
+        return $this->hasOne(Personnel::class);
+    }
 }

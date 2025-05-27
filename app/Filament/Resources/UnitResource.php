@@ -7,8 +7,10 @@ use App\Filament\Resources\UnitResource\RelationManagers;
 use App\Models\Unit;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Components\Select;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -23,7 +25,9 @@ class UnitResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Select::make('organization_id')
+                    ->relationship('organization', 'id')
+                    ->required(),
             ]);
     }
 
@@ -31,7 +35,8 @@ class UnitResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('id')->label('ID'),
+                TextColumn::make('organization.id')->label('Organization ID'),
             ])
             ->filters([
                 //
