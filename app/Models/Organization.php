@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Enums\OrganizationType;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Organization extends Model
@@ -12,4 +14,13 @@ class Organization extends Model
     use HasFactory, HasUuids, SoftDeletes;
 
     protected $guarded = [];
+
+    protected $casts = [
+        'type' => OrganizationType::class,
+    ];
+
+    public function units(): HasMany
+    {
+        return $this->hasMany(Unit::class);
+    }
 }

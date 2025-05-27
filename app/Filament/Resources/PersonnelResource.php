@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\PersonnelType;
 use App\Filament\Resources\PersonnelResource\Pages;
 use App\Filament\Resources\PersonnelResource\RelationManagers;
 use App\Models\Personnel;
@@ -23,7 +24,16 @@ class PersonnelResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Select::make('unit_id')
+                    ->relationship('unit', 'id')
+                    ->required(),
+                Forms\Components\Select::make('user_id')
+                    ->relationship('user', 'id')
+                    ->required(),
+                Forms\Components\Select::make('type')
+                    ->options(self::enumOptions(PersonnelType::class))
+                    ->enum(PersonnelType::class)
+                    ->required(),
             ]);
     }
 
@@ -31,7 +41,12 @@ class PersonnelResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('id')->sortable(),
+                Tables\Columns\TextColumn::make('unit_id')->sortable(),
+                Tables\Columns\TextColumn::make('user_id')->sortable(),
+                Tables\Columns\TextColumn::make('type')
+                    ->enum(PersonnelType::class)
+                    ->sortable(),
             ])
             ->filters([
                 //
@@ -60,5 +75,12 @@ class PersonnelResource extends Resource
             'create' => Pages\CreatePersonnel::route('/create'),
             'edit' => Pages\EditPersonnel::route('/{record}/edit'),
         ];
+    }
+
+    protected static function enumOptions(string $enum): array
+    {
+        return collect($enum::cases())
+            ->mapWithKeys(fn ($case) => [$case->value => str($case->name)->headline()->toString()])
+            ->all();
     }
 }
