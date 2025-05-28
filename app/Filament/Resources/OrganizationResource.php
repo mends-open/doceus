@@ -3,20 +3,22 @@
 namespace App\Filament\Resources;
 
 use App\Enums\OrganizationType;
+use App\Filament\Clusters\Settings;
 use App\Filament\Resources\OrganizationResource\Pages;
-use App\Filament\Resources\OrganizationResource\RelationManagers;
 use App\Models\Organization;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class OrganizationResource extends Resource
 {
+    protected static ?string $cluster = Settings::class;
+
     protected static ?string $model = Organization::class;
+
+    protected static ?int $navigationSort = 1;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -25,7 +27,7 @@ class OrganizationResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('type')
-                    ->options(self::enumOptions(OrganizationType::class))
+                    ->options(OrganizationType::class)
                     ->enum(OrganizationType::class)
                     ->required(),
             ]);
@@ -68,10 +70,4 @@ class OrganizationResource extends Resource
         ];
     }
 
-    protected static function enumOptions(string $enum): array
-    {
-        return collect($enum::cases())
-            ->mapWithKeys(fn ($case) => [$case->value => str($case->name)->headline()->toString()])
-            ->all();
-    }
 }

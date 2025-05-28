@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Enums\PersonnelType;
+use App\Filament\Clusters\Settings;
 use App\Filament\Resources\PersonnelResource\Pages;
 use App\Filament\Resources\PersonnelResource\RelationManagers;
 use App\Models\Personnel;
@@ -16,7 +17,12 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PersonnelResource extends Resource
 {
+
+    protected static ?string $cluster = Settings::class;
+
     protected static ?string $model = Personnel::class;
+
+    protected static ?int $navigationSort = 3;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -31,7 +37,7 @@ class PersonnelResource extends Resource
                     ->relationship('user', 'id')
                     ->required(),
                 Forms\Components\Select::make('type')
-                    ->options(self::enumOptions(PersonnelType::class))
+                    ->options(PersonnelType::class)
                     ->enum(PersonnelType::class)
                     ->required(),
             ]);
@@ -76,10 +82,4 @@ class PersonnelResource extends Resource
         ];
     }
 
-    protected static function enumOptions(string $enum): array
-    {
-        return collect($enum::cases())
-            ->mapWithKeys(fn ($case) => [$case->value => str($case->name)->headline()->toString()])
-            ->all();
-    }
 }
