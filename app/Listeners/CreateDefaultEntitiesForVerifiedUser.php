@@ -18,6 +18,11 @@ class CreateDefaultEntitiesForVerifiedUser implements ShouldQueue, ShouldBeEncry
     {
         $user = $event->user;
 
+        // Only create if the user does not have a personnel record yet
+        if ($user->personnel()->exists()) {
+            return;
+        }
+
         $organization = Organization::create();
 
         $unit = Unit::create([
