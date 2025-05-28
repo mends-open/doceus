@@ -10,10 +10,4 @@ class ListOrganizations extends ListRecords
 {
     protected static string $resource = OrganizationResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            Actions\CreateAction::make(),
-        ];
-    }
 }
