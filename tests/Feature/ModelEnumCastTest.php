@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Enums\Language;
 use App\Enums\OrganizationType;
 use App\Enums\PersonnelType;
 use App\Enums\UnitType;
@@ -34,6 +35,12 @@ class ModelEnumCastTest extends TestCase
         $this->assertSame(UnitType::WITHOUT_PRACTICE, $unit->fresh()->type);
 
         $user = User::factory()->create();
+
+        $this->assertInstanceOf(Language::class, $user->language);
+        $this->assertSame(Language::from(config('app.locale')), $user->language);
+
+        $userPl = User::factory()->create(['language' => Language::PL]);
+        $this->assertSame(Language::PL, $userPl->language);
 
         $personnel = Personnel::create([
             'unit_id' => $unit->id,
