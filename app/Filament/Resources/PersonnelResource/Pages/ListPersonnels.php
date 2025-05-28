@@ -10,10 +10,4 @@ class ListPersonnels extends ListRecords
 {
     protected static string $resource = PersonnelResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            Actions\CreateAction::make(),
-        ];
-    }
 }
