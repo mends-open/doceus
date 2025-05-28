@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Traits\HasDisplayName;
 use App\Models\Traits\HasBlindIndex;
+use App\Models\Traits\HasDisplayName;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,7 +18,7 @@ use Illuminate\Notifications\Notifiable;
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasDisplayName, HasBlindIndex, HasFactory, HasUuids, Notifiable, SoftDeletes;
+    use HasBlindIndex, HasDisplayName, HasFactory, HasUuids, Notifiable, SoftDeletes;
 
     protected $fillable = [
         'email',
@@ -49,7 +49,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'pesel' => ['unique' => true, 'nullable' => true],
     ];
 
-    public function personnel(): HasMany {
+    public function personnel(): HasMany
+    {
         return $this->hasMany(Personnel::class);
     }
 
@@ -69,5 +70,4 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return Organization::whereIn('id', $this->units()->pluck('organization_id'));
     }
-
 }

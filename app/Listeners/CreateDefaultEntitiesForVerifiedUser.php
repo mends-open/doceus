@@ -9,7 +9,7 @@ use Illuminate\Auth\Events\Verified;
 use Illuminate\Contracts\Queue\ShouldBeEncrypted;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class CreateDefaultEntitiesForVerifiedUser implements ShouldQueue, ShouldBeEncrypted
+class CreateDefaultEntitiesForVerifiedUser implements ShouldBeEncrypted, ShouldQueue
 {
     /**
      * Handle the event.

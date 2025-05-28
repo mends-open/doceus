@@ -14,7 +14,7 @@ class Personnel extends Model
     use HasFactory, HasUuids, SoftDeletes;
 
     protected $table = 'personnel';
-    
+
     protected $guarded = [];
 
     protected $casts = [

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('organizations', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->enum('type', ['individual', 'group_practice', 'medical_entity'])->default('individual');
+            $table->enum('type', ['natural_person', 'legal_entity'])->default('natural_person');
             $table->softDeletes();
             $table->timestamps();
         });
