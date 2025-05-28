@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Enums\UnitType;
+use App\Filament\Clusters\Settings;
 use App\Filament\Resources\UnitResource\Pages;
 use App\Filament\Resources\UnitResource\RelationManagers;
 use App\Models\Unit;
@@ -16,7 +17,12 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class UnitResource extends Resource
 {
+
+    protected static ?string $cluster = Settings::class;
+
     protected static ?string $model = Unit::class;
+
+    protected static ?int $navigationSort = 2;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -28,7 +34,7 @@ class UnitResource extends Resource
                     ->relationship('organization', 'id')
                     ->required(),
                 Forms\Components\Select::make('type')
-                    ->options(self::enumOptions(UnitType::class))
+                    ->options(UnitType::class)
                     ->enum(UnitType::class)
                     ->required(),
             ]);
@@ -72,10 +78,4 @@ class UnitResource extends Resource
         ];
     }
 
-    protected static function enumOptions(string $enum): array
-    {
-        return collect($enum::cases())
-            ->mapWithKeys(fn ($case) => [$case->value => str($case->name)->headline()->toString()])
-            ->all();
-    }
 }
