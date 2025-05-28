@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Enums\Language;
 use App\Models\Traits\HasBlindIndex;
 use App\Models\Traits\HasDisplayName;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -26,6 +28,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'first_name',
         'last_name',
         'pesel',
+        'language',
     ];
 
     protected $hidden = [
@@ -48,6 +51,14 @@ class User extends Authenticatable implements MustVerifyEmail
         'last_name' => ['nullable' => true],
         'pesel' => ['unique' => true, 'nullable' => true],
     ];
+
+    protected function language(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => Language::from($value ?? config('app.locale')),
+            set: fn ($value) => $value instanceof Language ? $value->value : $value,
+        );
+    }
 
     public function personnel(): HasMany
     {

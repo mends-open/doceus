@@ -5,6 +5,7 @@ return [
         'first_name' => 'First Name',
         'last_name' => 'Last Name',
         'email' => 'Email',
+        'language' => 'Language',
     ],
     'unit' => [
         'type' => 'Unit Type',
@@ -20,5 +21,9 @@ return [
         'type' => 'Organization Type',
         'natural_person' => 'Natural Person',
         'legal_entity' => 'Legal Entity',
+    ],
+    'language' => [
+        'en' => 'English',
+        'pl' => 'Polish',
     ],
 ];
