@@ -2,6 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Enums\OrganizationType;
+use App\Enums\PersonnelType;
+use App\Enums\UnitType;
 use App\Models\Organization;
 use App\Models\Personnel;
 use App\Models\Unit;
@@ -38,8 +41,17 @@ class UserRelationshipTest extends TestCase
         $this->assertDatabaseCount('units', 1);
         $this->assertDatabaseCount('personnel', 1);
 
+        $this->assertDatabaseHas('organizations', [
+            'type' => OrganizationType::NATURAL_PERSON,
+        ]);
+
+        $this->assertDatabaseHas('units', [
+            'type' => UnitType::WITHOUT_PRACTICE,
+        ]);
+
         $this->assertDatabaseHas('personnel', [
             'user_id' => $user->id,
+            'type' => PersonnelType::MEDICAL_DOCTOR,
         ]);
     }
 }

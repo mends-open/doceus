@@ -16,7 +16,6 @@ return [
     'personnel' => [
         'type' => 'Personnel Type',
         'medical_doctor' => 'Medical Doctor',
-        'dentistry_doctor' => 'Dentistry Doctor',
         'medical_assistant' => 'Medical Assistant',
         'label' => 'Personnel',
         'plural_label' => 'Personnel',
