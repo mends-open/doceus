@@ -23,6 +23,21 @@ class PersonnelResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getModelLabel(): string
+    {
+        return __('doceus.personnel.label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('doceus.personnel.plural_label');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return static::getPluralModelLabel();
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -34,6 +49,7 @@ class PersonnelResource extends Resource
                     ->relationship('user', 'id')
                     ->required(),
                 Forms\Components\Select::make('type')
+                    ->label(__('doceus.personnel.type'))
                     ->options(PersonnelType::class)
                     ->enum(PersonnelType::class)
                     ->required(),

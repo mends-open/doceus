@@ -10,20 +10,27 @@ return [
     'unit' => [
         'type' => 'Unit Type',
         'without_practice' => 'Without Practice',
+        'label' => 'Unit',
+        'plural_label' => 'Units',
     ],
     'personnel' => [
         'type' => 'Personnel Type',
         'medical_doctor' => 'Medical Doctor',
         'dentistry_doctor' => 'Dentistry Doctor',
         'medical_assistant' => 'Medical Assistant',
+        'label' => 'Personnel',
+        'plural_label' => 'Personnel',
     ],
     'organization' => [
         'type' => 'Organization Type',
         'natural_person' => 'Natural Person',
         'legal_entity' => 'Legal Entity',
+        'label' => 'Organization',
+        'plural_label' => 'Organizations',
     ],
     'language' => [
         'en' => 'English',
         'pl' => 'Polish',
     ],
+    'settings' => 'Settings',
 ];

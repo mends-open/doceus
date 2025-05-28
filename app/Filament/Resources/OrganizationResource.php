@@ -23,11 +23,27 @@ class OrganizationResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getModelLabel(): string
+    {
+        return __('doceus.organization.label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('doceus.organization.plural_label');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return static::getPluralModelLabel();
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Select::make('type')
+                    ->label(__('doceus.organization.type'))
                     ->options(
                         collect(OrganizationType::cases())
                             ->mapWithKeys(fn ($case) => [$case->value => $case->label()])
@@ -43,7 +59,7 @@ class OrganizationResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('type')
-                    ->label('Type')
+                    ->label(__('doceus.organization.type'))
                     ->formatStateUsing(fn ($state) => $state?->label() ?? '-')
                     ->sortable(),
             ])
