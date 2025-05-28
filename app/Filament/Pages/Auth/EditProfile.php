@@ -20,6 +20,7 @@ class EditProfile extends BaseEditProfile
                     ->maxLength(255),
                 TextInput::make('pesel')
                     ->rule(new ValidPesel),
-            ]);
+            ])
+            ->columns(4);
     }
 }
