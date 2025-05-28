@@ -53,12 +53,21 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Personnel::class);
     }
 
-    public function units(): HasManyThrough {
-        return $this->hasManyThrough(Unit::class, Personnel::class);
+    public function units(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            Unit::class,
+            Personnel::class,
+            'user_id',
+            'id',
+            'id',
+            'unit_id'
+        );
     }
 
-    public function organizations(): HasManyThrough {
-        return $this->hasManyThrough(Organization::class, Personnel::class);
+    public function organizations()
+    {
+        return Organization::whereIn('id', $this->units()->pluck('organization_id'));
     }
 
 }
