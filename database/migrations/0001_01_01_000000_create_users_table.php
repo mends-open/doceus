@@ -24,6 +24,8 @@ return new class extends Migration
                 'pesel' => ['unique' => true, 'nullable' => true],
             ]);
 
+            $table->enum('language', ['en', 'pl'])->nullable();
+
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
