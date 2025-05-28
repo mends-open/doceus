@@ -22,6 +22,21 @@ class UnitResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getModelLabel(): string
+    {
+        return __('doceus.unit.label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('doceus.unit.plural_label');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return static::getPluralModelLabel();
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -30,6 +45,7 @@ class UnitResource extends Resource
                     ->relationship('organization', 'id')
                     ->required(),
                 Forms\Components\Select::make('type')
+                    ->label(__('doceus.unit.type'))
                     ->options(UnitType::class)
                     ->enum(UnitType::class)
                     ->required(),
@@ -43,6 +59,7 @@ class UnitResource extends Resource
                 Tables\Columns\TextColumn::make('id')->sortable(),
                 Tables\Columns\TextColumn::make('organization_id')->sortable(),
                 Tables\Columns\TextColumn::make('type')
+                    ->label(__('doceus.unit.type'))
                     ->sortable(),
             ])
             ->filters([
