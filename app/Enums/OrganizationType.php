@@ -10,8 +10,8 @@ enum OrganizationType: string
     public function label(): string
     {
         return match ($this) {
-            self::NATURAL_PERSON => 'Natural Person',
-            self::LEGAL_ENTITY => 'Legal Entity',
+            self::NATURAL_PERSON => __('doceus.organization.natural_person'),
+            self::LEGAL_ENTITY => __('doceus.organization.legal_entity'),
         };
     }
 }

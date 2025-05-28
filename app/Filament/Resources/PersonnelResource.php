@@ -47,8 +47,8 @@ class PersonnelResource extends Resource
                 TextColumn::make('user.first_name')->label(__('doceus.user.first_name'))->sortable(),
                 TextColumn::make('user.last_name')->label(__('doceus.user.last_name'))->sortable(),
                 TextColumn::make('user.email')->label(__('doceus.user.email'))->sortable(),
-                TextColumn::make('type')->label(__('doceus.personnel.type'))->sortable(),
-                TextColumn::make('unit.type')->label(__('doceus.unit.type'))->sortable(),
+                TextColumn::make('type')->label(__('doceus.personnel.type'))->sortable()->formatStateUsing(fn ($state) => $state?->label() ?? ''),
+                TextColumn::make('unit.type')->label(__('doceus.unit.type'))->sortable()->formatStateUsing(fn ($state) => $state?->label() ?? ''),
             ])
             ->filters([
                 //

@@ -19,11 +19,11 @@ class ModelEnumCastTest extends TestCase
     public function test_types_are_cast_to_enums()
     {
         $org = Organization::create([
-            'type' => OrganizationType::MEDICAL_ENTITY,
+            'type' => OrganizationType::LEGAL_ENTITY,
         ]);
 
         $this->assertInstanceOf(OrganizationType::class, $org->type);
-        $this->assertSame(OrganizationType::MEDICAL_ENTITY, $org->fresh()->type);
+        $this->assertSame(OrganizationType::LEGAL_ENTITY, $org->fresh()->type);
 
         $unit = Unit::create([
             'organization_id' => $org->id,
