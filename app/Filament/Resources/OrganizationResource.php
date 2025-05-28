@@ -6,10 +6,11 @@ use App\Enums\OrganizationType;
 use App\Filament\Clusters\Settings;
 use App\Filament\Resources\OrganizationResource\Pages;
 use App\Models\Organization;
-use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
 class OrganizationResource extends Resource
@@ -26,8 +27,12 @@ class OrganizationResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('type')
-                    ->options(OrganizationType::class)
+                Select::make('type')
+                    ->options(
+                        collect(OrganizationType::cases())
+                            ->mapWithKeys(fn ($case) => [$case->value => $case->label()])
+                            ->toArray()
+                    )
                     ->enum(OrganizationType::class)
                     ->required(),
             ]);
@@ -37,20 +42,14 @@ class OrganizationResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')->sortable(),
-                Tables\Columns\TextColumn::make('type')
+                TextColumn::make('type')
+                    ->label('Type')
+                    ->formatStateUsing(fn ($state) => $state?->label() ?? '-')
                     ->sortable(),
             ])
-            ->filters([
-                //
-            ])
+            ->recordAction('view')
             ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                ViewAction::make(),
             ]);
     }
 
@@ -65,9 +64,6 @@ class OrganizationResource extends Resource
     {
         return [
             'index' => Pages\ListOrganizations::route('/'),
-            'create' => Pages\CreateOrganization::route('/create'),
-            'edit' => Pages\EditOrganization::route('/{record}/edit'),
         ];
     }
-
 }

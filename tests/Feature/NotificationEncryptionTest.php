@@ -12,7 +12,7 @@ class NotificationEncryptionTest extends TestCase
     public function test_notifications_implement_encryption(): void
     {
         $reset = new EncryptedResetPasswordNotification('token');
-        $verify = new EncryptedVerifyEmailNotification();
+        $verify = new EncryptedVerifyEmailNotification;
 
         $this->assertInstanceOf(ShouldBeEncrypted::class, $reset);
         $this->assertInstanceOf(ShouldBeEncrypted::class, $verify);

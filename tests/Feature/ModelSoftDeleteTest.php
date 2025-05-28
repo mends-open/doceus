@@ -3,8 +3,8 @@
 namespace Tests\Feature;
 
 use App\Models\Organization;
-use App\Models\Unit;
 use App\Models\Personnel;
+use App\Models\Unit;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -15,16 +15,16 @@ class ModelSoftDeleteTest extends TestCase
 
     public function test_models_are_soft_deleted()
     {
-        $org = new Organization();
+        $org = new Organization;
         $org->save();
 
-        $unit = new Unit();
+        $unit = new Unit;
         $unit->organization_id = $org->id;
         $unit->save();
 
         $user = User::factory()->create();
 
-        $personnel = new Personnel();
+        $personnel = new Personnel;
         $personnel->unit_id = $unit->id;
         $personnel->user_id = $user->id;
         $personnel->save();

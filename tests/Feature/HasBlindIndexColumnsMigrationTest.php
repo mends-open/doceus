@@ -2,13 +2,13 @@
 
 namespace Tests\Feature;
 
+use App\Database\Migrations\Traits\HasBlindIndexColumns;
 use Illuminate\Database\QueryException;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
-use App\Database\Migrations\Traits\HasBlindIndexColumns;
 
 class HasBlindIndexColumnsMigrationTest extends TestCase
 {
@@ -18,8 +18,10 @@ class HasBlindIndexColumnsMigrationTest extends TestCase
     {
         parent::setUp();
 
-        $migration = new class {
+        $migration = new class
+        {
             use HasBlindIndexColumns;
+
             public function build(Blueprint $table): void
             {
                 $this->addBlindIndexColumns($table, [

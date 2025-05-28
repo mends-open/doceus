@@ -10,7 +10,6 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 class EmailVerificationPrompt extends BasePage
 {
-
     protected function sendEmailVerificationNotification(MustVerifyEmail $user): void
     {
         if ($user->hasVerifiedEmail()) {
