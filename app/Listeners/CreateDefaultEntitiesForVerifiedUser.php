@@ -29,18 +29,18 @@ class CreateDefaultEntitiesForVerifiedUser implements ShouldBeEncrypted, ShouldQ
 
         DB::transaction(function () use ($user) {
             $organization = Organization::create([
-                'type' => OrganizationType::NATURAL_PERSON,
+                //'type' => OrganizationType::NATURAL_PERSON,
             ]);
 
             $unit = Unit::create([
                 'organization_id' => $organization->id,
-                'type' => UnitType::WITHOUT_PRACTICE,
+                //'type' => UnitType::WITHOUT_PRACTICE,
             ]);
 
             Personnel::create([
                 'user_id' => $user->id,
                 'unit_id' => $unit->id,
-                'type' => PersonnelType::MEDICAL_DOCTOR,
+                //'type' => PersonnelType::MEDICAL_DOCTOR,
             ]);
         });
     }
