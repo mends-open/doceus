@@ -6,7 +6,7 @@ trait HasTranslatableLabel
 {
     public function label(): string
     {
-        return __($this->translationPrefix() . $this->value);
+        return __($this->translationPrefix().$this->value);
     }
 
     // Each enum using this trait must implement this method

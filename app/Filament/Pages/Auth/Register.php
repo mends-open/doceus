@@ -23,7 +23,7 @@ class Register extends BaseRegister
                         Select::make('role')
                             ->options(
                                 collect(RoleType::cases())->mapWithKeys(
-                                    fn($case) => [$case->value => $case->label()]
+                                    fn ($case) => [$case->value => $case->label()]
                                 )->toArray()
                             )
                             ->enum(RoleType::class)
