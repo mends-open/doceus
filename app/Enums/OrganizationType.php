@@ -2,16 +2,17 @@
 
 namespace App\Enums;
 
+use App\Enums\Traits\HasTranslatableLabel;
+
 enum OrganizationType: string
 {
-    case NATURAL_PERSON = 'natural_person';
-    case LEGAL_ENTITY = 'legal_entity';
 
-    public function label(): string
+    use HasTranslatableLabel;
+    case INDIVIDUAL = 'individual';
+    case ENTITY = 'entity';
+
+    protected function translationPrefix(): string
     {
-        return match ($this) {
-            self::NATURAL_PERSON => __('doceus.organization.natural_person'),
-            self::LEGAL_ENTITY => __('doceus.organization.legal_entity'),
-        };
+        return 'doceus.organization.';
     }
 }
