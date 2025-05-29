@@ -6,7 +6,6 @@ use App\Enums\Traits\HasTranslatableLabel;
 
 enum OrganizationType: string
 {
-
     use HasTranslatableLabel;
     case INDIVIDUAL = 'individual';
     case ENTITY = 'entity';

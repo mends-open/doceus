@@ -3,9 +3,8 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\Auth\EditProfile;
-use App\Filament\Pages\Auth\EmailVerificationPrompt;
 use App\Filament\Pages\Auth\Register;
-use App\Filament\Pages\Auth\RequestPasswordReset;
+use App\Http\Middleware\SetUserLocale;
 use Exception;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -16,7 +15,6 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Widgets;
-use App\Http\Middleware\SetUserLocale;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -35,9 +33,9 @@ class DoceusPanelProvider extends PanelProvider
             ->default()
             ->id('doceus')
             ->path('')
-            ->passwordReset(RequestPasswordReset::class)
+            ->passwordReset()
             ->registration(Register::class)
-            ->emailVerification(EmailVerificationPrompt::class)
+            ->emailVerification()
             ->login()
             ->profile(EditProfile::class, false)
             ->colors([
