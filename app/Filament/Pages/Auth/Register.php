@@ -20,7 +20,8 @@ class Register extends BaseRegister
                         $this->getEmailFormComponent(),
                         $this->getPasswordFormComponent(),
                         $this->getPasswordConfirmationFormComponent(),
-                        Select::make('role')
+                        Select::make('default_role')
+                            ->label(__('doceus.auth.register.default_role'))
                             ->options(
                                 collect(RoleType::cases())->mapWithKeys(
                                     fn ($case) => [$case->value => $case->label()]
@@ -39,7 +40,7 @@ class Register extends BaseRegister
         $response = parent::register();
 
         if (Auth::check()) {
-            $role = RoleType::from($this->form->getState()['role']);
+            $role = RoleType::from($this->form->getState()['default_role']);
             CreateDefaultEntities::dispatch(Auth::id(), $role);
         }
 
