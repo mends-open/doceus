@@ -8,6 +8,4 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 class OrganizationRole extends Pivot
 {
     use HasUuids;
-
-    protected $table = 'organization_role';
 }
