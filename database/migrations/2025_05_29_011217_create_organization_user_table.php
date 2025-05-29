@@ -12,10 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('organization_user', function (Blueprint $table) {
-            $table->uuid('id')->primary();
             $table->uuid('organization_id');
             $table->uuid('user_id');
-            $table->timestamps();
+            $table->primary(['organization_id', 'user_id']);
 
             $table->unique(['organization_id', 'user_id']);
             $table->foreign('organization_id')->references('id')->on('organizations')->cascadeOnDelete();
