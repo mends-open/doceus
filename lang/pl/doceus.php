@@ -7,12 +7,6 @@ return [
         'email' => 'Email',
         'language' => 'Język',
     ],
-    'unit' => [
-        'type' => 'Typ jednostki',
-        'without_practice' => 'Bez praktyki',
-        'label' => 'Jednostka',
-        'plural_label' => 'Jednostki',
-    ],
     'organization' => [
         'type' => 'Typ organizacji',
         'natural_person' => 'Osoba fizyczna',
