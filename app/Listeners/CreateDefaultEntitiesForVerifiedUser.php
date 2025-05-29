@@ -2,10 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Enums\OrganizationType;
-use App\Enums\UnitType;
 use App\Models\Organization;
-use App\Models\Unit;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Contracts\Queue\ShouldBeEncrypted;
@@ -25,10 +22,6 @@ class CreateDefaultEntitiesForVerifiedUser implements ShouldBeEncrypted, ShouldQ
                 //'type' => OrganizationType::NATURAL_PERSON,
             ]);
 
-            $unit = Unit::create([
-                'organization_id' => $organization->id,
-                //'type' => UnitType::WITHOUT_PRACTICE,
-            ]);
         });
     }
 }
