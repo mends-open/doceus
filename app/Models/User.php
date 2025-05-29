@@ -46,7 +46,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'pesel' => 'encrypted',
     ];
 
-    protected $blind = [
+    protected $blindIndexes = [
         'email' => ['unique' => true],
         'first_name' => ['nullable' => true],
         'last_name' => ['nullable' => true],
