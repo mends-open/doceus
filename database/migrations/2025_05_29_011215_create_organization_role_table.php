@@ -12,8 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('organization_role', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
+            $table->uuid('organization_id');
+            $table->uuid('role_id');
             $table->timestamps();
+
+            $table->unique(['organization_id', 'role_id']);
+            $table->foreign('organization_id')->references('id')->on('organizations')->cascadeOnDelete();
+            $table->foreign('role_id')->references('id')->on('roles')->cascadeOnDelete();
         });
     }
 

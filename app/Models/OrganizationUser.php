@@ -3,8 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class OrganizationUser extends Pivot
 {
-    //
+    use HasUuids;
+
+    protected $table = 'organization_user';
 }

@@ -2,7 +2,11 @@
 
 namespace App\Filament\Pages\Auth;
 
+use App\Enums\RoleType;
+use App\Jobs\CreateDefaultEntities;
+use Filament\Forms\Components\Select;
 use Filament\Pages\Auth\Register as BaseRegister;
+use Illuminate\Support\Facades\Auth;
 
 class Register extends BaseRegister
 {
@@ -15,9 +19,23 @@ class Register extends BaseRegister
                         $this->getEmailFormComponent(),
                         $this->getPasswordFormComponent(),
                         $this->getPasswordConfirmationFormComponent(),
+                        Select::make('role')
+                            ->options(RoleType::class)
+                            ->enum(RoleType::class)
+                            ->required(),
                     ])
                     ->statePath('data'),
             ),
         ];
+    }
+
+    public function register(): void
+    {
+        parent::register();
+
+        if (Auth::check()) {
+            $role = RoleType::from($this->form->getState()['role']);
+            CreateDefaultEntities::dispatch(Auth::id(), $role);
+        }
     }
 }
