@@ -13,13 +13,6 @@ return [
         'label' => 'Unit',
         'plural_label' => 'Units',
     ],
-    'personnel' => [
-        'type' => 'Personnel Type',
-        'medical_doctor' => 'Medical Doctor',
-        'medical_assistant' => 'Medical Assistant',
-        'label' => 'Personnel',
-        'plural_label' => 'Personnel',
-    ],
     'organization' => [
         'type' => 'Organization Type',
         'natural_person' => 'Natural Person',
