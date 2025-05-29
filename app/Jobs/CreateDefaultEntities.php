@@ -28,14 +28,13 @@ class CreateDefaultEntities implements ShouldQueue
                 'type' => $this->roleType,
             ]);
 
-            $organization = Organization::create([
-                'type' => OrganizationType::INDIVIDUAL,
-            ]);
+            $organization = Organization::create();
 
             $organization->users()->attach($user->id);
             $organization->roles()->attach($role->id);
 
             $user->default_role_id = $role->id;
+            $user->default_organization_id = $organization->id;
             $user->save();
         });
     }

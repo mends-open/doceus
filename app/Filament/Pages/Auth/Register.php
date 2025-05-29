@@ -5,6 +5,7 @@ namespace App\Filament\Pages\Auth;
 use App\Enums\RoleType;
 use App\Jobs\CreateDefaultEntities;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Http\Responses\Auth\Contracts\RegistrationResponse;
 use Filament\Pages\Auth\Register as BaseRegister;
 use Illuminate\Support\Facades\Auth;
@@ -17,33 +18,32 @@ class Register extends BaseRegister
             'form' => $this->form(
                 $this->makeForm()
                     ->schema([
+                        $this->getFirstNameFormComponent(),
+                        $this->getLastNameFormComponent(),
                         $this->getEmailFormComponent(),
                         $this->getPasswordFormComponent(),
                         $this->getPasswordConfirmationFormComponent(),
-                        Select::make('default_role')
-                            ->label(__('doceus.auth.register.default_role'))
-                            ->options(
-                                collect(RoleType::cases())->mapWithKeys(
-                                    fn ($case) => [$case->value => $case->label()]
-                                )->toArray()
-                            )
-                            ->enum(RoleType::class)
-                            ->required(),
                     ])
                     ->statePath('data'),
             ),
         ];
     }
 
-    public function register(): ?RegistrationResponse
+    protected function getFirstNameFormComponent(): TextInput
     {
-        $response = parent::register();
-
-        if (Auth::check()) {
-            $role = RoleType::from($this->form->getState()['default_role']);
-            CreateDefaultEntities::dispatch(Auth::id(), $role);
-        }
-
-        return $response;
+        return TextInput::make('first_name')
+            ->label(__('doceus.auth.first_name'))
+            ->required()
+            ->maxLength(255)
+            ->autofocus();
     }
+
+    protected function getLastNameFormComponent(): TextInput
+    {
+        return TextInput::make('last_name')
+            ->label(__('doceus.auth.last_name'))
+            ->required()
+            ->maxLength(255);
+    }
+
 }

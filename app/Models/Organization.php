@@ -18,6 +18,11 @@ class Organization extends Model
         'type' => OrganizationType::class,
     ];
 
+    public function getNameAttribute(): string
+    {
+        return 'test';
+    }
+
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class)->using(OrganizationUser::class);

@@ -4,7 +4,9 @@ namespace App\Providers\Filament;
 
 use App\Filament\Pages\Auth\EditProfile;
 use App\Filament\Pages\Auth\Register;
+use App\Filament\Pages\Tenancy\RegisterOrganization;
 use App\Http\Middleware\SetUserLocale;
+use App\Models\Organization;
 use Exception;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -33,13 +35,14 @@ class AppPanelProvider extends PanelProvider
             ->default()
             ->id('app')
             ->path('')
+            ->tenant(Organization::class)
+            ->tenantRegistration(RegisterOrganization::class)
             ->passwordReset()
             ->registration(Register::class)
             ->emailVerification()
             ->login()
-            ->profile(EditProfile::class, false)
             ->colors([
-                'primary' => Color::Slate,
+                'primary' => Color::Neutral,
             ])
             ->maxContentWidth('full')
             ->topNavigation()
