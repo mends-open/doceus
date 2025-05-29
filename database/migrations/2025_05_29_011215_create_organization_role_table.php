@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\RoleType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,12 +14,21 @@ return new class extends Migration
     {
         Schema::create('organization_role', function (Blueprint $table) {
             $table->uuid('organization_id');
-            $table->uuid('role_id');
+            $table->uuid('user_id');
+            $table->enum('role_type', array_column(RoleType::cases(), 'value'));
             $table->timestamps();
 
-            $table->primary(['organization_id', 'role_id']);
-            $table->foreign('organization_id')->references('id')->on('organizations')->cascadeOnDelete();
-            $table->foreign('role_id')->references('id')->on('roles')->cascadeOnDelete();
+            // Composite foreign key
+            $table->foreign(['user_id', 'role_type'])
+                ->references(['user_id', 'type'])
+                ->on('roles')
+                ->onDelete('cascade');
+
+            // Foreign key for organization
+            $table->foreign('organization_id')
+                ->references('id')
+                ->on('organizations')
+                ->onDelete('cascade');
         });
     }
 

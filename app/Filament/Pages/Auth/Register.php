@@ -29,13 +29,4 @@ class Register extends BaseRegister
         ];
     }
 
-    public function register(): void
-    {
-        parent::register();
-
-        if (Auth::check()) {
-            $role = RoleType::from($this->form->getState()['role']);
-            CreateDefaultEntities::dispatch(Auth::id(), $role);
-        }
-    }
 }
