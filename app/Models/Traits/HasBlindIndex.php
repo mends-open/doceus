@@ -7,7 +7,7 @@ trait HasBlindIndex
     protected static function bootHasBlindIndex(): void
     {
         static::saving(function ($model) {
-            foreach ($model->getBlindIndexAttributes() as $attribute) {
+            foreach ($model->getBlindIndexFields() as $attribute) {
                 if ($model->isDirty($attribute)) {
                     $indexField = $attribute.'_blind_index';
                     $model->{$indexField} = static::makeBlindIndex($model->{$attribute});
@@ -19,15 +19,23 @@ trait HasBlindIndex
     /**
      * Generate a blind index for a value.
      */
-    public function getBlindIndexAttributes(): array
+    public function getBlindIndexFields(): array
     {
-        if (! property_exists($this, 'blind')) {
+        if (! property_exists($this, 'blindIndexes')) {
             return [];
         }
 
-        $blind = $this->blind;
+        $blind = $this->blindIndexes;
 
         return array_is_list($blind) ? $blind : array_keys($blind);
+    }
+
+    /**
+     * @deprecated Use getBlindIndexFields instead.
+     */
+    public function getBlindIndexAttributes(): array
+    {
+        return $this->getBlindIndexFields();
     }
 
     public static function makeBlindIndex(string $value): string
@@ -42,7 +50,7 @@ trait HasBlindIndex
     {
         $indexField = $field.'_blind_index';
         $instance = new static;
-        if (! in_array($field, $instance->getBlindIndexAttributes())) {
+        if (! in_array($field, $instance->getBlindIndexFields())) {
             throw new \InvalidArgumentException("Field [$field] is not configured for blind indexing.");
         }
         $index = static::makeBlindIndex($value);
