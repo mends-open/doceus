@@ -9,7 +9,7 @@ class BlindIndexFieldsTest extends TestCase
 {
     public function test_returns_configured_fields(): void
     {
-        $user = new User();
+        $user = new User;
 
         $expected = ['email', 'first_name', 'last_name', 'pesel'];
 
