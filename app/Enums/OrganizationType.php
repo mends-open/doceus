@@ -12,6 +12,6 @@ enum OrganizationType: string
 
     protected function translationPrefix(): string
     {
-        return 'doceus.organization.';
+        return 'doceus.organization';
     }
 }
