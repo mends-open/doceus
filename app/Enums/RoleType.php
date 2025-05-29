@@ -6,7 +6,6 @@ use App\Enums\Traits\HasTranslatableLabel;
 
 enum RoleType: string
 {
-
     use HasTranslatableLabel;
     // Physicians
     case IS_MEDICAL_DOCTOR = 'is_medical_doctor';
@@ -25,9 +24,8 @@ enum RoleType: string
 
     // Administrative and Support Roles
     case IS_MEDICAL_ASSISTANT = 'is_medical_assistant';
-    case IS_HEALTHCARE_MANAGER = 'is_healthcare_manager';
-
-    case HAS_REGISTERED_PRACTICE = 'has_registered_practice';
+    case IS_SUPERADMIN = 'is_superadmin';
+    case IS_ADMIN = 'is_admin';
 
     protected function translationPrefix(): string
     {

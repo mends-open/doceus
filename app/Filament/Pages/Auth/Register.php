@@ -2,13 +2,8 @@
 
 namespace App\Filament\Pages\Auth;
 
-use App\Enums\RoleType;
-use App\Jobs\CreateDefaultEntities;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Http\Responses\Auth\Contracts\RegistrationResponse;
 use Filament\Pages\Auth\Register as BaseRegister;
-use Illuminate\Support\Facades\Auth;
 
 class Register extends BaseRegister
 {
@@ -45,5 +40,4 @@ class Register extends BaseRegister
             ->required()
             ->maxLength(255);
     }
-
 }
