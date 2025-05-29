@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -60,25 +58,4 @@ class User extends Authenticatable implements MustVerifyEmail
         );
     }
 
-    public function personnel(): HasMany
-    {
-        return $this->hasMany(Personnel::class);
-    }
-
-    public function units(): HasManyThrough
-    {
-        return $this->hasManyThrough(
-            Unit::class,
-            Personnel::class,
-            'user_id',
-            'id',
-            'id',
-            'unit_id'
-        );
-    }
-
-    public function organizations()
-    {
-        return Organization::whereIn('id', $this->units()->pluck('organization_id'));
-    }
 }
