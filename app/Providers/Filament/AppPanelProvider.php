@@ -22,7 +22,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
-class DoceusPanelProvider extends PanelProvider
+class AppPanelProvider extends PanelProvider
 {
     /**
      * @throws Exception
@@ -31,7 +31,7 @@ class DoceusPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
-            ->id('doceus')
+            ->id('app')
             ->path('')
             ->passwordReset()
             ->registration(Register::class)
