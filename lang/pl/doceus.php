@@ -7,6 +7,10 @@ return [
         'email' => 'Email',
         'language' => 'Język',
     ],
+    'auth' => [
+        'first_name' => 'Imię',
+        'last_name' => 'Nazwisko',
+    ],
     'organization' => [
         'type' => 'Typ organizacji',
         'individual' => 'Osoba indywidualna',
@@ -27,6 +31,8 @@ return [
         'is_psychotherapist' => 'Psychoterapeuta',
         'has_registered_practice' => 'Posiada zarejestrowaną praktykę',
         'is_healthcare_manager' => 'Menedżer ochrony zdrowia',
+        'is_superadmin' => 'Superadministrator',
+        'is_admin' => 'Administrator',
     ],
     'language' => [
         'en' => 'Angielski',

@@ -7,6 +7,10 @@ return [
         'email' => 'Email',
         'language' => 'Language',
     ],
+    'auth' => [
+        'first_name' => 'First Name',
+        'last_name' => 'Last Name',
+    ],
     'organization' => [
         'type' => 'Organization Type',
         'individual' => 'Individual',
@@ -27,6 +31,8 @@ return [
         'is_psychotherapist' => 'Psychotherapist',
         'has_registered_practice' => 'Has registered practice',
         'is_healthcare_manager' => 'Healthcare manager',
+        'is_superadmin' => 'Super administrator',
+        'is_admin' => 'Administrator',
     ],
     'language' => [
         'en' => 'English',
