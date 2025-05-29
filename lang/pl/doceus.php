@@ -13,13 +13,6 @@ return [
         'label' => 'Jednostka',
         'plural_label' => 'Jednostki',
     ],
-    'personnel' => [
-        'type' => 'Typ personelu',
-        'medical_doctor' => 'Lekarz',
-        'medical_assistant' => 'Asystent medyczny',
-        'label' => 'Personel',
-        'plural_label' => 'Personel',
-    ],
     'organization' => [
         'type' => 'Typ organizacji',
         'natural_person' => 'Osoba fizyczna',
