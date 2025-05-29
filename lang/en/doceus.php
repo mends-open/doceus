@@ -13,19 +13,17 @@ return [
         'label' => 'Unit',
         'plural_label' => 'Units',
     ],
-    'personnel' => [
-        'type' => 'Personnel Type',
-        'medical_doctor' => 'Medical Doctor',
-        'medical_assistant' => 'Medical Assistant',
-        'label' => 'Personnel',
-        'plural_label' => 'Personnel',
-    ],
     'organization' => [
         'type' => 'Organization Type',
         'natural_person' => 'Natural Person',
         'legal_entity' => 'Legal Entity',
         'label' => 'Organization',
         'plural_label' => 'Organizations',
+    ],
+    'role' => [
+        'label' => 'Role',
+        'plural_label' => 'Roles',
+        'name' => 'Role Name',
     ],
     'language' => [
         'en' => 'English',

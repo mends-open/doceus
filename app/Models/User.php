@@ -3,14 +3,16 @@
 namespace App\Models;
 
 use App\Enums\Language;
+use App\Models\Organization;
+use App\Models\Role;
 use App\Models\Traits\HasBlindIndex;
 use App\Models\Traits\HasDisplayName;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -60,25 +62,13 @@ class User extends Authenticatable implements MustVerifyEmail
         );
     }
 
-    public function personnel(): HasMany
+    public function roles(): HasMany
     {
-        return $this->hasMany(Personnel::class);
+        return $this->hasMany(Role::class);
     }
 
-    public function units(): HasManyThrough
+    public function organizations(): BelongsToMany
     {
-        return $this->hasManyThrough(
-            Unit::class,
-            Personnel::class,
-            'user_id',
-            'id',
-            'id',
-            'unit_id'
-        );
-    }
-
-    public function organizations()
-    {
-        return Organization::whereIn('id', $this->units()->pluck('organization_id'));
+        return $this->belongsToMany(Organization::class, 'organization_user');
     }
 }

@@ -3,16 +3,16 @@
 namespace App\Models;
 
 use App\Enums\UnitType;
+use App\Models\Traits\BelongsToTenant;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Unit extends Model
 {
-    use HasFactory, HasUuids, SoftDeletes;
+    use BelongsToTenant, HasFactory, HasUuids, SoftDeletes;
 
     protected $guarded = [];
 
@@ -25,8 +25,4 @@ class Unit extends Model
         return $this->belongsTo(Organization::class);
     }
 
-    public function personnel(): HasMany
-    {
-        return $this->hasMany(Personnel::class);
-    }
 }
