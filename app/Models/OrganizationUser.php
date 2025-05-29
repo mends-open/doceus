@@ -7,5 +7,4 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class OrganizationUser extends Pivot
 {
-    use HasUuids;
 }

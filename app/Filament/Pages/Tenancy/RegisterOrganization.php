@@ -25,7 +25,7 @@ class RegisterOrganization extends RegisterTenant
                 Select::make('type')
                     ->options(
                         collect(OrganizationType::cases())->mapWithKeys(
-                            fn($case) => [$case->value => $case->label()]
+                            fn ($case) => [$case->value => $case->label()]
                         )->toArray()
                     )
                     ->enum(OrganizationType::class)
@@ -33,7 +33,7 @@ class RegisterOrganization extends RegisterTenant
                 Select::make('role_type')
                     ->options(
                         collect(RoleType::cases())->mapWithKeys(
-                            fn($case) => [$case->value => $case->label()]
+                            fn ($case) => [$case->value => $case->label()]
                         )->toArray()
                     )
                     ->enum(RoleType::class)
@@ -51,28 +51,15 @@ class RegisterOrganization extends RegisterTenant
                 'type' => $data['type'],
             ]);
 
-            // 2. Create Role for this user and type (roles.id PK still required for user FK!)
-            $role = Role::create([
-                'user_id' => $user->id,
-                'type'    => $data['role_type'],
+            // 2. Attach user to organization with role
+            $organization->users()->attach($user->id, [
+                'role_type' => $data['role_type'],
             ]);
 
-            // 3. Attach user to organization (organization_user pivot, no id)
-            DB::table('organization_user')->insert([
-                'organization_id' => $organization->id,
-                'user_id'         => $user->id,
-            ]);
-
-            // 4. Attach role to organization (organization_role pivot, no id)
-            DB::table('organization_role')->insert([
-                'organization_id' => $organization->id,
-                'role_id'         => $role->id,
-            ]);
-
-            // 5. Set user's default org and role (still UUID FKs on user table)
+            // 3. Optionally: Set user's default org/role
             $user->update([
                 'default_organization_id' => $organization->id,
-                'default_role_id' => $role->id,
+                // To reference default role, use org_id+user_id+role_type, or just role_type if user/org is unique
             ]);
 
             return $organization;

@@ -23,7 +23,7 @@ use Illuminate\Support\Collection;
 /**
  * @property mixed $email
  */
-class User extends Authenticatable implements MustVerifyEmail, FilamentUser, HasTenants
+class User extends Authenticatable implements FilamentUser, HasTenants, MustVerifyEmail
 {
     use HasBlindIndex, HasDisplayName, HasFactory, HasUuids, Notifiable;
 
@@ -73,16 +73,9 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
 
     public function organizations(): BelongsToMany
     {
-        return $this->belongsToMany(Organization::class)->using(OrganizationUser::class);
-    }
-
-    public function defaultRole(): BelongsTo
-    {
-        return $this->belongsTo(Role::class, 'default_role_id');
-    }
-
-    public function defaultOrganization(): BelongsTo {
-        return $this->belongsTo(Organization::class, 'default_organization_id');
+        return $this->belongsToMany(Organization::class)
+            ->using(OrganizationUser::class)
+            ->withPivot('role_type');
     }
 
     public function getTenants(Panel $panel): Collection

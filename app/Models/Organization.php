@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Organization extends Model
 {
@@ -20,16 +21,14 @@ class Organization extends Model
 
     public function getNameAttribute(): string
     {
-        return 'test';
+        return $this->type?->label() ?? '';
     }
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class)->using(OrganizationUser::class);
+        return $this->belongsToMany(User::class)
+            ->using(OrganizationUser::class)
+            ->withPivot('role_type');
     }
 
-    public function roles(): BelongsToMany
-    {
-        return $this->belongsToMany(Role::class)->using(OrganizationRole::class);
-    }
 }
