@@ -9,23 +9,23 @@ enum RoleType: string
 
     use HasTranslatableLabel;
     // Physicians
-    case MEDICAL_DOCTOR = 'medical_doctor';
-    case DENTAL_DOCTOR = 'dental_doctor';
-    case INTERN_DOCTOR = 'intern_doctor';
-    case RESIDENT_DOCTOR = 'resident_doctor';
+    case IS_MEDICAL_DOCTOR = 'is_medical_doctor';
+    case IS_DENTISTRY_DOCTOR = 'is_dentistry_doctor';
+    case IS_INTERN_DOCTOR = 'is_intern_doctor';
+    case IS_RESIDENT_DOCTOR = 'is_resident_doctor';
 
     // Students
-    case MEDICAL_STUDENT = 'medical_student';
-    case DENTISTRY_STUDENT = 'dentistry_student';
-    case PSYCHOLOGY_STUDENT = 'psychology_student';
+    case IS_MEDICAL_STUDENT = 'is_medical_student';
+    case IS_DENTISTRY_STUDENT = 'is_dentistry_student';
+    case IS_PSYCHOLOGY_STUDENT = 'is_psychology_student';
 
     // Mental Health Professionals
-    case PSYCHOLOGIST = 'psychologist';
-    case PSYCHOTHERAPIST = 'psychotherapist';
+    case IS_PSYCHOLOGIST = 'is_psychologist';
+    case IS_PSYCHOTHERAPIST = 'is_psychotherapist';
 
     // Administrative and Support Roles
-    case MEDICAL_ASSISTANT = 'medical_assistant';
-    case HEALTHCARE_MANAGER = 'healthcare_manager';
+    case IS_MEDICAL_ASSISTANT = 'is_medical_assistant';
+    case IS_HEALTHCARE_MANAGER = 'is_healthcare_manager';
 
     case HAS_REGISTERED_PRACTICE = 'has_registered_practice';
 
