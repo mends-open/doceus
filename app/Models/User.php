@@ -5,6 +5,12 @@ namespace App\Models;
 use App\Enums\Language;
 use App\Models\Traits\HasBlindIndex;
 use App\Models\Traits\HasDisplayName;
+use App\Models\Role;
+use App\Models\Organization;
+use App\Models\OrganizationUser;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -27,6 +33,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'last_name',
         'pesel',
         'language',
+        'default_role_id',
     ];
 
     protected $hidden = [
@@ -58,4 +65,18 @@ class User extends Authenticatable implements MustVerifyEmail
         );
     }
 
+    public function roles(): HasMany
+    {
+        return $this->hasMany(Role::class);
+    }
+
+    public function organizations(): BelongsToMany
+    {
+        return $this->belongsToMany(Organization::class)->using(OrganizationUser::class);
+    }
+
+    public function defaultRole(): BelongsTo
+    {
+        return $this->belongsTo(Role::class, 'default_role_id');
+    }
 }
