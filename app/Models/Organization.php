@@ -28,14 +28,12 @@ class Organization extends Model
         return $this->type?->label() ?? '';
     }
 
-    public function users(): BelongsToMany
+    public function users()
     {
         return $this->belongsToMany(
             User::class,
-            'organization_user_features'
-        )
-            ->using(OrganizationUserFeature::class)
-            ->withPivot(['feature', 'event', 'created_at', 'created_by']);
+            'organization_users'
+        )->using(OrganizationUser::class);
     }
 
     public function uniqueUsers(): BelongsToMany
