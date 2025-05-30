@@ -30,13 +30,13 @@ return new class extends Migration
             $table->foreign('created_by')->references('id')->on('users')->nullOnDelete();
         });
 
-        MaterializedView::make('organization_user')
-            ->query(
+        Schema::createMaterializedView('organization_user', function (MaterializedView $view) {
+            $view->query(
                 DB::table('organization_user_features')
-                    ->select('organization_id', 'user_id')->distinct()
-            )
-            ->uniqueIndex('organization_user_pk', ['organization_id', 'user_id'])
-            ->create();
+                    ->select('organization_id', 'user_id')
+                    ->distinct()
+            )->uniqueIndex('organization_user_pk', ['organization_id', 'user_id']);
+        });
 
     }
 
@@ -46,6 +46,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('organization_user_features');
-        MaterializedView::make('organization_user')->drop();
+        Schema::dropMaterializedView('organization_user');
     }
 };

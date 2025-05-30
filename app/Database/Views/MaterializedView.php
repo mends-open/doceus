@@ -8,19 +8,13 @@ use Illuminate\Support\Facades\DB;
 
 class MaterializedView
 {
-    protected string $name;
-
     protected string $query;
 
     /** @var string[] */
     protected array $indexes = [];
 
-    public static function make(string $name): static
+    public function __construct(protected string $name)
     {
-        $instance = new static;
-        $instance->name = $name;
-
-        return $instance;
     }
 
     public function query(Closure|Builder|string $query): static
@@ -64,7 +58,7 @@ class MaterializedView
         }
     }
 
-    public function drop(): void
+    public function dropIfExists(): void
     {
         DB::statement("DROP MATERIALIZED VIEW IF EXISTS {$this->name} CASCADE");
     }
@@ -73,5 +67,10 @@ class MaterializedView
     {
         $concurrent = $concurrently ? 'CONCURRENTLY ' : '';
         DB::statement("REFRESH MATERIALIZED VIEW {$concurrent}{$this->name}");
+    }
+
+    public function name(): string
+    {
+        return $this->name;
     }
 }
