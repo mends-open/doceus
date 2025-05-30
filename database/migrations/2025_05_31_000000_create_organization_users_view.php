@@ -13,11 +13,11 @@ return new class extends Migration
             FROM organization_user_features
         ');
 
-        DB::statement('CREATE UNIQUE INDEX organization_users_pk ON organization_user (organization_id, user_id)');
+        DB::statement('CREATE UNIQUE INDEX organization_user_pk ON organization_user (organization_id, user_id)');
     }
 
     public function down(): void
     {
-        MaterializedView::drop('organization_users');
+        MaterializedView::drop('organization_user');
     }
 };

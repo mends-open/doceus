@@ -72,9 +72,7 @@ class User extends Authenticatable implements FilamentUser, HasTenants, MustVeri
     public function organizations(): BelongsToMany
     {
         return $this->belongsToMany(
-            Organization::class,
-            'organization_users'
-        )->using(OrganizationUser::class);
+            Organization::class)->using(OrganizationUser::class);
     }
 
     public function getTenants(Panel $panel): Collection
