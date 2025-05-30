@@ -3,6 +3,7 @@
 use App\Enums\OrganizationType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -14,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('organizations', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->enum('type', array_column(OrganizationType::cases(), 'value'));
+            $table->enum('type', Arr::pluck(OrganizationType::cases(), 'value'));
             $table->timestamps();
         });
     }
