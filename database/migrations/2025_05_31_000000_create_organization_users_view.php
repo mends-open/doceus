@@ -8,12 +8,12 @@ return new class extends Migration
 {
     public function up(): void
     {
-        MaterializedView::create('organization_users', '
+        MaterializedView::create('organization_user', '
             SELECT DISTINCT organization_id, user_id
             FROM organization_user_features
         ');
 
-        DB::statement('CREATE UNIQUE INDEX organization_users_pk ON organization_users (organization_id, user_id)');
+        DB::statement('CREATE UNIQUE INDEX organization_users_pk ON organization_user (organization_id, user_id)');
     }
 
     public function down(): void

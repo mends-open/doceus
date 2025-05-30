@@ -29,7 +29,7 @@ class OrganizationUserFeature extends Model
     protected static function booted(): void
     {
         static::created(function (): void {
-            event(new MaterializedViewNeedsRefresh('organization_users'));
+            event(new MaterializedViewNeedsRefresh('organization_user'));
         });
     }
 
@@ -40,7 +40,7 @@ class OrganizationUserFeature extends Model
 
     public function organizations()
     {
-        return $this->belongsToMany(Organization::class, 'organization_users')
+        return $this->belongsToMany(Organization::class)
             ->using(OrganizationUser::class);
     }
 

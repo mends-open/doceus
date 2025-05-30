@@ -9,21 +9,10 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class OrganizationUser extends Pivot
 {
-    protected $table = 'organization_users';
-
-    protected $guarded = [];
-
-    public $incrementing = false;
-
-    public $timestamps = false;
-
 // Classic pivot, if you want it
-    public function organizations(): BelongsToMany
+    public function organization(): BelongsTo
     {
-        return $this->belongsToMany(
-            Organization::class,
-            'organization_users'
-        )->using(OrganizationUser::class);
+        return $this->belongsTo(Organization::class);
     }
 
     public function user(): BelongsTo

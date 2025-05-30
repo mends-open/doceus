@@ -31,17 +31,12 @@ class Organization extends Model
     public function users()
     {
         return $this->belongsToMany(
-            User::class,
-            'organization_users'
-        )->using(OrganizationUser::class);
+            User::class)->using(OrganizationUser::class);
     }
 
     public function uniqueUsers(): BelongsToMany
     {
-        return $this->belongsToMany(
-            User::class,
-            'organization_users'
-        )->using(OrganizationUser::class);
+        return $this->belongsToMany(User::class)->using(OrganizationUser::class);
     }
 
     public function features(): HasMany

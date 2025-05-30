@@ -15,10 +15,6 @@ class OrganizationFeature extends Model
 {
     use HasFactory, HasUuids;
 
-    protected $table = 'organization_features';
-
-    protected $guarded = [];
-
     protected $casts = [
         'feature' => OrganizationFeatureEnum::class,
         'event' => FeatureEvent::class,
