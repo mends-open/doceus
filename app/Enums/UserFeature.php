@@ -32,6 +32,6 @@ enum UserFeature: string
 
     protected function translationPrefix(): string
     {
-        return 'doceus.feature';
+        return 'doceus.user_feature';
     }
 }

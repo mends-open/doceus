@@ -19,7 +19,7 @@ return [
         'label' => 'Organizacja',
         'plural_label' => 'Organizacje',
     ],
-    'feature' => [
+    'user_feature' => [
         'is_medical_doctor' => 'Lekarz',
         'is_medical_assistant' => 'Asystent medyczny',
         'is_dentistry_doctor' => 'Dentysta',

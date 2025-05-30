@@ -29,7 +29,7 @@ class RegisterOrganization extends RegisterTenant
                     )
                     ->enum(OrganizationType::class)
                     ->required(),
-                Select::make('feature')
+                Select::make('user_feature')
                     ->options(
                         collect(UserFeature::cases())->mapWithKeys(
                             fn ($case) => [$case->value => $case->label()]
@@ -52,13 +52,13 @@ class RegisterOrganization extends RegisterTenant
 
             // 2. Attach user to organization with role
             $organization->users()->attach($user->id, [
-                'feature' => $data['feature'],
+                'user_feature' => $data['user_feature'],
             ]);
 
             // 3. Optionally: Set user's default org/role
             $user->update([
                 'default_organization_id' => $organization->id,
-                // To reference default feature, use org_id+user_id+feature, or just feature if user/org is unique
+                // To reference default user_feature, use org_id+user_id+user_feature, or just user_feature if user/org is unique
             ]);
 
             return $organization;
