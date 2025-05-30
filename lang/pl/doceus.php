@@ -10,6 +10,7 @@ return [
     'auth' => [
         'first_name' => 'Imię',
         'last_name' => 'Nazwisko',
+        'pesel' => 'PESEL',
     ],
     'organization' => [
         'type' => 'Typ organizacji',
@@ -38,5 +39,7 @@ return [
         'en' => 'Angielski',
         'pl' => 'Polski',
     ],
+    'pesel-exact-eleven-digits' => 'PESEL musi składać się dokładnie z 11 cyfr.',
+    'pesel-invalid' => 'Niepoprawny numer PESEL.',
     'settings' => 'Ustawienia',
 ];
