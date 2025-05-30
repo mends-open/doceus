@@ -10,7 +10,7 @@ class ValidPesel implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         if (! preg_match('/^\d{11}$/', $value)) {
-            $fail(__('doceus.pesel-exact-eleven-digits'));
+            $fail(__('doceus.pesel.exact-eleven-digits'));
 
             return;
         }
@@ -21,7 +21,7 @@ class ValidPesel implements ValidationRule
         }
         $control = (10 - ($sum % 10)) % 10;
         if ($control !== (int) $value[10]) {
-            $fail(__('doceus.pesel-invalid'));
+            $fail(__('doceus.pesel.invalid'));
         }
     }
 }
