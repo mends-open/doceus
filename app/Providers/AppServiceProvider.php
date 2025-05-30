@@ -4,11 +4,14 @@ namespace App\Providers;
 
 use App\Auth\BlindIndexUserProvider;
 use App\Database\BlindIndexes\BlindIndexColumn;
+use App\Database\Views\MaterializedView;
+use Closure;
 use App\Events\MaterializedViewNeedsRefresh;
 use App\Listeners\RefreshMaterializedView;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -31,6 +34,20 @@ class AppServiceProvider extends ServiceProvider
     {
         Blueprint::macro('blind', function (string $column): BlindIndexColumn {
             return new BlindIndexColumn($this, $column);
+        });
+
+        Schema::macro('createMaterializedView', function (string $name, Closure $callback): void {
+            $view = new MaterializedView($name);
+            $callback($view);
+            $view->create();
+        });
+
+        Schema::macro('dropMaterializedView', function (string $name): void {
+            (new MaterializedView($name))->dropIfExists();
+        });
+
+        Schema::macro('refreshMaterializedView', function (string $name, bool $concurrently = false): void {
+            (new MaterializedView($name))->refresh($concurrently);
         });
 
         /**
