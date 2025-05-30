@@ -3,9 +3,8 @@
 namespace App\Filament\Pages\Tenancy;
 
 use App\Enums\OrganizationType;
-use App\Enums\RoleType;
+use App\Enums\UserFeature;
 use App\Models\Organization;
-use App\Models\Role;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Pages\Tenancy\RegisterTenant;
@@ -30,13 +29,13 @@ class RegisterOrganization extends RegisterTenant
                     )
                     ->enum(OrganizationType::class)
                     ->required(),
-                Select::make('role_type')
+                Select::make('feature')
                     ->options(
-                        collect(RoleType::cases())->mapWithKeys(
+                        collect(UserFeature::cases())->mapWithKeys(
                             fn ($case) => [$case->value => $case->label()]
                         )->toArray()
                     )
-                    ->enum(RoleType::class)
+                    ->enum(UserFeature::class)
                     ->required(),
             ]);
     }
@@ -53,13 +52,13 @@ class RegisterOrganization extends RegisterTenant
 
             // 2. Attach user to organization with role
             $organization->users()->attach($user->id, [
-                'role_type' => $data['role_type'],
+                'feature' => $data['feature'],
             ]);
 
             // 3. Optionally: Set user's default org/role
             $user->update([
                 'default_organization_id' => $organization->id,
-                // To reference default role, use org_id+user_id+role_type, or just role_type if user/org is unique
+                // To reference default feature, use org_id+user_id+feature, or just feature if user/org is unique
             ]);
 
             return $organization;

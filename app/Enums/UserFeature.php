@@ -4,7 +4,7 @@ namespace App\Enums;
 
 use App\Enums\Traits\HasTranslatableLabel;
 
-enum RoleType: string
+enum UserFeature: string
 {
     use HasTranslatableLabel;
 
@@ -32,6 +32,6 @@ enum RoleType: string
 
     protected function translationPrefix(): string
     {
-        return 'doceus.role';
+        return 'doceus.feature';
     }
 }
