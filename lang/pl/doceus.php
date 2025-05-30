@@ -37,6 +37,10 @@ return [
         'is_owner' => 'Właściciel',
         'is_user' => 'Użytkownik',
     ],
+    'feature_event' => [
+        'granted' => 'Przyznano',
+        'revoked' => 'Cofnięto',
+    ],
     'language' => [
         'en' => 'Angielski',
         'pl' => 'Polski',
