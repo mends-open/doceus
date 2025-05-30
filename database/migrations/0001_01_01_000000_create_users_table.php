@@ -1,6 +1,5 @@
 <?php
 
-use App\Database\BlindIndexes\BlindIndex;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,11 +14,10 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
-            $blind = BlindIndex::table($table);
-            $blind->create('email')->unique();
-            $blind->create('first_name')->nullable();
-            $blind->create('last_name')->nullable();
-            $blind->create('pesel')->unique()->nullable();
+            $table->blind('email')->unique();
+            $table->blind('first_name')->nullable();
+            $table->blind('last_name')->nullable();
+            $table->blind('pesel')->unique()->nullable();
 
             $table->enum('language', ['en', 'pl'])->nullable();
 
