@@ -4,14 +4,16 @@ namespace App\Enums;
 
 use App\Enums\Traits\HasTranslatableLabel;
 
-enum OrganizationType: string
+enum FeatureEvent: string
 {
+
     use HasTranslatableLabel;
-    case INDIVIDUAL = 'individual';
-    case ENTITY = 'entity';
+    case GRANTED = 'granted';
+    case REVOKED = 'revoked';
 
     protected function translationPrefix(): string
     {
-        return 'doceus.organization_type';
+        return 'doceus.feature_event';
     }
+
 }

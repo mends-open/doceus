@@ -27,8 +27,8 @@ class Organization extends Model
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class)
-            ->using(OrganizationUser::class)
-            ->withPivot('user_feature');
+            ->using(OrganizationUserFeature::class)
+            ->withPivot('feature');
     }
 
 }
