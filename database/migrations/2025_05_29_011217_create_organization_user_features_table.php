@@ -16,7 +16,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('organization_user_features', function (Blueprint $table) {
+        Schema::create('organization_user_events', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('organization_id');
             $table->uuid('user_id');
@@ -30,11 +30,19 @@ return new class extends Migration
             $table->foreign('created_by')->references('id')->on('users')->nullOnDelete();
         });
 
+       /* Schema::createMaterializedView('organization_user_role', function (MaterializedView $view) {
+           $view
+               // here select from organization user events table
+            // sort from latest
+            // for if for given user and org role has latest event granted - include, otherwise - do not include
+       // create materialized view with organization_id, user_id, role - unique index for all
+        });*/
+
         Schema::createMaterializedView('organization_user', function (MaterializedView $view) {
             $view
                 ->select('organization_id', 'user_id')
                 ->distinct()
-                ->from('organization_user_features')
+                ->from('organization_user_events')
                 // Unique index on organization and user without custom name
                 ->unique(['organization_id', 'user_id']);
         });
@@ -46,7 +54,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('organization_user_features');
+        Schema::dropIfExists('organization_user_events');
         Schema::dropMaterializedView('organization_user');
     }
 };
