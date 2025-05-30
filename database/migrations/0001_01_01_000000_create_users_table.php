@@ -1,14 +1,12 @@
 <?php
 
-use App\Database\Migrations\Traits\HasBlindIndexColumns;
+use App\Database\BlindIndexes\BlindIndex;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    use HasBlindIndexColumns;
-
     /**
      * Run the migrations.
      */
@@ -17,12 +15,11 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
-            $this->addBlindIndexColumns($table, [
-                'email' => ['unique' => true],
-                'first_name' => ['nullable' => true],
-                'last_name' => ['nullable' => true],
-                'pesel' => ['unique' => true, 'nullable' => true],
-            ]);
+            $blind = BlindIndex::table($table);
+            $blind->column('email')->unique()->apply();
+            $blind->column('first_name')->nullable()->apply();
+            $blind->column('last_name')->nullable()->apply();
+            $blind->column('pesel')->unique()->nullable()->apply();
 
             $table->enum('language', ['en', 'pl'])->nullable();
 
