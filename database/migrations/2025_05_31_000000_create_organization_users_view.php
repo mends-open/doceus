@@ -1,6 +1,6 @@
 <?php
 
-use App\Support\MaterializedView;
+use App\Database\Views\MaterializedView;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
@@ -8,16 +8,17 @@ return new class extends Migration
 {
     public function up(): void
     {
-        MaterializedView::create('organization_user', '
-            SELECT DISTINCT organization_id, user_id
-            FROM organization_user_features
-        ');
-
-        DB::statement('CREATE UNIQUE INDEX organization_user_pk ON organization_user (organization_id, user_id)');
+        MaterializedView::make('organization_user')
+            ->query(
+                DB::table('organization_user_features')
+                    ->selectRaw('DISTINCT organization_id, user_id')
+            )
+            ->uniqueIndex('organization_user_pk', ['organization_id', 'user_id'])
+            ->create();
     }
 
     public function down(): void
     {
-        MaterializedView::drop('organization_user');
+        MaterializedView::make('organization_user')->drop();
     }
 };
