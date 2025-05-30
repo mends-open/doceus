@@ -2,22 +2,19 @@
 
 namespace App\Models\Traits;
 
+use App\Support\BlindIndex;
+
 trait HasBlindIndex
 {
     protected static function bootHasBlindIndex(): void
     {
         static::saving(function ($model) {
-            foreach ($model->getBlindIndexFields() as $attribute) {
-                if ($model->isDirty($attribute)) {
-                    $indexField = $attribute.'_blind_index';
-                    $model->{$indexField} = static::makeBlindIndex($model->{$attribute});
-                }
-            }
+            BlindIndex::for($model)->update();
         });
     }
 
     /**
-     * Generate a blind index for a value.
+     * Get the model fields configured for blind indexing.
      */
     public function getBlindIndexFields(): array
     {
@@ -30,20 +27,10 @@ trait HasBlindIndex
         return array_is_list($blind) ? $blind : array_keys($blind);
     }
 
-    /**
-     * @deprecated Use getBlindIndexFields instead.
-     */
-    public function getBlindIndexAttributes(): array
-    {
-        return $this->getBlindIndexFields();
-    }
 
     public static function makeBlindIndex(string $value): string
     {
-        $normalized = \Illuminate\Support\Str::of($value)->lower()->trim();
-        $hmacKey = base64_decode(\Illuminate\Support\Str::after(env('APP_BLIND_INDEX_KEY'), 'base64:'));
-
-        return hash_hmac('sha256', $normalized, $hmacKey);
+        return BlindIndex::hash($value);
     }
 
     public static function findByBlindIndex(string $field, string $value): ?self

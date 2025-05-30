@@ -6,9 +6,9 @@ use Illuminate\Database\Schema\Blueprint;
 
 trait HasBlindIndexColumns
 {
-    protected function addBlindIndexColumns(Blueprint $table, array $fields): void
+    protected function addBlindIndexColumns(Blueprint $table, array $columns): void
     {
-        foreach ($fields as $field => $options) {
+        foreach ($columns as $column => $options) {
             $unique = false;
             $nullable = false;
 
@@ -19,12 +19,12 @@ trait HasBlindIndexColumns
                 $nullable = $options['nullable'] ?? false;
             }
 
-            $textColumn = $table->text($field);
+            $textColumn = $table->text($column);
             if ($nullable) {
                 $textColumn->nullable()->default(null);
             }
 
-            $indexColumn = $table->char($field.'_blind_index', 64)->default('');
+            $indexColumn = $table->char($column.'_blind_index', 64)->default('');
             if ($nullable) {
                 $indexColumn->nullable()->default(null);
             }
