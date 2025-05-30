@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Events\MaterializedViewNeedsRefresh;
 use App\Database\Views\MaterializedView;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 class RefreshMaterializedView
 {
