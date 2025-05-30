@@ -15,23 +15,22 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
-<<<<<<< HEAD
-            $blind = BlindIndex::table($table);
-            $blind->column('email')->unique()->apply();
-            $blind->column('first_name')->nullable()->apply();
-            $blind->column('last_name')->nullable()->apply();
-            $blind->column('pesel')->unique()->nullable()->apply();
-=======
+            // Recommended concise style
             BlindIndex::table($table)->columns([
-                'email' => ['unique' => true],
+                'email'      => ['unique' => true],
                 'first_name' => ['nullable' => true],
-                'last_name' => ['nullable' => true],
-                'pesel' => ['unique' => true, 'nullable' => true],
+                'last_name'  => ['nullable' => true],
+                'pesel'      => ['unique' => true, 'nullable' => true],
             ]);
->>>>>>> feat/redesign-features
+
+            // Or (less concise, but also valid):
+            // $blind = BlindIndex::table($table);
+            // $blind->column('email')->unique()->apply();
+            // $blind->column('first_name')->nullable()->apply();
+            // $blind->column('last_name')->nullable()->apply();
+            // $blind->column('pesel')->unique()->nullable()->apply();
 
             $table->enum('language', ['en', 'pl'])->nullable();
-
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
@@ -43,7 +42,6 @@ return new class extends Migration
             $table->string('token');
             $table->timestamp('created_at')->nullable();
         });
-
     }
 
     /**

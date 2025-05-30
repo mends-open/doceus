@@ -16,25 +16,19 @@ class BlindIndex
         return $instance;
     }
 
-<<<<<<< HEAD
     public function column(string $name): BlindIndexColumn
     {
         return new BlindIndexColumn($this->table, $name);
     }
 
     /**
-     * Convenience method to add multiple columns at once.
-     *
+     * Add blind index columns to the table (multiple at once).
      * @param array<string, array|bool> $columns
-=======
-    /**
-     * Add blind index columns to the table.
->>>>>>> feat/redesign-features
      */
     public function columns(array $columns): void
     {
         foreach ($columns as $column => $options) {
-<<<<<<< HEAD
+            // Use builder so custom logic (unique/nullable/apply) works
             $builder = $this->column($column);
 
             if (is_bool($options)) {
@@ -107,33 +101,3 @@ class BlindIndexColumn
         $this->apply();
     }
 }
-=======
-            $unique = false;
-            $nullable = false;
-
-            if (is_bool($options)) {
-                $unique = $options;
-            } elseif (is_array($options)) {
-                $unique = $options['unique'] ?? false;
-                $nullable = $options['nullable'] ?? false;
-            }
-
-            $textColumn = $this->table->text($column);
-            if ($nullable) {
-                $textColumn->nullable()->default(null);
-            }
-
-            $indexColumn = $this->table->char($column . '_blind_index', 64)->default('');
-            if ($nullable) {
-                $indexColumn->nullable()->default(null);
-            }
-
-            if ($unique) {
-                $indexColumn->unique();
-            } else {
-                $indexColumn->index();
-            }
-        }
-    }
-}
->>>>>>> feat/redesign-features
