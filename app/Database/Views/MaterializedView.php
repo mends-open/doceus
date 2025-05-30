@@ -12,7 +12,11 @@ class MaterializedView
 
     protected ?Builder $builder = null;
 
-    /** @var string[] */
+    /**
+     * SQL statements to create indexes for the view.
+     *
+     * @var string[]
+     */
     protected array $indexes = [];
 
     public function __construct(protected string $name)
@@ -45,21 +49,44 @@ class MaterializedView
         return $result instanceof Builder ? $this : $result;
     }
 
-    public function index(string $name, array|string $columns, bool $unique = false): static
+    protected function addIndex(array|string $columns, ?string $name, bool $unique): static
     {
+        $columnsList = $columns;
+
         if (is_array($columns)) {
-            $columns = implode(', ', $columns);
+            $columnsList = implode(', ', $columns);
+        } else {
+            $columns = [$columns];
         }
 
+        $name ??= $this->generateIndexName($columns, $unique);
+
         $uniqueSql = $unique ? 'UNIQUE ' : '';
-        $this->indexes[] = "CREATE {$uniqueSql}INDEX {$name} ON {$this->name} ({$columns})";
+        $this->indexes[] = "CREATE {$uniqueSql}INDEX {$name} ON {$this->name} ({$columnsList})";
 
         return $this;
     }
 
+    public function index(array|string $columns, ?string $name = null): static
+    {
+        return $this->addIndex($columns, $name, false);
+    }
+
+    public function unique(array|string $columns, ?string $name = null): static
+    {
+        return $this->addIndex($columns, $name, true);
+    }
+
     public function uniqueIndex(string $name, array|string $columns): static
     {
-        return $this->index($name, $columns, true);
+        // Backwards compatibility
+        return $this->addIndex($columns, $name, true);
+    }
+
+    protected function generateIndexName(array $columns, bool $unique): string
+    {
+        $type = $unique ? 'unique' : 'index';
+        return strtolower($this->name.'_'.implode('_', $columns).'_'.$type);
     }
 
     public function create(): void
