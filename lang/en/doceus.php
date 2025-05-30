@@ -13,11 +13,13 @@ return [
         'pesel' => 'PESEL',
     ],
     'organization' => [
-        'type' => 'Organization Type',
-        'individual' => 'Individual',
-        'entity' => 'Entity',
         'label' => 'Organization',
         'plural_label' => 'Organizations',
+    ],
+    'organization_type' => [
+        'label' => 'Organization Type',
+        'individual' => 'Individual',
+        'entity' => 'Entity',
     ],
     'user_feature' => [
         'is_medical_doctor' => 'Medical doctor',
@@ -37,11 +39,25 @@ return [
         'is_owner' => 'Owner',
         'is_user' => 'User',
     ],
+    'organization_feature' => [
+        'is_registered_practice' => 'Registered practice',
+        'is_specialized_practice' => 'Specialized medical practice',
+        'is_medical_practice' => 'Medical practice',
+        'is_dental_practice' => 'Dental practice',
+        'is_group_medical_practice' => 'Group medical practice',
+        'is_medical_facility' => 'Medical facility',
+    ],
+    'feature_event' => [
+        'granted' => 'Granted',
+        'revoked' => 'Revoked',
+    ],
     'language' => [
         'en' => 'English',
         'pl' => 'Polish',
     ],
-    'pesel-exact-eleven-digits' => 'The PESEL must be exactly 11 digits.',
-    'pesel-invalid' => 'The PESEL number is invalid.',
+    'pesel' => [
+        'exact-eleven-digits' => 'The PESEL must be exactly 11 digits.',
+        'invalid' => 'The PESEL number is invalid.',
+    ],
     'settings' => 'Settings',
 ];
