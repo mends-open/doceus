@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Organization;
+use App\Models\OrganizationUser;
 use App\Models\OrganizationUserFeature;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -78,14 +79,22 @@ class User extends Authenticatable implements FilamentUser, HasTenants, MustVeri
             ->withPivot(['feature', 'event', 'created_at', 'created_by']);
     }
 
+    public function uniqueOrganizations(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Organization::class,
+            'organization_users'
+        )->using(OrganizationUser::class);
+    }
+
     public function getTenants(Panel $panel): Collection
     {
-        return $this->organizations()->get()->unique();
+        return $this->uniqueOrganizations()->get();
     }
 
     public function canAccessTenant(Model $tenant): bool
     {
-        return $this->organizations()->whereKey($tenant)->exists();
+        return $this->uniqueOrganizations()->whereKey($tenant)->exists();
     }
 
     public function canAccessPanel(Panel $panel): bool

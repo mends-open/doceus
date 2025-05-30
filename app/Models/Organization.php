@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\OrganizationType;
 use App\Models\OrganizationFeature;
+use App\Models\OrganizationUser;
 use App\Models\OrganizationUserFeature;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -35,6 +36,14 @@ class Organization extends Model
         )
             ->using(OrganizationUserFeature::class)
             ->withPivot(['feature', 'event', 'created_at', 'created_by']);
+    }
+
+    public function uniqueUsers(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            User::class,
+            'organization_users'
+        )->using(OrganizationUser::class);
     }
 
     public function features(): HasMany
