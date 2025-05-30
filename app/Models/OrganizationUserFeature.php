@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\FeatureEvent;
 use App\Enums\UserFeature;
+use App\Events\MaterializedViewNeedsRefresh;
 use App\Models\Organization;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -21,6 +22,13 @@ class OrganizationUserFeature extends Model
     protected $guarded = [];
 
     public $incrementing = false;
+
+    protected static function booted(): void
+    {
+        static::created(function (): void {
+            event(new MaterializedViewNeedsRefresh('organization_users'));
+        });
+    }
 
     protected $casts = [
         'feature' => UserFeature::class,
