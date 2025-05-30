@@ -35,7 +35,8 @@ return new class extends Migration
                 ->select('organization_id', 'user_id')
                 ->distinct()
                 ->from('organization_user_features')
-                ->uniqueIndex('organization_user_pk', ['organization_id', 'user_id']);
+                // Unique index on organization and user without custom name
+                ->unique(['organization_id', 'user_id']);
         });
 
     }
