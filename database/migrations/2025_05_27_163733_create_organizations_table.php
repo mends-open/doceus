@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('organizations', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->enum('type', array_column(OrganizationType::cases(), 'value'))->default(OrganizationType::INDIVIDUAL->value);
+            $table->enum('type', array_column(OrganizationType::cases(), 'value'));
             $table->timestamps();
         });
     }

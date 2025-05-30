@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('organization_user', function (Blueprint $table) {
             $table->uuid('organization_id');
             $table->uuid('user_id');
-            $table->enum('feature', array_column(UserFeature::cases(), 'value'));
+            $table->enum('user_feature', array_column(UserFeature::cases(), 'value'));
             $table->primary(['organization_id', 'user_id', 'feature']);
 
             $table->foreign('organization_id')->references('id')->on('organizations')->cascadeOnDelete();
