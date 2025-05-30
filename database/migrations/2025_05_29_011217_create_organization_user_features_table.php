@@ -1,10 +1,12 @@
 <?php
 
+use App\Database\Views\MaterializedView;
 use App\Enums\FeatureEvent;
 use App\Enums\UserFeature;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -27,6 +29,15 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->foreign('created_by')->references('id')->on('users')->nullOnDelete();
         });
+
+        MaterializedView::make('organization_user')
+            ->query(
+                DB::table('organization_user_features')
+                    ->select('organization_id', 'user_id')->distinct()
+            )
+            ->uniqueIndex('organization_user_pk', ['organization_id', 'user_id'])
+            ->create();
+
     }
 
     /**
@@ -35,5 +46,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('organization_user_features');
+        MaterializedView::make('organization_user')->drop();
     }
 };
