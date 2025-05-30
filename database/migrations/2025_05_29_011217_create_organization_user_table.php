@@ -18,7 +18,6 @@ return new class extends Migration
             $table->enum('role_type', array_column(RoleType::cases(), 'value'));
             $table->primary(['organization_id', 'user_id', 'role_type']);
 
-            $table->unique(['organization_id', 'user_id']);
             $table->foreign('organization_id')->references('id')->on('organizations')->cascadeOnDelete();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
         });

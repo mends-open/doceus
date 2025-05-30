@@ -66,21 +66,15 @@ class User extends Authenticatable implements FilamentUser, HasTenants, MustVeri
         );
     }
 
-    public function roles(): HasMany
-    {
-        return $this->hasMany(Role::class);
-    }
-
     public function organizations(): BelongsToMany
     {
         return $this->belongsToMany(Organization::class)
-            ->using(OrganizationUser::class)
-            ->withPivot('role_type');
+            ->using(OrganizationUser::class);
     }
 
     public function getTenants(Panel $panel): Collection
     {
-        return $this->organizations;
+        return $this->organizations()->get()->unique();
     }
 
     public function canAccessTenant(Model $tenant): bool
