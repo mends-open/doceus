@@ -17,7 +17,7 @@ class MaterializedView
 
     public static function make(string $name): static
     {
-        $instance = new static();
+        $instance = new static;
         $instance->name = $name;
 
         return $instance;
