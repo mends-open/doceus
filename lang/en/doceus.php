@@ -10,6 +10,7 @@ return [
     'auth' => [
         'first_name' => 'First Name',
         'last_name' => 'Last Name',
+        'pesel' => 'PESEL',
     ],
     'organization' => [
         'type' => 'Organization Type',
@@ -38,5 +39,7 @@ return [
         'en' => 'English',
         'pl' => 'Polish',
     ],
+    'pesel-exact-eleven-digits' => 'The PESEL must be exactly 11 digits.',
+    'pesel-invalid' => 'The PESEL number is invalid.',
     'settings' => 'Settings',
 ];
