@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Auth\BlindIndexUserProvider;
+use App\Database\BlindIndexes\BlindIndexColumn;
 use App\Events\MaterializedViewNeedsRefresh;
 use App\Listeners\RefreshMaterializedView;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
@@ -27,6 +29,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Blueprint::macro('blindIndex', function (string $column) {
+            return new BlindIndexColumn($this, $column);
+        });
+
         /**
          * Register the custom 'blindindex' user provider for encrypted email/blind index authentication.
          * Used for all user lookups in auth (including Filament).
