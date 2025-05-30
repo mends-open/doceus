@@ -16,7 +16,7 @@ return new class extends Migration
             $table->uuid('organization_id');
             $table->uuid('user_id');
             $table->enum('user_feature', array_column(UserFeature::cases(), 'value'));
-            $table->primary(['organization_id', 'user_id', 'feature']);
+            $table->primary(['organization_id', 'user_id', 'user_feature']);
 
             $table->foreign('organization_id')->references('id')->on('organizations')->cascadeOnDelete();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
