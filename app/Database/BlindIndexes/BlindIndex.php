@@ -4,6 +4,10 @@ namespace App\Database\BlindIndexes;
 
 use Illuminate\Database\Schema\Blueprint;
 
+/**
+ * Utility for managing blind index columns on a table.
+ */
+
 class BlindIndex
 {
     protected Blueprint $table;
@@ -17,36 +21,34 @@ class BlindIndex
     }
 
     /**
-     * Add blind index columns to the table.
+     * Add blind index columns using the legacy array syntax.
      */
     public function columns(array $columns): void
     {
         foreach ($columns as $column => $options) {
-            $unique = false;
-            $nullable = false;
+            $definition = $this->create($column);
 
-            if (is_bool($options)) {
-                $unique = $options;
-            } elseif (is_array($options)) {
-                $unique = $options['unique'] ?? false;
-                $nullable = $options['nullable'] ?? false;
+            if (is_bool($options) && $options) {
+                $definition->unique();
             }
 
-            $textColumn = $this->table->text($column);
-            if ($nullable) {
-                $textColumn->nullable()->default(null);
-            }
+            if (is_array($options)) {
+                if (($options['unique'] ?? false) === true) {
+                    $definition->unique();
+                }
 
-            $indexColumn = $this->table->char($column . '_blind_index', 64)->default('');
-            if ($nullable) {
-                $indexColumn->nullable()->default(null);
-            }
-
-            if ($unique) {
-                $indexColumn->unique();
-            } else {
-                $indexColumn->index();
+                if (($options['nullable'] ?? false) === true) {
+                    $definition->nullable();
+                }
             }
         }
+    }
+
+    /**
+     * Create a new blind index column definition.
+     */
+    public function create(string $column): BlindIndexColumn
+    {
+        return new BlindIndexColumn($this->table, $column);
     }
 }

@@ -15,12 +15,11 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
-            BlindIndex::table($table)->columns([
-                'email' => ['unique' => true],
-                'first_name' => ['nullable' => true],
-                'last_name' => ['nullable' => true],
-                'pesel' => ['unique' => true, 'nullable' => true],
-            ]);
+            $blind = BlindIndex::table($table);
+            $blind->create('email')->unique();
+            $blind->create('first_name')->nullable();
+            $blind->create('last_name')->nullable();
+            $blind->create('pesel')->unique()->nullable();
 
             $table->enum('language', ['en', 'pl'])->nullable();
 
