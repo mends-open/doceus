@@ -13,11 +13,13 @@ return [
         'pesel' => 'PESEL',
     ],
     'organization' => [
-        'type' => 'Typ organizacji',
-        'individual' => 'Osoba indywidualna',
-        'entity' => 'Jednostka',
         'label' => 'Organizacja',
         'plural_label' => 'Organizacje',
+    ],
+    'organization_type' => [
+        'label' => 'Typ organizacji',
+        'individual' => 'Osoba indywidualna',
+        'entity' => 'Jednostka',
     ],
     'user_feature' => [
         'is_medical_doctor' => 'Lekarz',
@@ -37,11 +39,25 @@ return [
         'is_owner' => 'Właściciel',
         'is_user' => 'Użytkownik',
     ],
+    'organization_feature' => [
+        'is_registered_practice' => 'Zarejestrowana praktyka',
+        'is_specialized_practice' => 'Specjalistyczna praktyka medyczna',
+        'is_medical_practice' => 'Praktyka lekarska',
+        'is_dental_practice' => 'Praktyka dentystyczna',
+        'is_group_medical_practice' => 'Grupowa praktyka lekarska',
+        'is_medical_facility' => 'Placówka medyczna',
+    ],
+    'feature_event' => [
+        'granted' => 'Przyznano',
+        'revoked' => 'Cofnięto',
+    ],
     'language' => [
         'en' => 'Angielski',
         'pl' => 'Polski',
     ],
-    'pesel-exact-eleven-digits' => 'PESEL musi składać się dokładnie z 11 cyfr.',
-    'pesel-invalid' => 'Niepoprawny numer PESEL.',
+    'pesel' => [
+        'exact-eleven-digits' => 'PESEL musi składać się dokładnie z 11 cyfr.',
+        'invalid' => 'Niepoprawny numer PESEL.',
+    ],
     'settings' => 'Ustawienia',
 ];
