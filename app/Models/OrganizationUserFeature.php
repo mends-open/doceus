@@ -9,10 +9,9 @@ use App\Models\Organization;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class OrganizationUserFeature extends Model
+class OrganizationUserFeature extends Pivot
 {
     use HasFactory, HasUuids;
 
