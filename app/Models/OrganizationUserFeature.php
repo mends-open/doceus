@@ -5,17 +5,15 @@ namespace App\Models;
 use App\Enums\FeatureEvent;
 use App\Enums\UserFeature;
 use App\Events\MaterializedViewNeedsRefresh;
-use App\Models\Organization;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class OrganizationUserFeature extends Model
 {
     use HasFactory, HasUuids;
+
     public $timestamps = false;
 
     protected $fillable = [

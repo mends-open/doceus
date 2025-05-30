@@ -16,7 +16,7 @@ class EditProfile extends BasePage
                         $this->getEmailFormComponent()->disabled(),
                         $this->getFirstNameFormComponent(),
                         $this->getLastNameFormComponent(),
-                        $this->getPeselFormComponent()
+                        $this->getPeselFormComponent(),
                     ])
                     ->operation('edit')
                     ->model($this->getUser())
@@ -25,6 +25,7 @@ class EditProfile extends BasePage
             ),
         ];
     }
+
     protected function getFirstNameFormComponent(): TextInput
     {
         return TextInput::make('first_name')

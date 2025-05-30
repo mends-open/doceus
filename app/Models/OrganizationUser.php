@@ -2,14 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class OrganizationUser extends Pivot
 {
-// Classic pivot, if you want it
+    // Classic pivot, if you want it
     public function organization(): BelongsTo
     {
         return $this->belongsTo(Organization::class);
