@@ -19,7 +19,7 @@ return [
         'label' => 'Organizacja',
         'plural_label' => 'Organizacje',
     ],
-    'role' => [
+    'feature' => [
         'is_medical_doctor' => 'Lekarz',
         'is_medical_assistant' => 'Asystent medyczny',
         'is_dentistry_doctor' => 'Dentysta',
@@ -34,6 +34,8 @@ return [
         'is_healthcare_manager' => 'Menedżer ochrony zdrowia',
         'is_superadmin' => 'Superadministrator',
         'is_admin' => 'Administrator',
+        'is_owner' => 'Właściciel',
+        'is_user' => 'Użytkownik',
     ],
     'language' => [
         'en' => 'Angielski',
