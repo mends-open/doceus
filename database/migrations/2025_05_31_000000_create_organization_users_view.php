@@ -11,7 +11,7 @@ return new class extends Migration
         MaterializedView::make('organization_user')
             ->query(
                 DB::table('organization_user_features')
-                    ->selectRaw('DISTINCT organization_id, user_id')
+                    ->select('organization_id', 'user_id')->distinct()
             )
             ->uniqueIndex('organization_user_pk', ['organization_id', 'user_id'])
             ->create();
