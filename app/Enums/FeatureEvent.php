@@ -6,7 +6,6 @@ use App\Enums\Traits\HasTranslatableLabel;
 
 enum FeatureEvent: string
 {
-
     use HasTranslatableLabel;
     case GRANTED = 'granted';
     case REVOKED = 'revoked';
@@ -15,5 +14,4 @@ enum FeatureEvent: string
     {
         return 'doceus.feature_event';
     }
-
 }

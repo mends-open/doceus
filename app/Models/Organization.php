@@ -3,10 +3,6 @@
 namespace App\Models;
 
 use App\Enums\OrganizationType;
-use App\Models\OrganizationFeature;
-use App\Models\OrganizationUser;
-use App\Models\OrganizationUserFeature;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -43,5 +39,4 @@ class Organization extends Model
     {
         return $this->hasMany(OrganizationFeature::class);
     }
-
 }

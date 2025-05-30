@@ -2,9 +2,8 @@
 
 namespace App\Listeners;
 
-use App\Events\MaterializedViewNeedsRefresh;
 use App\Database\Views\MaterializedView;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Events\MaterializedViewNeedsRefresh;
 
 class RefreshMaterializedView
 {
