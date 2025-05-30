@@ -73,28 +73,18 @@ class User extends Authenticatable implements FilamentUser, HasTenants, MustVeri
     {
         return $this->belongsToMany(
             Organization::class,
-            'organization_user_features'
-        )
-            ->using(OrganizationUserFeature::class)
-            ->withPivot(['feature', 'event', 'created_at', 'created_by']);
-    }
-
-    public function uniqueOrganizations(): BelongsToMany
-    {
-        return $this->belongsToMany(
-            Organization::class,
             'organization_users'
         )->using(OrganizationUser::class);
     }
 
     public function getTenants(Panel $panel): Collection
     {
-        return $this->uniqueOrganizations()->get();
+        return $this->organizations()->get();
     }
 
     public function canAccessTenant(Model $tenant): bool
     {
-        return $this->uniqueOrganizations()->whereKey($tenant)->exists();
+        return $this->organizations()->whereKey($tenant)->exists();
     }
 
     public function canAccessPanel(Panel $panel): bool

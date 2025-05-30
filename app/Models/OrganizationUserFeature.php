@@ -9,18 +9,22 @@ use App\Models\Organization;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class OrganizationUserFeature extends Pivot
+class OrganizationUserFeature extends Model
 {
     use HasFactory, HasUuids;
+    public $timestamps = false;
 
-    protected $table = 'organization_user_features';
-
-    protected $guarded = [];
-
-    public $incrementing = false;
+    protected $fillable = [
+        'organization_id',
+        'user_id',
+        'feature',
+        'event',
+        'created_by',
+    ];
 
     protected static function booted(): void
     {
@@ -34,9 +38,10 @@ class OrganizationUserFeature extends Pivot
         'event' => FeatureEvent::class,
     ];
 
-    public function organization(): BelongsTo
+    public function organizations()
     {
-        return $this->belongsTo(Organization::class);
+        return $this->belongsToMany(Organization::class, 'organization_users')
+            ->using(OrganizationUser::class);
     }
 
     public function user(): BelongsTo

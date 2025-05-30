@@ -4,8 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class OrganizationUser extends Model
+class OrganizationUser extends Pivot
 {
     protected $table = 'organization_users';
 
@@ -15,17 +17,13 @@ class OrganizationUser extends Model
 
     public $timestamps = false;
 
-    protected static function booted(): void
+// Classic pivot, if you want it
+    public function organizations(): BelongsToMany
     {
-        static::saving(fn() => false);
-        static::creating(fn() => false);
-        static::updating(fn() => false);
-        static::deleting(fn() => false);
-    }
-
-    public function organization(): BelongsTo
-    {
-        return $this->belongsTo(Organization::class);
+        return $this->belongsToMany(
+            Organization::class,
+            'organization_users'
+        )->using(OrganizationUser::class);
     }
 
     public function user(): BelongsTo
