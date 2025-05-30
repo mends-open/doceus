@@ -18,10 +18,16 @@ class BlindIndexColumnsUtilityTest extends TestCase
 
         Schema::create('utility_records', function (Blueprint $table) {
             $table->increments('id');
+<<<<<<< HEAD
             BlindIndex::table($table)
                 ->column('secret')
                 ->unique()
                 ->apply();
+=======
+            BlindIndex::table($table)->columns([
+                'secret' => ['unique' => true],
+            ]);
+>>>>>>> feat/redesign-features
         });
     }
 
