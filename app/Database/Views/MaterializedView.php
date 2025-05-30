@@ -8,19 +8,15 @@ use Illuminate\Support\Facades\DB;
 
 class MaterializedView
 {
-    protected string $name;
+    protected ?string $rawQuery = null;
 
-    protected string $query;
+    protected ?Builder $builder = null;
 
     /** @var string[] */
     protected array $indexes = [];
 
-    public static function make(string $name): static
+    public function __construct(protected string $name)
     {
-        $instance = new static;
-        $instance->name = $name;
-
-        return $instance;
     }
 
     public function query(Closure|Builder|string $query): static
@@ -30,12 +26,23 @@ class MaterializedView
         }
 
         if ($query instanceof Builder) {
-            $query = $query->toRawSql();
+            $this->builder = $query;
+            $this->rawQuery = null;
+        } else {
+            $this->rawQuery = (string) $query;
+            $this->builder = null;
         }
 
-        $this->query = $query;
-
         return $this;
+    }
+
+    public function __call(string $method, array $parameters)
+    {
+        $this->builder ??= DB::query();
+
+        $result = $this->builder->$method(...$parameters);
+
+        return $result instanceof Builder ? $this : $result;
     }
 
     public function index(string $name, array|string $columns, bool $unique = false): static
@@ -57,14 +64,20 @@ class MaterializedView
 
     public function create(): void
     {
-        DB::statement("CREATE MATERIALIZED VIEW {$this->name} AS {$this->query}");
+        $query = $this->rawQuery;
+
+        if ($this->builder) {
+            $query = $this->builder->toRawSql();
+        }
+
+        DB::statement("CREATE MATERIALIZED VIEW {$this->name} AS {$query}");
 
         foreach ($this->indexes as $sql) {
             DB::statement($sql);
         }
     }
 
-    public function drop(): void
+    public function dropIfExists(): void
     {
         DB::statement("DROP MATERIALIZED VIEW IF EXISTS {$this->name} CASCADE");
     }
@@ -73,5 +86,10 @@ class MaterializedView
     {
         $concurrent = $concurrently ? 'CONCURRENTLY ' : '';
         DB::statement("REFRESH MATERIALIZED VIEW {$concurrent}{$this->name}");
+    }
+
+    public function name(): string
+    {
+        return $this->name;
     }
 }
