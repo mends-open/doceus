@@ -1,6 +1,5 @@
 <?php
 
-use App\Database\Views\MaterializedView;
 use App\Enums\FeatureEvent;
 use App\Enums\OrganizationFeature;
 use Illuminate\Database\Migrations\Migration;
@@ -11,9 +10,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('organization_feature_events', function (Blueprint $table) {
@@ -28,27 +24,23 @@ return new class extends Migration
             $table->foreign('created_by')->references('id')->on('users')->nullOnDelete();
         });
 
-        Schema::createMaterializedView('organization_feature', function (MaterializedView $view) {
-            $view->query(
+        Schema::materializedView('organization_feature')
+            ->query(
                 DB::table('organization_feature_events')
                     ->where('event', 'granted')
                     ->distinctOnLatest(['organization_id', 'feature'])
                     ->select([
                         'organization_id',
                         'feature',
-                        'event',
-                        'created_at',
                     ])
-            )->unique(['organization_id', 'feature']);
-        });
+            )
+            ->unique(['organization_id', 'feature'])
+            ->create();
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropMaterializedView('organization_feature');
+        Schema::materializedView('organization_feature')->dropIfExists();
         Schema::dropIfExists('organization_feature_events');
     }
 };

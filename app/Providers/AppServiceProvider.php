@@ -38,18 +38,8 @@ class AppServiceProvider extends ServiceProvider
             return new BlindIndexColumn($this, $column);
         });
 
-        Schema::macro('createMaterializedView', function (string $name, Closure $callback): void {
-            $view = new MaterializedView($name);
-            $callback($view);
-            $view->create();
-        });
-
-        Schema::macro('dropMaterializedView', function (string $name): void {
-            (new MaterializedView($name))->dropIfExists();
-        });
-
-        Schema::macro('refreshMaterializedView', function (string $name, bool $concurrently = false): void {
-            (new MaterializedView($name))->refresh($concurrently);
+        Schema::macro('materializedView', function (string $name): MaterializedView {
+            return new MaterializedView($name);
         });
 
         // User provider macro registration, if you use blind-index auth

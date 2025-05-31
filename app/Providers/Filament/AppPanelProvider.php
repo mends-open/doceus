@@ -4,6 +4,7 @@ namespace App\Providers\Filament;
 
 use App\Filament\Pages\Auth\EditProfile;
 use App\Filament\Pages\Auth\Register;
+use App\Filament\Pages\Tenancy\EditTenantProfile;
 use App\Filament\Pages\Tenancy\RegisterOrganization;
 use App\Http\Middleware\SetUserLocale;
 use App\Models\Organization;
@@ -37,6 +38,7 @@ class AppPanelProvider extends PanelProvider
             ->path('')
             ->tenant(Organization::class)
             ->tenantRegistration(RegisterOrganization::class)
+            ->tenantProfile(EditTenantProfile   ::class)
             ->passwordReset()
             ->profile(EditProfile::class)
             ->registration(Register::class)
