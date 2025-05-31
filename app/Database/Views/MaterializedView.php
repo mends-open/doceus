@@ -19,9 +19,7 @@ class MaterializedView
      */
     protected array $indexes = [];
 
-    public function __construct(protected string $name)
-    {
-    }
+    public function __construct(protected string $name) {}
 
     public function query(Closure|Builder|string $query): static
     {
@@ -86,6 +84,7 @@ class MaterializedView
     protected function generateIndexName(array $columns, bool $unique): string
     {
         $type = $unique ? 'unique' : 'index';
+
         return strtolower($this->name.'_'.implode('_', $columns).'_'.$type);
     }
 

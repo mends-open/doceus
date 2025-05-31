@@ -10,7 +10,7 @@ class BlindIndexFacadeTest extends TestCase
 {
     public function test_can_update_model_using_facade(): void
     {
-        $user = new User();
+        $user = new User;
         $user->email = 'test@example.com';
 
         BlindIndex::for($user)->update();

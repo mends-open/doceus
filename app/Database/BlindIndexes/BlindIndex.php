@@ -7,14 +7,13 @@ use Illuminate\Database\Schema\Blueprint;
 /**
  * Utility for managing blind index columns on a table.
  */
-
 class BlindIndex
 {
     protected Blueprint $table;
 
     public static function table(Blueprint $table): static
     {
-        $instance = new static();
+        $instance = new static;
         $instance->table = $table;
 
         return $instance;

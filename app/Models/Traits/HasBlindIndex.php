@@ -27,7 +27,6 @@ trait HasBlindIndex
         return array_is_list($blind) ? $blind : array_keys($blind);
     }
 
-
     public static function makeBlindIndex(string $value): string
     {
         return BlindIndex::hash($value);
