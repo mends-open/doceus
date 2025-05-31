@@ -5,9 +5,10 @@ namespace App\Providers;
 use App\Auth\BlindIndexUserProvider;
 use App\Database\BlindIndexes\BlindIndexColumn;
 use App\Database\Views\MaterializedView;
-use Closure;
 use App\Events\MaterializedViewNeedsRefresh;
 use App\Listeners\RefreshMaterializedView;
+use Closure;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
@@ -32,6 +33,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // For blind index columns (if you use this feature)
         Blueprint::macro('blind', function (string $column): BlindIndexColumn {
             return new BlindIndexColumn($this, $column);
         });
@@ -50,10 +52,7 @@ class AppServiceProvider extends ServiceProvider
             (new MaterializedView($name))->refresh($concurrently);
         });
 
-        /**
-         * Register the custom 'blindindex' user provider for encrypted email/blind index authentication.
-         * Used for all user lookups in auth (including Filament).
-         */
+        // User provider macro registration, if you use blind-index auth
         Auth::provider('blindindex', function ($app, array $config) {
             return new BlindIndexUserProvider($app['hash'], $config['model']);
         });
@@ -63,5 +62,32 @@ class AppServiceProvider extends ServiceProvider
             RefreshMaterializedView::class,
         );
 
+        /**
+         * Builder macro for "distinct on latest" for PostgreSQL usage.
+         * Generates SQL like:
+         *   SELECT DISTINCT ON (col1, col2, ...) * FROM ... ORDER BY col1, col2, ..., created_at DESC, id DESC
+         */
+        Builder::macro('distinctOnLatest', function (
+            array $columns,
+            string $orderByDesc = 'created_at',
+            ?string $tiebreaker = 'id'
+        ) {
+            $on = implode(', ', $columns);
+
+            // This resets the select and uses a raw SELECT for correct syntax
+            $this->selectRaw("DISTINCT ON ($on) *");
+
+            foreach ($columns as $column) {
+                $this->orderBy($column);
+            }
+
+            $this->orderByDesc($orderByDesc);
+
+            if ($tiebreaker) {
+                $this->orderByDesc($tiebreaker);
+            }
+
+            return $this;
+        });
     }
 }

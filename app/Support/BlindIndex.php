@@ -14,7 +14,7 @@ class BlindIndex
      */
     public static function for(Model $model): static
     {
-        $instance = new static();
+        $instance = new static;
         $instance->model = $model;
 
         return $instance;
@@ -23,13 +23,13 @@ class BlindIndex
     /**
      * Update blind index columns for the model.
      */
-    public function update(array $fields = null): void
+    public function update(?array $fields = null): void
     {
         $fields = $fields ?? $this->getFields();
 
         foreach ($fields as $field) {
             if ($this->model->isDirty($field)) {
-                $indexField = $field . '_blind_index';
+                $indexField = $field.'_blind_index';
                 $this->model->{$indexField} = static::hash($this->model->{$field});
             }
         }
@@ -40,7 +40,7 @@ class BlindIndex
      */
     protected function getFields(): array
     {
-        if (!method_exists($this->model, 'getBlindIndexFields')) {
+        if (! method_exists($this->model, 'getBlindIndexFields')) {
             return [];
         }
 

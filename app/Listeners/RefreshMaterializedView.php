@@ -2,8 +2,8 @@
 
 namespace App\Listeners;
 
-use Illuminate\Support\Facades\Schema;
 use App\Events\MaterializedViewNeedsRefresh;
+use Illuminate\Support\Facades\Schema;
 
 class RefreshMaterializedView
 {

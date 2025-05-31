@@ -37,6 +37,6 @@ class Organization extends Model
 
     public function features(): HasMany
     {
-        return $this->hasMany(OrganizationFeature::class);
+        return $this->hasMany(OrganizationFeatureEvent::class);
     }
 }

@@ -8,13 +8,15 @@ use Illuminate\Database\Schema\ColumnDefinition;
 class BlindIndexColumn
 {
     protected ColumnDefinition $textColumn;
+
     protected ColumnDefinition $indexColumn;
+
     protected bool $unique = false;
 
     public function __construct(protected Blueprint $table, protected string $name)
     {
         $this->textColumn = $this->table->text($this->name);
-        $this->indexColumn = $this->table->char($this->name . '_blind_index', 64)->default('');
+        $this->indexColumn = $this->table->char($this->name.'_blind_index', 64)->default('');
     }
 
     /**
