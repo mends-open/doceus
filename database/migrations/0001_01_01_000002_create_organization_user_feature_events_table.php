@@ -11,9 +11,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('organization_user_feature_events', function (Blueprint $table) {
@@ -30,37 +27,39 @@ return new class extends Migration
             $table->foreign('created_by')->references('id')->on('users')->nullOnDelete();
         });
 
-        Schema::createMaterializedView('organization_user_feature', function (MaterializedView $view) {
-            $view->query(
-                DB::table('organization_user_feature_events')
-                    ->distinctOnLatest(['organization_id', 'user_id', 'feature'])
-                    ->where('event', 'granted')
-                    ->select([
-                        'organization_id',
-                        'user_id',
-                        'feature',
-                    ])
-            )->unique(['organization_id', 'user_id', 'feature']); // Add or adjust indexes as needed
-        });
+        // organization_user_feature view using the optimized MaterializedView approach
+        Schema::materializedView('organization_user_feature')
+            ->query(
+                DB::table(DB::raw('(
+                    SELECT DISTINCT ON (organization_id, user_id, feature)
+                        organization_id,
+                        user_id,
+                        feature,
+                        event
+                    FROM organization_user_feature_events
+                    ORDER BY organization_id, user_id, feature, created_at DESC
+                ) as last_event'))
+                ->where('event', 'granted')
+                ->select(['organization_id', 'user_id', 'feature'])
+            )
+            ->unique(['organization_id', 'user_id', 'feature'])
+            ->create();
 
-        // organization_user view: pure builder
-        Schema::createMaterializedView('organization_user', function (MaterializedView $view) {
-            $view->query(
+        // organization_user view using the optimized approach
+        Schema::materializedView('organization_user')
+            ->query(
                 DB::table('organization_user_feature_events')
                     ->select(['organization_id', 'user_id'])
                     ->distinct()
-            )->unique(['organization_id', 'user_id']);
-        });
-
+            )
+            ->unique(['organization_id', 'user_id'])
+            ->create();
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropMaterializedView('organization_user_role');
-        Schema::dropMaterializedView('organization_user');
-        Schema::dropIfExists('organization_user_events');
+        Schema::materializedView('organization_user_role')->dropIfExists();
+        Schema::materializedView('organization_user')->dropIfExists();
+        Schema::dropIfExists('organization_user_feature_events');
     }
 };

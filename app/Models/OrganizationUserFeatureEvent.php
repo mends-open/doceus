@@ -27,8 +27,8 @@ class OrganizationUserFeatureEvent extends Model
     protected static function booted(): void
     {
         static::created(function (): void {
-            event(new MaterializedViewNeedsRefresh('organization_user'));
-            event(new MaterializedViewNeedsRefresh('organization_user_feature'));
+            event(new MaterializedViewNeedsRefresh('organization_user'), true);
+            event(new MaterializedViewNeedsRefresh('organization_user_feature'), true);
         });
     }
 

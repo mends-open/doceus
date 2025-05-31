@@ -9,6 +9,6 @@ class RefreshMaterializedView
 {
     public function handle(MaterializedViewNeedsRefresh $event): void
     {
-        Schema::refreshMaterializedView($event->viewName, $event->concurrently);
+        Schema::materializedView($event->viewName)->refresh($event->concurrently);
     }
 }
