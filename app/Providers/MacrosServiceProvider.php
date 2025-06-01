@@ -3,9 +3,9 @@
 namespace App\Providers;
 
 use App\Utilities\Postgres\Macros\Blueprint;
+use App\Utilities\Postgres\Macros\Builder;
 use App\Utilities\Postgres\Macros\Schema;
 use Illuminate\Support\ServiceProvider;
-use App\Utilities\Postgres\Macros\Builder;
 
 class MacrosServiceProvider extends ServiceProvider
 {
@@ -24,7 +24,9 @@ class MacrosServiceProvider extends ServiceProvider
     {
         Builder::distinctOn();
         Blueprint::blind();
-        Schema::materializedView();
+        Schema::createMaterializedView();
         Schema::dropMaterializedView();
+        Schema::dropView();
+        Schema::createView();
     }
 }

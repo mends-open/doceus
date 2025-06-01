@@ -19,8 +19,6 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 
 /**
- * 
- *
  * @property string $id
  * @property string $email_blind
  * @property mixed $email
@@ -42,6 +40,7 @@ use Illuminate\Support\Collection;
  * @property-read \App\Models\OrganizationUser|null $pivot
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Organization> $organizations
  * @property-read int|null $organizations_count
+ *
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
@@ -61,6 +60,7 @@ use Illuminate\Support\Collection;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePeselBlind($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class User extends Authenticatable implements FilamentUser, HasTenants, MustVerifyEmail
@@ -91,11 +91,11 @@ class User extends Authenticatable implements FilamentUser, HasTenants, MustVeri
         'pesel' => 'encrypted',
     ];
 
-    protected $blindIndexes = [
-        'email' => ['unique' => true],
-        'first_name' => ['nullable' => true],
-        'last_name' => ['nullable' => true],
-        'pesel' => ['unique' => true, 'nullable' => true],
+    protected array $blind = [
+        'email',
+        'first_name',
+        'last_name',
+        'pesel',
     ];
 
     protected function language(): Attribute

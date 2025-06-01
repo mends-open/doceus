@@ -38,7 +38,7 @@ class AppPanelProvider extends PanelProvider
             ->path('')
             ->tenant(Organization::class)
             ->tenantRegistration(RegisterOrganization::class)
-            ->tenantProfile(EditTenantProfile   ::class)
+            ->tenantProfile(EditTenantProfile::class)
             ->passwordReset()
             ->profile(EditProfile::class)
             ->registration(Register::class)

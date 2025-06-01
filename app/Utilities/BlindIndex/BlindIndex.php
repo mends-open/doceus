@@ -15,6 +15,7 @@ class BlindIndex
     {
         $instance = new static;
         $instance->table = $table;
+
         return $instance;
     }
 

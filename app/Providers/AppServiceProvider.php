@@ -3,15 +3,7 @@
 namespace App\Providers;
 
 use App\Utilities\BlindIndex\Auth\BlindIndexUserProvider;
-use App\Utilities\BlindIndex\BlindIndexColumn;
-use App\Utilities\MaterializedView\Events\MaterializedViewNeedsRefresh;
-use App\Utilities\MaterializedView\Listeners\RefreshMaterializedView;
-use App\Utilities\MaterializedView\MaterializedView;
-use Illuminate\Database\Query\Builder;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -38,9 +30,5 @@ class AppServiceProvider extends ServiceProvider
             return new BlindIndexUserProvider($app['hash'], $config['model']);
         });
 
-        Event::listen(
-            MaterializedViewNeedsRefresh::class,
-            RefreshMaterializedView::class,
-        );
     }
 }
