@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events;
+namespace App\Utilities\MaterializedView\Events;
 
 class MaterializedViewNeedsRefresh
 {

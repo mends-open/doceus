@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-use App\Enums\Traits\HasTranslatableLabel;
+use App\Traits\HasTranslatableLabel;
 
 enum UserFeature: string
 {

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Enums\FeatureEvent;
 use App\Enums\UserFeature;
-use App\Events\MaterializedViewNeedsRefresh;
+use App\Utilities\MaterializedView\Events\MaterializedViewNeedsRefresh;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

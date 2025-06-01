@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use App\Enums\Language;
-use App\Models\Traits\HasBlindIndex;
-use App\Models\Traits\HasDisplayName;
+use App\Traits\HasDisplayName;
+use App\Utilities\BlindIndex\Traits\HasBlindIndex;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasTenants;
 use Filament\Panel;
@@ -23,13 +23,13 @@ use Illuminate\Support\Collection;
  *
  * @property string $id
  * @property mixed $email
- * @property string $email_blind_index
+ * @property string $email_blind
  * @property mixed|null $first_name
- * @property string|null $first_name_blind_index
+ * @property string|null $first_name_blind
  * @property mixed|null $last_name
- * @property string|null $last_name_blind_index
+ * @property string|null $last_name_blind
  * @property mixed|null $pesel
- * @property string|null $pesel_blind_index
+ * @property string|null $pesel_blind
  * @property string|null $language
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property string $password
@@ -48,17 +48,17 @@ use Illuminate\Support\Collection;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmailBlindIndex($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmailBlind($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmailVerifiedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereFirstName($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereFirstNameBlindIndex($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereFirstNameBlind($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereLanguage($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereLastName($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereLastNameBlindIndex($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereLastNameBlind($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePesel($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePeselBlindIndex($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePeselBlind($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
  * @mixin \Eloquent

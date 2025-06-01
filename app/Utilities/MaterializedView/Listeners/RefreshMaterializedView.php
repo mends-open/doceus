@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Listeners;
+namespace App\Utilities\MaterializedView\Listeners;
 
-use App\Events\MaterializedViewNeedsRefresh;
+use App\Utilities\MaterializedView\Events\MaterializedViewNeedsRefresh;
 use Illuminate\Support\Facades\Schema;
 
 class RefreshMaterializedView

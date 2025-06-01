@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Database\Views;
+namespace App\Utilities\MaterializedView;
 
 use Closure;
 use Illuminate\Database\Query\Builder;
@@ -163,22 +163,4 @@ SQL;
         return $this->query($sql);
     }
 
-    /**
-     * Add DISTINCT ON to the underlying query builder (Postgres).
-     * Usage: $view->distinctOn(['col1', 'col2'])
-     */
-    public function distinctOn(array $columns): static
-    {
-        if (!$this->builder) {
-            $this->builder = DB::query();
-        }
-
-        $grammar = $this->builder->getGrammar();
-        $columnString = implode(', ', array_map(fn($col) => $grammar->wrap($col), $columns));
-
-        // Prepend DISTINCT ON to the SELECT clause. Clear selects if already exists.
-        $this->builder->selectRaw("DISTINCT ON ({$columnString}) *");
-
-        return $this;
-    }
 }

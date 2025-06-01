@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models\Traits;
+namespace App\Utilities\BlindIndex\Traits;
 
-use App\Support\BlindIndex;
+use App\Utilities\BlindIndex\Support\BlindIndex;
 
 trait HasBlindIndex
 {
