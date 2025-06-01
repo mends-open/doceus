@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Database\BlindIndexes\BlindIndex;
+use App\BlindIndex\Database\BlindIndexBlueprint as BlindIndex;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Schema;
@@ -33,6 +33,6 @@ class BlindIndexColumnsUtilityTest extends TestCase
     public function test_columns_are_added_using_utility(): void
     {
         $this->assertTrue(Schema::hasColumn('utility_records', 'secret'));
-        $this->assertTrue(Schema::hasColumn('utility_records', 'secret_blind_index'));
+        $this->assertTrue(Schema::hasColumn('utility_records', 'secret_blind'));
     }
 }

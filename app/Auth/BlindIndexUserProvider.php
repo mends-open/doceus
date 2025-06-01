@@ -3,6 +3,7 @@
 namespace App\Auth;
 
 use Illuminate\Auth\EloquentUserProvider;
+use App\BlindIndex\BlindIndexer;
 
 class BlindIndexUserProvider extends EloquentUserProvider
 {
@@ -14,11 +15,8 @@ class BlindIndexUserProvider extends EloquentUserProvider
             return null;
         }
         $model = $this->createModel();
-        if (method_exists($model, 'findByBlindIndex')) {
-            return $model->findByBlindIndex('email', $email);
-        }
 
-        // fallback
-        return parent::retrieveByCredentials($credentials);
+        return BlindIndexer::find($model, 'email', $email)
+            ?? parent::retrieveByCredentials($credentials);
     }
 }

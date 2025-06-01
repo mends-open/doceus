@@ -32,8 +32,8 @@ class UserNameBlindIndexTest extends TestCase
         $expectedFirst = hash_hmac('sha256', $normalizedFirst, $hmacKey);
         $expectedLast = hash_hmac('sha256', $normalizedLast, $hmacKey);
 
-        $this->assertEquals($expectedFirst, $rawDbUser->first_name_blind_index);
-        $this->assertEquals($expectedLast, $rawDbUser->last_name_blind_index);
+        $this->assertEquals($expectedFirst, $rawDbUser->first_name_blind);
+        $this->assertEquals($expectedLast, $rawDbUser->last_name_blind);
 
         $foundFirst = User::findByBlindIndex('first_name', $firstName);
         $foundLast = User::findByBlindIndex('last_name', $lastName);

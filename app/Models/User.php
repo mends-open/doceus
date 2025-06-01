@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Enums\Language;
-use App\Models\Traits\HasBlindIndex;
+use App\BlindIndex\Concerns\HasBlindIndex;
 use App\Models\Traits\HasDisplayName;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasTenants;
