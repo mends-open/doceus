@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Database\BlindIndexes\BlindIndex;
+use App\Utilities\BlindIndex\BlindIndex;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Schema;

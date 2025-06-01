@@ -24,11 +24,15 @@ return new class extends Migration
             $table->foreign('created_by')->references('id')->on('users')->nullOnDelete();
         });
 
+        // Create organization_feature materialized view
         Schema::materializedView('organization_feature')
             ->query(
                 DB::table('organization_feature_events')
-                    ->where('event', 'granted')
-                    ->distinctOnLatest(['organization_id', 'feature'])
+                    ->where('event', FeatureEvent::GRANTED)
+                    ->distinctOn(['organization_id', 'feature'])
+                    ->orderBy('organization_id')
+                    ->orderBy('feature')
+                    ->orderByDesc('created_at')
                     ->select([
                         'organization_id',
                         'feature',
@@ -40,7 +44,7 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::materializedView('organization_feature')->dropIfExists();
+        Schema::dropMaterializedView('organization_feature');
         Schema::dropIfExists('organization_feature_events');
     }
 };

@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Auth\BlindIndexUserProvider;
 use App\Models\User;
+use App\Utilities\BlindIndex\Auth\BlindIndexUserProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;

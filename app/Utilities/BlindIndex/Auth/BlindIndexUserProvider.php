@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Auth;
+namespace App\Utilities\BlindIndex\Auth;
 
 use Illuminate\Auth\EloquentUserProvider;
 

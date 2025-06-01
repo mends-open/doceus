@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Support;
+namespace App\Utilities\BlindIndex\Support;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;

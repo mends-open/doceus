@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Database\Migrations\Traits\HasBlindIndexColumns;
+use App\Utilities\BlindIndex\Traits\HasBlindIndexColumns;
 use Illuminate\Database\QueryException;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Testing\RefreshDatabase;

@@ -15,11 +15,15 @@ return new class extends Migration
             $table->uuid('id')->primary();
 
             $table->blind('email')->unique();
+            $table->text('email');
             $table->blind('first_name')->nullable();
+            $table->text('first_name')->nullable();
             $table->blind('last_name')->nullable();
+            $table->text('last_name')->nullable();
             $table->blind('pesel')->unique()->nullable();
+            $table->text('pesel')->nullable();
 
-            $table->enum('language', ['en', 'pl'])->nullable(); // get from enums
+            $table->enum('language', ['en', 'pl'])->nullable();
 
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

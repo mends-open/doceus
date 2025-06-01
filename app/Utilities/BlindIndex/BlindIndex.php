@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Database\BlindIndexes;
+namespace App\Utilities\BlindIndex;
 
 use Illuminate\Database\Schema\Blueprint;
 
