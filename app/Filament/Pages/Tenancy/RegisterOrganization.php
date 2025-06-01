@@ -60,7 +60,7 @@ class RegisterOrganization extends RegisterTenant
             ]);
 
             // 3. Optionally: Set user's default org/role
-            auth()->update([
+            auth()->user()->update([
                 'default_organization_id' => $organization->id,
                 // To reference default user_feature, use org_id+user_id+user_feature, or just user_feature if user/org is unique
             ]);
