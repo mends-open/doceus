@@ -16,7 +16,7 @@ class Blueprint
     {
         BlueprintBase::macro('blind', function ($column, $length = 64) {
             /** @var BlueprintBase $this */
-            return $this->char($column . '_blind', $length);
+            return $this->char($column.'_blind', $length);
         });
     }
 }

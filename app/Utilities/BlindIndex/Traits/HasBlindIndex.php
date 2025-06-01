@@ -18,11 +18,12 @@ trait HasBlindIndex
      */
     public function getBlindIndexFields(): array
     {
-        if (! property_exists($this, 'blindIndexes')) {
+        if (! property_exists($this, 'blind')) {
             return [];
         }
 
-        $blind = $this->blindIndexes;
+        $blind = $this->blind;
+
         return array_is_list($blind) ? $blind : array_keys($blind);
     }
 
@@ -33,7 +34,7 @@ trait HasBlindIndex
 
     public static function findByBlindIndex(string $field, string $value): ?self
     {
-        $indexField = $field . '_blind';
+        $indexField = $field.'_blind';
         $instance = new static;
         if (! in_array($field, $instance->getBlindIndexFields())) {
             throw new \InvalidArgumentException("Field [$field] is not configured for blind indexing.");

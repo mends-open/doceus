@@ -24,22 +24,19 @@ return new class extends Migration
             $table->foreign('created_by')->references('id')->on('users')->nullOnDelete();
         });
 
-        // Create organization_feature materialized view
-        Schema::materializedView('organization_feature')
-            ->query(
+        Schema::createMaterializedView('organization_feature', DB::query()
+            ->fromSub(
                 DB::table('organization_feature_events')
-                    ->where('event', FeatureEvent::GRANTED)
                     ->distinctOn(['organization_id', 'feature'])
                     ->orderBy('organization_id')
                     ->orderBy('feature')
-                    ->orderByDesc('created_at')
-                    ->select([
-                        'organization_id',
-                        'feature',
-                    ])
-            )
-            ->unique(['organization_id', 'feature'])
-            ->create();
+                    ->orderByDesc('created_at'), 'latest_event')
+            ->where('event', FeatureEvent::GRANTED)
+            ->select([
+                'organization_id',
+                'feature',
+            ])
+        );
     }
 
     public function down(): void

@@ -23,9 +23,10 @@ class Builder
             }
             /** @var BuilderBase $this */
             $grammar = $this->getGrammar();
-            $wrappedCols = array_map(static fn($col) => $grammar->wrap($col), $columns);
+            $wrappedCols = array_map(static fn ($col) => $grammar->wrap($col), $columns);
             $colString = implode(', ', $wrappedCols);
             $this->selectRaw("DISTINCT ON ({$colString}) *");
+
             return $this;
         });
     }

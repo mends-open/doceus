@@ -5,18 +5,15 @@ namespace App\Filament\Pages\Tenancy;
 use App\Enums\FeatureEvent;
 use App\Enums\UserFeature;
 use App\Models\UserFeatureEvent;
-use Filament\Pages\Tenancy\EditTenantProfile as BasePage;
-use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
+use Filament\Pages\Tenancy\EditTenantProfile as BasePage;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class EditTenantProfile extends BasePage
 {
-
     public static function getLabel(): string
     {
         return 'Edit profile';
@@ -53,17 +50,17 @@ class EditTenantProfile extends BasePage
         $organization = $this->tenant;
 
         Log::info(Arr::join([
-            'feature'        => $this->data['user_feature'] ?? null,
-            'event'          => $this->data['feature_event'] ?? null,
+            'feature' => $this->data['user_feature'] ?? null,
+            'event' => $this->data['feature_event'] ?? null,
         ], ', '));
 
         // Persist the feature event
         UserFeatureEvent::create([
             'organization_id' => $organization->id,
-            'user_id'        => auth()->id(),
-            'feature'        => $this->data['user_feature'] ?? null,
-            'event'          => $this->data['feature_event'] ?? null,
-            'created_by'     => auth()->id(),
+            'user_id' => auth()->id(),
+            'feature' => $this->data['user_feature'] ?? null,
+            'event' => $this->data['feature_event'] ?? null,
+            'created_by' => auth()->id(),
         ]);
 
         Notification::make()

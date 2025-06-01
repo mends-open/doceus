@@ -4,15 +4,12 @@ namespace App\Models;
 
 use App\Enums\FeatureEvent;
 use App\Enums\UserFeature;
-use App\Utilities\MaterializedView\Events\MaterializedViewNeedsRefresh;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * 
- *
  * @property string $id
  * @property string $organization_id
  * @property string $user_id
@@ -25,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Organization> $organizations
  * @property-read int|null $organizations_count
  * @property-read \App\Models\User $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UserFeatureEvent newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UserFeatureEvent newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UserFeatureEvent query()
@@ -35,6 +33,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UserFeatureEvent whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UserFeatureEvent whereOrganizationId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UserFeatureEvent whereUserId($value)
+ *
  * @mixin \Eloquent
  */
 class UserFeatureEvent extends Model
@@ -50,14 +49,6 @@ class UserFeatureEvent extends Model
         'event',
         'created_by',
     ];
-
-    protected static function booted(): void
-    {
-        static::created(function (): void {
-            event(new MaterializedViewNeedsRefresh('organization_user'), true);
-            event(new MaterializedViewNeedsRefresh('user_feature'), true);
-        });
-    }
 
     protected $casts = [
         'feature' => UserFeature::class,
