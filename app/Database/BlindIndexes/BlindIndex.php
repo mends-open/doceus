@@ -15,7 +15,6 @@ class BlindIndex
     {
         $instance = new static;
         $instance->table = $table;
-
         return $instance;
     }
 
@@ -25,7 +24,7 @@ class BlindIndex
     public function columns(array $columns): void
     {
         foreach ($columns as $column => $options) {
-            $definition = $this->create($column);
+            $definition = new BlindIndexColumn($this->table, $column);
 
             if (is_bool($options) && $options) {
                 $definition->unique();
@@ -41,13 +40,5 @@ class BlindIndex
                 }
             }
         }
-    }
-
-    /**
-     * Create a new blind index column definition.
-     */
-    public function create(string $column): BlindIndexColumn
-    {
-        return new BlindIndexColumn($this->table, $column);
     }
 }

@@ -29,7 +29,7 @@ class BlindIndex
 
         foreach ($fields as $field) {
             if ($this->model->isDirty($field)) {
-                $indexField = $field.'_blind_index';
+                $indexField = $field.'_blind';
                 $this->model->{$indexField} = static::hash($this->model->{$field});
             }
         }
