@@ -6,7 +6,7 @@ use App\Enums\FeatureEvent;
 use App\Enums\OrganizationType;
 use App\Enums\UserFeature;
 use App\Models\Organization;
-use App\Models\OrganizationUserFeatureEvent;
+use App\Models\UserFeatureEvent;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Pages\Tenancy\RegisterTenant;
@@ -45,24 +45,22 @@ class RegisterOrganization extends RegisterTenant
     protected function handleRegistration(array $data): Organization
     {
         return DB::transaction(function () use ($data) {
-            $user = auth()->user();
 
-            // 1. Create Organization
             $organization = Organization::create([
                 'type' => $data['type'],
             ]);
 
             // 2. Attach user to organization with role
-            OrganizationUserFeatureEvent::create([
+            UserFeatureEvent::create([
                 'organization_id' => $organization->id,
-                'user_id' => $user->id,
+                'user_id' => auth()->id(),
                 'feature' => $data['user_feature'],
                 'event' => FeatureEvent::GRANTED,
-                'created_by' => $user->id,
+                'created_by' => auth()->id(),
             ]);
 
             // 3. Optionally: Set user's default org/role
-            $user->update([
+            auth()->update([
                 'default_organization_id' => $organization->id,
                 // To reference default user_feature, use org_id+user_id+user_feature, or just user_feature if user/org is unique
             ]);

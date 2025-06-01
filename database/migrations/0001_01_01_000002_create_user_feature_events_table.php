@@ -13,7 +13,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('organization_user_feature_events', function (Blueprint $table) {
+        Schema::create('user_feature_events', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('organization_id');
             $table->uuid('user_id');
@@ -28,7 +28,7 @@ return new class extends Migration
         });
 
         // organization_user_feature view using the optimized MaterializedView approach
-        Schema::materializedView('organization_user_feature')
+        Schema::materializedView('user_feature')
             ->query(
                 DB::table(DB::raw('(
                     SELECT DISTINCT ON (organization_id, user_id, feature)
@@ -36,7 +36,7 @@ return new class extends Migration
                         user_id,
                         feature,
                         event
-                    FROM organization_user_feature_events
+                    FROM user_feature_events
                     ORDER BY organization_id, user_id, feature, created_at DESC
                 ) as last_event'))
                 ->where('event', 'granted')
@@ -48,7 +48,7 @@ return new class extends Migration
         // organization_user view using the optimized approach
         Schema::materializedView('organization_user')
             ->query(
-                DB::table('organization_user_feature_events')
+                DB::table('user_feature_events')
                     ->select(['organization_id', 'user_id'])
                     ->distinct()
             )
@@ -58,8 +58,8 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::materializedView('organization_user_role')->dropIfExists();
+        Schema::dropIfExists('user_feature_events');
+        Schema::materializedView('user_feature')->dropIfExists();
         Schema::materializedView('organization_user')->dropIfExists();
-        Schema::dropIfExists('organization_user_feature_events');
     }
 };

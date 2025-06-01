@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class OrganizationUserFeatureEvent extends Model
+class UserFeatureEvent extends Model
 {
     use HasFactory, HasUuids;
 
@@ -28,7 +28,7 @@ class OrganizationUserFeatureEvent extends Model
     {
         static::created(function (): void {
             event(new MaterializedViewNeedsRefresh('organization_user'), true);
-            event(new MaterializedViewNeedsRefresh('organization_user_feature'), true);
+            event(new MaterializedViewNeedsRefresh('user_feature'), true);
         });
     }
 
