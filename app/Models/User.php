@@ -22,14 +22,14 @@ use Illuminate\Support\Collection;
  * 
  *
  * @property string $id
- * @property mixed $email
  * @property string $email_blind
- * @property mixed|null $first_name
+ * @property mixed $email
  * @property string|null $first_name_blind
- * @property mixed|null $last_name
+ * @property mixed|null $first_name
  * @property string|null $last_name_blind
- * @property mixed|null $pesel
+ * @property mixed|null $last_name
  * @property string|null $pesel_blind
+ * @property mixed|null $pesel
  * @property string|null $language
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property string $password
