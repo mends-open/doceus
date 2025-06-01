@@ -46,9 +46,9 @@ class HasBlindIndexColumnsMigrationTest extends TestCase
     public function test_columns_and_constraints_are_applied(): void
     {
         $this->assertTrue(Schema::hasColumn('temp_records', 'secret'));
-        $this->assertTrue(Schema::hasColumn('temp_records', 'secret_blind_index'));
+        $this->assertTrue(Schema::hasColumn('temp_records', 'secret_blind'));
         $this->assertTrue(Schema::hasColumn('temp_records', 'note'));
-        $this->assertTrue(Schema::hasColumn('temp_records', 'note_blind_index'));
+        $this->assertTrue(Schema::hasColumn('temp_records', 'note_blind'));
 
         DB::table('temp_records')->insert([
             'secret' => 'abc',

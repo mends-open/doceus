@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\User;
-use App\Support\BlindIndex;
+use App\BlindIndex\BlindIndexer as BlindIndex;
 use Tests\TestCase;
 
 class BlindIndexFacadeTest extends TestCase
@@ -16,6 +16,6 @@ class BlindIndexFacadeTest extends TestCase
         BlindIndex::for($user)->update();
 
         $expected = BlindIndex::hash('test@example.com');
-        $this->assertSame($expected, $user->email_blind_index);
+        $this->assertSame($expected, $user->email_blind);
     }
 }

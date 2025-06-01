@@ -45,6 +45,6 @@ class UserEmailBlindIndexTest extends TestCase
         $normalized = Str::of($plaintextEmail)->lower()->trim();
         $hmacKey = base64_decode(Str::after(env('APP_BLIND_INDEX_KEY'), 'base64:'));
         $expectedBlindIndex = hash_hmac('sha256', $normalized, $hmacKey);
-        $this->assertEquals($expectedBlindIndex, $rawDbUser->email_blind_index);
+        $this->assertEquals($expectedBlindIndex, $rawDbUser->email_blind);
     }
 }

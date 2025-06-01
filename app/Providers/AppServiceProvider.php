@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Auth\BlindIndexUserProvider;
-use App\Database\BlindIndexes\BlindIndexColumn;
+use App\BlindIndex\Database\BlindIndexColumn;
 use App\Database\Views\MaterializedView;
 use App\Events\MaterializedViewNeedsRefresh;
 use App\Listeners\RefreshMaterializedView;
