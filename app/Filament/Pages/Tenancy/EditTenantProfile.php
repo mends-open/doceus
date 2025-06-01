@@ -4,7 +4,7 @@ namespace App\Filament\Pages\Tenancy;
 
 use App\Enums\FeatureEvent;
 use App\Enums\UserFeature;
-use App\Models\OrganizationUserFeatureEvent;
+use App\Models\UserFeatureEvent;
 use Filament\Pages\Tenancy\EditTenantProfile as BasePage;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
@@ -50,9 +50,7 @@ class EditTenantProfile extends BasePage
 
     public function save(): void
     {
-        // Retrieve current user/organization from tenancy context
-        $user = Auth::user();
-        $organization = $this->tenant; // Or however you get the current org
+        $organization = $this->tenant;
 
         Log::info(Arr::join([
             'feature'        => $this->data['user_feature'] ?? null,
@@ -60,12 +58,12 @@ class EditTenantProfile extends BasePage
         ], ', '));
 
         // Persist the feature event
-        OrganizationUserFeatureEvent::create([
+        UserFeatureEvent::create([
             'organization_id' => $organization->id,
-            'user_id'        => $user->id,
+            'user_id'        => auth()->id(),
             'feature'        => $this->data['user_feature'] ?? null,
             'event'          => $this->data['feature_event'] ?? null,
-            'created_by'     => $user->id,
+            'created_by'     => auth()->id(),
         ]);
 
         Notification::make()
