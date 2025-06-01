@@ -9,6 +9,30 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * 
+ *
+ * @property string $id
+ * @property OrganizationType $type
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\OrganizationFeatureEvent> $features
+ * @property-read int|null $features_count
+ * @property-read string $name
+ * @property-read \App\Models\OrganizationUser|null $pivot
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $uniqueUsers
+ * @property-read int|null $unique_users_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
+ * @property-read int|null $users_count
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Organization extends Model
 {
     use HasFactory, HasUuids;
