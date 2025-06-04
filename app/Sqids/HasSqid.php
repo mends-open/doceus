@@ -3,6 +3,7 @@
 namespace App\Sqids;
 
 use Illuminate\Support\Str;
+use Sqids\Sqids;
 
 trait HasSqid
 {
@@ -67,12 +68,29 @@ trait HasSqid
     }
 
     /**
-     * Get the model's sqid, with prefix.
+     * Get the model's sqid, with prefix and using per-model alphabet if configured.
      */
     public function getSqidAttribute(): ?string
     {
         $prefix = $this->getSqidPrefix();
-        return $this->id !== null ? $prefix . Sqid::encode($this->id) : null;
+        if ($this->id === null) {
+            return null;
+        }
+
+        // Use the model-specific alphabet if present in the config
+        $alphabet = Sqid::modelAlphabet(static::class);
+        if ($alphabet) {
+            $config = config('sqid');
+            $sqids = new Sqids(
+                alphabet: $alphabet,
+                minLength: $config['length'] ?? 10
+            );
+            $encoded = $sqids->encode([(int)$this->id]);
+        } else {
+            $encoded = Sqid::encode($this->id);
+        }
+
+        return $prefix . $encoded;
     }
 
     public function getRouteKey(): string
@@ -87,7 +105,19 @@ trait HasSqid
             ? Str::after($value, $prefix)
             : $value;
 
-        $id = Sqid::decode($sqid);
+        $alphabet = Sqid::modelAlphabet(static::class);
+        if ($alphabet) {
+            $config = config('sqid');
+            $sqids = new Sqids(
+                alphabet: $alphabet,
+                minLength: $config['length'] ?? 10
+            );
+            $decoded = $sqids->decode($sqid);
+            $id = isset($decoded[0]) ? (int)$decoded[0] : null;
+        } else {
+            $id = Sqid::decode($sqid);
+        }
+
         return $id !== null ? $this->where('id', $id)->firstOrFail() : null;
     }
 }

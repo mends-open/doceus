@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Organization;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,16 +14,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('organization_user', function (Blueprint $table) {
-            $table->unsignedBigInteger('organization_id');
-            $table->unsignedBigInteger('user_id');
-            $table->primary(['organization_id', 'user_id']);
-            $table->foreign('organization_id')
-                ->references('id')
-                ->on('organizations')
-                ->onDelete('cascade');
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users');
+            $table->foreignIdFor(Organization::class);
+            $table->foreignIdFor(User::class);
+            $table->timestamp('created_at')->useCurrent();;
         });
     }
 

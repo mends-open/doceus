@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Casts\EncryptedBinary;
 use App\Enums\OrganizationType;
+use App\Revisions\LogsRevisions;
 use App\Sqids\HasSqid;
 use App\Sqids\Sqidable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  *
@@ -31,25 +34,21 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Organization extends Model implements Sqidable
 {
-    use HasFactory, HasSqid;
+    use HasFactory, HasSqid, LogsRevisions, SoftDeletes;
 
     protected $guarded = [];
 
     protected $casts = [
         'type' => OrganizationType::class,
+        'name' => 'encrypted',
     ];
 
+    protected $fillable = [
+        'type',
+        'name',
+];
+
     protected static string $sqidPrefixBase = 'org';
-
-    public function getNameAttribute(): string
-    {
-        return $this->type?->label() ?? '';
-    }
-
-    public function getFilamentName(): string
-    {
-        return $this->type?->label() ?? '';
-    }
 
     public function users(): BelongsToMany
     {
