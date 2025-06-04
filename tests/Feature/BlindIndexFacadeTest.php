@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\User;
-use App\Utilities\BlindIndex\Support\BlindIndex;
+use App\Traits\Utilities\BlindIndex\Support\BlindIndex;
 use Tests\TestCase;
 
 class BlindIndexFacadeTest extends TestCase
