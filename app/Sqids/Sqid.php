@@ -2,6 +2,7 @@
 
 namespace App\Sqids;
 
+use Illuminate\Support\Str;
 use Sqids\Sqids;
 
 class Sqid
@@ -9,18 +10,15 @@ class Sqid
     protected static ?Sqids $sqids = null;
 
     /**
-     * Get Sqid config from sqid.php.
+     * Get Sqid config from config/sqid.php.
      */
     protected static function config(): array
     {
-        return config('sqid', [
-            'length'   => 32,
-            'alphabet' => 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789',
-        ]);
+        return config('sqid');
     }
 
     /**
-     * Get the current configured Sqids instance (singleton).
+     * Get the currently configured Sqids instance (singleton).
      */
     public static function init(): Sqids
     {
@@ -35,7 +33,7 @@ class Sqid
     }
 
     /**
-     * Re-initialize with fresh config (if called after config changes).
+     * Re-initialize with current config (e.g. after config changes).
      */
     public static function refresh(): void
     {
@@ -47,7 +45,7 @@ class Sqid
     }
 
     /**
-     * Encode an integer ID into a SQID string.
+     * Encode an integer or string ID into a SQID string.
      */
     public static function encode(int|string $id): string
     {
@@ -62,5 +60,18 @@ class Sqid
     {
         $decoded = self::init()->decode($sqid);
         return isset($decoded[0]) ? (int)$decoded[0] : null;
+    }
+
+    /**
+     * Get the per-model alphabet if available, otherwise the default.
+     *
+     * @param string $model   Model class name or snake-case name.
+     * @return string|null
+     */
+    public static function modelAlphabet(string $model): ?string
+    {
+        $config = self::config();
+        $snake = Str::snake(class_basename($model));
+        return $config['alphabets'][$snake] ?? $config['alphabet'] ?? null;
     }
 }
