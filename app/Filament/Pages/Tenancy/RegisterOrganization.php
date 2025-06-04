@@ -2,11 +2,8 @@
 
 namespace App\Filament\Pages\Tenancy;
 
-use App\Enums\FeatureEvent;
 use App\Enums\OrganizationType;
-use App\Enums\UserFeature;
 use App\Models\Organization;
-use App\Models\UserFeatureEvent;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Pages\Tenancy\RegisterTenant;
@@ -31,40 +28,19 @@ class RegisterOrganization extends RegisterTenant
                     )
                     ->enum(OrganizationType::class)
                     ->required(),
-                Select::make('user_feature')
-                    ->options(
-                        collect(UserFeature::cases())->mapWithKeys(
-                            fn ($case) => [$case->value => $case->label()]
-                        )->toArray()
-                    )
-                    ->enum(UserFeature::class)
-                    ->required(),
             ]);
     }
 
     protected function handleRegistration(array $data): Organization
     {
         return DB::transaction(function () use ($data) {
-
             $organization = Organization::create([
                 'type' => $data['type'],
             ]);
-
-            // 2. Attach user to organization with role
-            UserFeatureEvent::create([
-                'organization_id' => $organization->id,
-                'user_id' => auth()->id(),
-                'feature' => $data['user_feature'],
-                'event' => FeatureEvent::GRANTED,
-                'created_by' => auth()->id(),
-            ]);
-
-            // 3. Optionally: Set user's default org/role
-            auth()->user()->update([
-                'default_organization_id' => $organization->id,
-                // To reference default user_feature, use org_id+user_id+user_feature, or just user_feature if user/org is unique
-            ]);
-
+            // Attach the current user to the organization, if authenticated
+            if (auth()->check()) {
+                $organization->users()->attach(auth()->id());
+            }
             return $organization;
         });
     }
