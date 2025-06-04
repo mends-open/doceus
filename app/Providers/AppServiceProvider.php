@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Utilities\BlindIndex\Auth\BlindIndexUserProvider;
+use App\Traits\Utilities\BlindIndex\Auth\BlindIndexUserProvider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 
@@ -24,11 +24,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-
-        // User provider macro registration, if you use blind-index auth
-        Auth::provider('blindindex', function ($app, array $config) {
-            return new BlindIndexUserProvider($app['hash'], $config['model']);
-        });
 
     }
 }
