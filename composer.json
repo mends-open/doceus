@@ -12,7 +12,8 @@
         "laravel/horizon": "^5.32",
         "laravel/octane": "^2.9",
         "laravel/tinker": "^2.10.1",
-        "predis/predis": "^3.0"
+        "predis/predis": "^3.0",
+        "sqids/sqids": "^0.5.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.15",
