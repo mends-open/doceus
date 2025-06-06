@@ -5,11 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Database\Eloquent\Relations\Relation;
 
 class Revision extends Model
 {
-
     protected $fillable = [
         'created_at',
         'user_id',
@@ -45,6 +43,4 @@ class Revision extends Model
     {
         return $this->belongsTo(Organization::class);
     }
-
-
 }

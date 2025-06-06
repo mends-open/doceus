@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Sqids;
+namespace App\Traits\Sqids;
 
+use App\Services\Sqids\Sqid;
 use Sqids\Sqids;
 
 trait HasSqid
@@ -22,7 +23,8 @@ trait HasSqid
                 alphabet: $alphabet,
                 minLength: $config['length'] ?? 10
             );
-            return $sqids->encode([(int)$this->id]);
+
+            return $sqids->encode([(int) $this->id]);
         }
 
         return Sqid::encode($this->id);
@@ -49,7 +51,7 @@ trait HasSqid
                 minLength: $config['length'] ?? 10
             );
             $decoded = $sqids->decode($value);
-            $id = isset($decoded[0]) ? (int)$decoded[0] : null;
+            $id = isset($decoded[0]) ? (int) $decoded[0] : null;
         } else {
             $id = Sqid::decode($value);
         }

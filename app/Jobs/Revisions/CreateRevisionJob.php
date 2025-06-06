@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Revisions;
+namespace App\Jobs\Revisions;
 
 use App\Models\Revision;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -43,21 +43,14 @@ class CreateRevisionJob implements ShouldQueue
 
     /**
      * Create a new job instance.
-     *
-     * @param Model $revisionable
-     * @param string $dispatchedAt
-     * @param array $attributes
-     * @param int|null $organizationId
-     * @param int|null $userId
      */
     public function __construct(
-        Model  $revisionable,
+        Model $revisionable,
         string $dispatchedAt,
-        array  $attributes = [],
-        ?int   $organizationId = null,
-        ?int   $userId = null
-    )
-    {
+        array $attributes = [],
+        ?int $organizationId = null,
+        ?int $userId = null
+    ) {
         $this->revisionable = $revisionable;
         $this->organizationId = $organizationId;
         $this->userId = $userId;
@@ -77,8 +70,6 @@ class CreateRevisionJob implements ShouldQueue
 
     /**
      * Instantiates a Revision model with provided data.
-     *
-     * @return Revision
      */
     private function makeRevision(): Revision
     {

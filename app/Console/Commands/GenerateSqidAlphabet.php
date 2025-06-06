@@ -44,9 +44,9 @@ class GenerateSqidAlphabet extends Command
             $this->option('hyphen') ||
             $this->option('underscore');
 
-        $useDigits    = $this->option('digits')    || !$hasExplicit;
-        $useUppercase = $this->option('uppercase') || !$hasExplicit;
-        $useLowercase = $this->option('lowercase') || !$hasExplicit;
+        $useDigits = $this->option('digits') || ! $hasExplicit;
+        $useUppercase = $this->option('uppercase') || ! $hasExplicit;
+        $useLowercase = $this->option('lowercase') || ! $hasExplicit;
 
         $sets = [];
 
@@ -68,6 +68,7 @@ class GenerateSqidAlphabet extends Command
 
         if (count($sets) === 0) {
             $this->error('You must choose at least one character set option (--digits, --uppercase, --lowercase, --hyphen, --underscore).');
+
             return 1;
         }
 
@@ -82,7 +83,7 @@ class GenerateSqidAlphabet extends Command
 
         $final = implode('', $alphabetArray);
 
-        $this->info("Generated SqID alphabet:");
+        $this->info('Generated SqID alphabet:');
         $this->line($final);
 
         return 0;

@@ -2,10 +2,8 @@
 
 namespace App\Models;
 
-use App\Revisions\LogsRevisions;
-use App\Sqids\HasSqid;
-use App\Traits\SerializesDateWithMilliseconds;
-use DateTimeInterface;
+use App\Services\Revisions\LogsRevisions;
+use App\Traits\Sqids\HasSqid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -37,10 +35,10 @@ class Person extends Model
 
     protected $casts = [
         'first_name' => 'encrypted',
-        'last_name'  => 'encrypted',
-        'pesel'      => 'encrypted',
-        'email'      => 'encrypted',
-        'phone'      => 'encrypted',
+        'last_name' => 'encrypted',
+        'pesel' => 'encrypted',
+        'email' => 'encrypted',
+        'phone' => 'encrypted',
     ];
 
     public function organization(): BelongsTo
@@ -65,5 +63,4 @@ class Person extends Model
     {
         return $this->organization_id;
     }
-
 }

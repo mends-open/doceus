@@ -5,15 +5,14 @@ namespace App\Filament\Clusters\Managment\Resources;
 use App\Filament\Clusters\Managment;
 use App\Filament\Clusters\Managment\Resources\PersonResource\Pages;
 use App\Models\Person;
-use App\Rules\ValidPesel;
+use Eloquent;
 use Filament\Facades\Filament;
 use Filament\Forms;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
-use Eloquent;
 
 class PersonResource extends Resource
 {

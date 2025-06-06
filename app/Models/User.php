@@ -3,9 +3,8 @@
 namespace App\Models;
 
 use App\Enums\Language;
-use App\Revisions\LogsRevisions;
+use App\Services\Revisions\LogsRevisions;
 use App\Traits\HasDisplayName;
-use App\Traits\SerializesDateWithMilliseconds;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasTenants;
 use Filament\Panel;
@@ -20,8 +19,6 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 
 /**
- *
- *
  * @property string $id
  * @property string $email
  * @property mixed|null $first_name
@@ -37,6 +34,7 @@ use Illuminate\Support\Collection;
  * @property-read string $name
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
+ *
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
@@ -53,11 +51,12 @@ use Illuminate\Support\Collection;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePesel($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class User extends Authenticatable implements FilamentUser, HasTenants, MustVerifyEmail
 {
-    use HasDisplayName, HasFactory, Notifiable, LogsRevisions, SoftDeletes;
+    use HasDisplayName, HasFactory, LogsRevisions, Notifiable, SoftDeletes;
 
     protected $fillable = [
         'email',
@@ -109,5 +108,4 @@ class User extends Authenticatable implements FilamentUser, HasTenants, MustVeri
     {
         return $this->belongsToMany(Organization::class)->using(OrganizationUser::class);
     }
-
 }

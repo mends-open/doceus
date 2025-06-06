@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Revisions;
+namespace App\Services\Revisions;
 
-use Filament\Facades\Filament;
-use Illuminate\Support\Facades\Auth;
-use App\Revisions\CreateRevisionJob;
+use App\Jobs\Revisions\CreateRevisionJob;
 
 trait LogsRevisions
 {
@@ -30,7 +28,7 @@ trait LogsRevisions
             ? $this->revisionActions
             : ['created', 'updated', 'deleted', 'restored'];
 
-        if (!in_array($action, $actions, true)) {
+        if (! in_array($action, $actions, true)) {
             return;
         }
 
@@ -64,6 +62,7 @@ trait LogsRevisions
             $result = $this->getHidden();
             $hidden = is_array($result) ? $result : [];
         }
+
         return array_diff($revisionable, $hidden);
     }
 
@@ -73,6 +72,7 @@ trait LogsRevisions
     private function getRevisionData(string $action, array $visibleRevisionable): array
     {
         $attributes = $action === 'updated' ? $this->getDirty() : $this->getAttributes();
+
         return array_intersect_key($attributes, array_flip($visibleRevisionable));
     }
 }
