@@ -50,6 +50,7 @@ class RegisterOrganization extends RegisterTenant
             if (auth()->check()) {
                 $organization->users()->attach(auth()->id());
             }
+
             return $organization;
         });
     }

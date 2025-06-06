@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Sqids;
+namespace App\Services\Sqids;
 
 use Illuminate\Support\Str;
 use Sqids\Sqids;
@@ -29,6 +29,7 @@ class Sqid
                 minLength: $config['length']
             );
         }
+
         return self::$sqids;
     }
 
@@ -49,7 +50,8 @@ class Sqid
      */
     public static function encode(int|string $id): string
     {
-        $id = (int)$id;
+        $id = (int) $id;
+
         return self::init()->encode([$id]);
     }
 
@@ -59,19 +61,20 @@ class Sqid
     public static function decode(string $sqid): ?int
     {
         $decoded = self::init()->decode($sqid);
-        return isset($decoded[0]) ? (int)$decoded[0] : null;
+
+        return isset($decoded[0]) ? (int) $decoded[0] : null;
     }
 
     /**
      * Get the per-model alphabet if available, otherwise the default.
      *
-     * @param string $model   Model class name or snake-case name.
-     * @return string|null
+     * @param  string  $model  Model class name or snake-case name.
      */
     public static function modelAlphabet(string $model): ?string
     {
         $config = self::config();
         $snake = Str::snake(class_basename($model));
+
         return $config['alphabets'][$snake] ?? $config['alphabet'] ?? null;
     }
 }

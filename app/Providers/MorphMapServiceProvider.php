@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\ServiceProvider;
 
 class MorphMapServiceProvider extends ServiceProvider
 {
@@ -22,11 +22,11 @@ class MorphMapServiceProvider extends ServiceProvider
     {
         Relation::enforceMorphMap([
             // Short aliases for morph types
-            'person'        => \App\Models\Person::class,
-            'organization'  => \App\Models\Organization::class,
-            'organization_user'  => \App\Models\OrganizationUser::class,
-            'user'          => \App\Models\User::class,
-            'revision'      => \App\Models\Revision::class,
+            'person' => \App\Models\Person::class,
+            'organization' => \App\Models\Organization::class,
+            'organization_user' => \App\Models\OrganizationUser::class,
+            'user' => \App\Models\User::class,
+            'revision' => \App\Models\Revision::class,
         ]);
     }
 }
