@@ -13,10 +13,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('organization_user', function (Blueprint $table) {
+        Schema::create('people', function (Blueprint $table) {
+            $table->id();
+            $table->text('first_name');
+            $table->text('last_name');
+            $table->text('pesel');
+            $table->text('email');
+            $table->text('phone');
             $table->foreignIdFor(Organization::class);
-            $table->foreignIdFor(User::class);
-            $table->timestamp('created_at')->useCurrent();
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -25,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('organization_user');
+        Schema::dropIfExists('people');
     }
 };

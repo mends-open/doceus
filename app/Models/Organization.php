@@ -7,9 +7,11 @@ use App\Enums\OrganizationType;
 use App\Revisions\LogsRevisions;
 use App\Sqids\HasSqid;
 use App\Sqids\Sqidable;
+use App\Traits\SerializesDateWithMilliseconds;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -46,12 +48,14 @@ class Organization extends Model implements Sqidable
     protected $fillable = [
         'type',
         'name',
-];
-
-    protected static string $sqidPrefixBase = 'org';
+    ];
 
     public function users(): BelongsToMany
     {
         return $this->BelongsToMany(User::class)->using(OrganizationUser::class);
+    }
+    public function people(): HasMany
+    {
+        return $this->hasMany(Person::class);
     }
 }

@@ -2,25 +2,15 @@
 
 use Illuminate\Support\Str;
 
-// Find all model class names in app/Models
-$models = [];
-$modelDir = app_path('Models');
-
-if (is_dir($modelDir)) {
-    foreach (scandir($modelDir) as $file) {
-        if (Str::endsWith($file, '.php')) {
-            $model = pathinfo($file, PATHINFO_FILENAME);
-            $models[] = $model;
-        }
-    }
-}
-
-// Build the per-model alphabets array using snake_case keys
+// Parse all environment variables starting with SQID_ALPHABET_
 $alphabets = [];
-foreach ($models as $model) {
-    $snake = Str::snake($model);
-    $envKey = 'SQID_ALPHABET_' . Str::upper($snake);
-    $alphabets[$snake] = env($envKey, env('SQID_ALPHABET'));
+foreach ($_ENV as $key => $value) {
+    if (Str::startsWith($key, 'SQID_ALPHABET_')) {
+        // Extract snake-case model name from key
+        $suffix = Str::after($key, 'SQID_ALPHABET_');
+        $snake = Str::lower($suffix);
+        $alphabets[$snake] = $value;
+    }
 }
 
 return [
