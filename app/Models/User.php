@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Contracts\Revisions\Revisionable;
+use App\Contracts\Sqids\Sqidable;
 use App\Enums\Language;
-use App\Services\Revisions\LogsRevisions;
 use App\Traits\HasDisplayName;
+use App\Traits\Revisions\LogsRevisions;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasTenants;
 use Filament\Panel;
@@ -54,7 +56,7 @@ use Illuminate\Support\Collection;
  *
  * @mixin \Eloquent
  */
-class User extends Authenticatable implements FilamentUser, HasTenants, MustVerifyEmail
+class User extends Authenticatable implements FilamentUser, HasTenants, MustVerifyEmail, Revisionable, Sqidable
 {
     use HasDisplayName, HasFactory, LogsRevisions, Notifiable, SoftDeletes;
 
