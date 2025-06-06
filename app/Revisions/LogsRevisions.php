@@ -2,7 +2,9 @@
 
 namespace App\Revisions;
 
+use Filament\Facades\Filament;
 use Illuminate\Support\Facades\Auth;
+use App\Revisions\CreateRevisionJob;
 
 trait LogsRevisions
 {
@@ -32,10 +34,28 @@ trait LogsRevisions
             return;
         }
 
-        // Use high-precision microtime for timestamp (with ms, matching migration)
-        $nowMs = now()->format('Y-m-d H:i:s.v');
+        $dispatchedAt = now()->format('Y-m-d H:i:s.u');
+        $visibleRevisionable = $this->getVisibleRevisionableAttributes();
+        $revisionData = $this->getRevisionData($action, $visibleRevisionable);
 
-        // Use visible revisionable attributes (excluding hidden)
+        if (empty($revisionData)) {
+            return;
+        }
+
+        dispatch(new CreateRevisionJob(
+            clone $this,
+            $dispatchedAt,              // string $dispatchedAt
+            $revisionData,              // array $attributes
+            filament()->getTenant()->id ?? null, // ?int $organizationId
+            auth()->id()                // ?int $userId
+        ));
+    }
+
+    /**
+     * Get the list of revisionable attributes visible for revision logging (excluding hidden).
+     */
+    private function getVisibleRevisionableAttributes(): array
+    {
         $revisionable = property_exists($this, 'revisionable') ? $this->revisionable : ($this->fillable ?? []);
         $hidden = [];
         if (property_exists($this, 'hidden') && is_array($this->hidden)) {
@@ -44,23 +64,15 @@ trait LogsRevisions
             $result = $this->getHidden();
             $hidden = is_array($result) ? $result : [];
         }
+        return array_diff($revisionable, $hidden);
+    }
 
-        $visibleRevisionable = array_diff($revisionable, $hidden);
-
-        // Get changed values for update, all for create/delete/restore
-        $dirty = $action === 'updated' ? $this->getDirty() : $this->getAttributes();
-        $revisionData = array_intersect_key($dirty, array_flip($visibleRevisionable));
-
-        if (empty($revisionData)) {
-            return;
-        }
-
-        // Dispatch creation to queue as a job, passing explicit attribute-value map
-        dispatch(new \App\Revisions\CreateRevisionJob(
-            clone $this,
-            Auth::id(),
-            $nowMs,
-            $revisionData
-        ));
+    /**
+     * Get the revision data for the given action and attribute whitelist.
+     */
+    private function getRevisionData(string $action, array $visibleRevisionable): array
+    {
+        $attributes = $action === 'updated' ? $this->getDirty() : $this->getAttributes();
+        return array_intersect_key($attributes, array_flip($visibleRevisionable));
     }
 }

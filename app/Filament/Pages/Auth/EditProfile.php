@@ -46,6 +46,8 @@ class EditProfile extends BasePage
     protected function getPeselFormComponent(): TextInput
     {
         return TextInput::make('pesel')
-            ->label(__('doceus.auth.pesel'));
+            ->label(__('PESEL'))
+            ->required()
+            ->mask('99999999999');
     }
 }

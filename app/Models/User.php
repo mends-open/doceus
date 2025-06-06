@@ -5,13 +5,12 @@ namespace App\Models;
 use App\Enums\Language;
 use App\Revisions\LogsRevisions;
 use App\Traits\HasDisplayName;
-use App\Traits\Utilities\BlindIndex\Traits\HasBlindIndex;
+use App\Traits\SerializesDateWithMilliseconds;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasTenants;
 use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -19,7 +18,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
-use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  *
@@ -84,12 +82,6 @@ class User extends Authenticatable implements FilamentUser, HasTenants, MustVeri
         'pesel' => 'encrypted',
     ];
 
-    protected $auditInclude = [
-        'first_name',
-        'last_name',
-        'pesel',
-    ];
-
     protected function language(): Attribute
     {
         return Attribute::make(
@@ -113,8 +105,9 @@ class User extends Authenticatable implements FilamentUser, HasTenants, MustVeri
         return true;
     }
 
-    private function organizations(): belongsToMany
+    public function organizations(): belongsToMany
     {
         return $this->belongsToMany(Organization::class)->using(OrganizationUser::class);
     }
+
 }

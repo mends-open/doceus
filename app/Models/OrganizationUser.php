@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use App\Revisions\LogsRevisions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 /**
- * 
+ *
  *
  * @property string $organization_id
  * @property string $user_id
@@ -19,5 +20,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  */
 class OrganizationUser extends Pivot
 {
-    //
+    use LogsRevisions;
+
+    public $timestamps = false;
 }

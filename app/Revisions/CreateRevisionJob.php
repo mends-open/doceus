@@ -9,29 +9,60 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
+/**
+ * Job to create a revision entry for a revisionable model.
+ */
 class CreateRevisionJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, SerializesModels;
 
-    protected Model $model;
+    /**
+     * The revisionable model instance.
+     */
+    protected Model $revisionable;
+
+    /**
+     * Organization identifier.
+     */
+    protected ?int $organizationId;
+
+    /**
+     * User identifier.
+     */
     protected ?int $userId;
+
+    /**
+     * Dispatched timestamp in 'Y-m-d H:i:s.u' format.
+     */
     protected string $dispatchedAt;
-    protected array $revisionData;
+
+    /**
+     * Revision data attributes.
+     */
+    protected array $attributes;
 
     /**
      * Create a new job instance.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @param  int|string|null  $userId
-     * @param  string $dispatchedAt
-     * @param  array $revisionData  // keys: attribute, value
+     * @param Model $revisionable
+     * @param string $dispatchedAt
+     * @param array $attributes
+     * @param int|null $organizationId
+     * @param int|null $userId
      */
-    public function __construct(Model $model, $userId = null, string $dispatchedAt, array $revisionData = [])
+    public function __construct(
+        Model  $revisionable,
+        string $dispatchedAt,
+        array  $attributes = [],
+        ?int   $organizationId = null,
+        ?int   $userId = null
+    )
     {
-        $this->model = $model;
+        $this->revisionable = $revisionable;
+        $this->organizationId = $organizationId;
         $this->userId = $userId;
         $this->dispatchedAt = $dispatchedAt;
-        $this->revisionData = $revisionData;
+        $this->attributes = $attributes;
     }
 
     /**
@@ -39,15 +70,23 @@ class CreateRevisionJob implements ShouldQueue
      */
     public function handle(): void
     {
-        foreach ($this->revisionData as $attribute => $value) {
-            Revision::create([
-                'created_at'             => $this->dispatchedAt,
-                'user_id'                => $this->userId,
-                'revisionable_type'      => get_class($this->model),
-                'revisionable_id'        => $this->model->getKey(),
-                'revisionable_attribute' => $attribute,
-                'data'                   => $value,
-            ]);
-        }
+        $revision = $this->makeRevision();
+        $revision->revisionable()->associate($this->revisionable);
+        $revision->save();
+    }
+
+    /**
+     * Instantiates a Revision model with provided data.
+     *
+     * @return Revision
+     */
+    private function makeRevision(): Revision
+    {
+        return new Revision([
+            'created_at' => $this->dispatchedAt,
+            'organization_id' => $this->organizationId,
+            'user_id' => $this->userId,
+            'data' => $this->attributes,
+        ]);
     }
 }
