@@ -2948,9 +2948,9 @@ namespace PHPSTORM_META {
     override(\tap(0), type(0));
     override(\optional(0), type(0));
 
-            registerArgumentsSet('auth', 
+            registerArgumentsSet('auth',
 'viewTelescope','viewHorizon',);
-        registerArgumentsSet('configs', 
+        registerArgumentsSet('configs',
 'app.name','app.env','app.debug','app.url','app.frontend_url',
 'app.asset_url','app.timezone','app.locale','app.fallback_locale','app.faker_locale',
 'app.cipher','app.key','app.previous_keys','app.maintenance.driver','app.maintenance.store',
@@ -3079,11 +3079,11 @@ namespace PHPSTORM_META {
 'ide-helper.model_camel_case_properties','ide-helper.type_overrides.integer','ide-helper.type_overrides.boolean','ide-helper.include_class_docblocks','ide-helper.force_fqn',
 'ide-helper.use_generics_annotations','ide-helper.additional_relation_types','ide-helper.additional_relation_return_types','ide-helper.enforce_nullable_relationships','ide-helper.post_migrate',
 'ide-helper.macroable_traits','tinker.commands','tinker.alias','tinker.dont_alias',);
-        registerArgumentsSet('middleware', 
+        registerArgumentsSet('middleware',
 'web','api','auth','auth.basic','auth.session',
 'cache.headers','can','guest','password.confirm','precognitive',
 'signed','throttle','verified',);
-        registerArgumentsSet('routes', 
+        registerArgumentsSet('routes',
 'debugbar.openhandler','debugbar.clockwork','debugbar.telescope','debugbar.assets.css','debugbar.assets.js',
 'debugbar.cache.delete','debugbar.queries.explain','filament.exports.download','filament.imports.failed-rows.download','filament.app.auth.login',
 'filament.app.auth.password-reset.request','filament.app.auth.password-reset.reset','filament.app.auth.register','filament.app.auth.logout','filament.app.auth.profile',
@@ -3094,7 +3094,7 @@ namespace PHPSTORM_META {
 'horizon.jobs-batches.show','horizon.jobs-batches.retry','horizon.pending-jobs.index','horizon.completed-jobs.index','horizon.silenced-jobs.index',
 'horizon.failed-jobs.index','horizon.failed-jobs.show','horizon.retry-jobs.show','horizon.jobs.show','horizon.index','telescope','livewire.update','livewire.upload-file','livewire.preview-file',
 'storage.local',);
-        registerArgumentsSet('views', 
+        registerArgumentsSet('views',
 'filament-actions::badge-action','filament-actions::badge-group','filament-actions::button-action','filament-actions::button-group','filament-actions::components.action',
 'filament-actions::components.actions','filament-actions::components.group','filament-actions::components.modals','filament-actions::grouped-action','filament-actions::grouped-group',
 'filament-actions::icon-button-action','filament-actions::icon-button-group','filament-actions::link-action','filament-actions::link-group','filament-actions::select-action',
@@ -3151,7 +3151,7 @@ namespace PHPSTORM_META {
 'livewire::bootstrap','livewire::simple-bootstrap','livewire::simple-tailwind','livewire::tailwind','notifications::email',
 'pagination::bootstrap-4','pagination::bootstrap-5','pagination::default','pagination::semantic-ui','pagination::simple-bootstrap-4',
 'pagination::simple-bootstrap-5','pagination::simple-default','pagination::simple-tailwind','pagination::tailwind','telescope::layout',);
-        registerArgumentsSet('translations', 
+        registerArgumentsSet('translations',
 'auth.failed','auth.password','auth.throttle','pagination.previous','pagination.next',
 'passwords.reset','passwords.sent','passwords.throttled','passwords.token','passwords.user',
 'validation.accepted','validation.accepted_if','validation.active_url','validation.after','validation.after_or_equal',
@@ -3258,7 +3258,7 @@ namespace PHPSTORM_META {
 'filament-tables::table.filters.trashed.with_trashed','filament-tables::table.filters.trashed.without_trashed','filament-tables::table.grouping.fields.group.label','filament-tables::table.grouping.fields.group.placeholder','filament-tables::table.grouping.fields.direction.label',
 'filament-tables::table.grouping.fields.direction.options.asc','filament-tables::table.grouping.fields.direction.options.desc','filament-tables::table.reorder_indicator','filament-tables::table.selection_indicator.selected_count','filament-tables::table.selection_indicator.actions.select_all.label',
 'filament-tables::table.selection_indicator.actions.deselect_all.label','filament-tables::table.sorting.fields.column.label','filament-tables::table.sorting.fields.direction.label','filament-tables::table.sorting.fields.direction.options.asc','filament-tables::table.sorting.fields.direction.options.desc',);
-        registerArgumentsSet('env', 
+        registerArgumentsSet('env',
 'APP_NAME','APP_ENV','APP_KEY','APP_BLIND_INDEX_KEY','APP_DEBUG',
 'APP_URL','APP_LOCALE','APP_FALLBACK_LOCALE','APP_FAKER_LOCALE','APP_MAINTENANCE_DRIVER',
 'PHP_CLI_SERVER_WORKERS','BCRYPT_ROUNDS','LOG_CHANNEL','LOG_STACK','LOG_DEPRECATIONS_CHANNEL',
@@ -3269,7 +3269,7 @@ namespace PHPSTORM_META {
 'MAIL_SCHEME','MAIL_HOST','MAIL_PORT','MAIL_USERNAME','MAIL_PASSWORD',
 'MAIL_FROM_ADDRESS','MAIL_FROM_NAME','AWS_ACCESS_KEY_ID','AWS_SECRET_ACCESS_KEY','AWS_DEFAULT_REGION',
 'AWS_BUCKET','AWS_USE_PATH_STYLE_ENDPOINT','VITE_APP_NAME','OCTANE_SERVER',);
-        
+
                 expectedArguments(\Illuminate\Support\Facades\Gate::has(), 0, argumentsSet('auth'));
     expectedArguments(\Illuminate\Support\Facades\Gate::allows(), 0, argumentsSet('auth'));
     expectedArguments(\Illuminate\Support\Facades\Gate::denies(), 0, argumentsSet('auth'));
@@ -3333,5 +3333,5 @@ namespace PHPSTORM_META {
                 expectedArguments(\Illuminate\Contracts\Translation\Translator::get(), 0, argumentsSet('translations'));
                 expectedArguments(\env(), 0, argumentsSet('env'));
                 expectedArguments(\Illuminate\Support\Env::get(), 0, argumentsSet('env'));
-            
+
 }

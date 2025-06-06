@@ -5,7 +5,7 @@ namespace App\Traits\Sqids;
 use App\Services\Sqids\Sqid;
 use Sqids\Sqids;
 
-trait HasSqid
+trait HasSqids
 {
     /**
      * Get the model's sqid value (pure, no prefix).

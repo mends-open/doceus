@@ -12,7 +12,7 @@ use Illuminate\Queue\SerializesModels;
 /**
  * Job to create a revision entry for a revisionable model.
  */
-class CreateRevisionJob implements ShouldQueue
+class CreateRevision implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, SerializesModels;
 

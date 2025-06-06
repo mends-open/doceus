@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+use App\Contracts\Revisions\Revisionable;
 use App\Contracts\Sqids\Sqidable;
 use App\Enums\OrganizationType;
-use App\Services\Revisions\LogsRevisions;
-use App\Traits\Sqids\HasSqid;
+use App\Traits\Revisions\LogsRevisions;
+use App\Traits\Sqids\HasSqids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -31,9 +32,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @mixin \Eloquent
  */
-class Organization extends Model implements Sqidable
+class Organization extends Model implements Revisionable, Sqidable
 {
-    use HasFactory, HasSqid, LogsRevisions, SoftDeletes;
+    use HasFactory, HasSqids, LogsRevisions, SoftDeletes;
 
     protected $guarded = [];
 

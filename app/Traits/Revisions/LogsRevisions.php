@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\Revisions;
+namespace App\Traits\Revisions;
 
-use App\Jobs\Revisions\CreateRevisionJob;
+use App\Jobs\Revisions\CreateRevision;
 
 trait LogsRevisions
 {
@@ -40,7 +40,7 @@ trait LogsRevisions
             return;
         }
 
-        dispatch(new CreateRevisionJob(
+        dispatch(new CreateRevision(
             clone $this,
             $dispatchedAt,              // string $dispatchedAt
             $revisionData,              // array $attributes
