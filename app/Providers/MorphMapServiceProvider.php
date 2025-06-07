@@ -26,7 +26,6 @@ class MorphMapServiceProvider extends ServiceProvider
             'organization' => \App\Models\Organization::class,
             'organization_user' => \App\Models\OrganizationUser::class,
             'user' => \App\Models\User::class,
-            'revision' => \App\Models\Revision::class,
         ]);
     }
 }

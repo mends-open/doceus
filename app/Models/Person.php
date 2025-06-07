@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use App\Contracts\Revisions\Revisionable;
 use App\Contracts\Sqids\Sqidable;
-use App\Traits\Revisions\LogsRevisions;
 use App\Traits\Sqids\HasSqids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -20,9 +18,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $phone
  * @property int $organization_id
  */
-class Person extends Model implements Revisionable, Sqidable
+class Person extends Model implements Sqidable
 {
-    use HasFactory, HasSqids, LogsRevisions, SoftDeletes;
+    use HasFactory, HasSqids, SoftDeletes;
 
     protected $table = 'people';
 

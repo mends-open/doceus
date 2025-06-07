@@ -1,23 +1,26 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Revisions;
 
+use App\Models\Organization;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-class Revision extends Model
+class ModelRevision extends Model
 {
-    protected $fillable = [
-        'created_at',
-        'user_id',
+    public $timestamps = false;
+
+    public $fillable = [
+        'dispatched_at',
         'organization_id',
+        'user_id',
         'revisionable_type',
         'revisionable_id',
+        'type',
         'data',
     ];
-
-    public $timestamps = false;
 
     protected $casts = [
         'data' => 'json',
