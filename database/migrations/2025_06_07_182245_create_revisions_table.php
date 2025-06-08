@@ -24,6 +24,7 @@ return new class extends Migration
             $table->enum('type', Arr::pluck(RevisionType::cases(), 'value'));
             $table->jsonb('data')->index()->nullable();
             $table->jsonb('meta')->nullable();
+            $table->string('session_id')->nullable()->index();
             $table->string('ip_address')->nullable();
             $table->string('user_agent')->nullable();
             $table->string('http_method', 10)->nullable();

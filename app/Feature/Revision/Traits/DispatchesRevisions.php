@@ -41,6 +41,22 @@ trait DispatchesRevisions
         return request()->header('referer') ?? request()->fullUrl();
     }
 
+    protected function getSessionId(): ?string
+    {
+        return session()->getId();
+    }
+
+    protected function getRequestContext(): array
+    {
+        return [
+            'session_id' => $this->getSessionId(),
+            'ip_address' => $this->getIpAddress(),
+            'user_agent' => $this->getUserAgent(),
+            'http_method' => $this->getHttpMethod(),
+            'url' => $this->getUrl(),
+        ];
+    }
+
     protected function getRevisableAttributes(Model $model): array
     {
         $fields = $model->getRevisionable();
@@ -83,19 +99,18 @@ trait DispatchesRevisions
 
         $morph = $this->resolveRevisionableMorph($model, $forcedType, $forcedId);
 
-        return [
-            'dispatched_at' => now()->format('Y-m-d H:i:s.u'),
-            'organization_id' => $organizationId,
-            'user_id' => $userId,
-            'revisionable_type' => $morph['revisionable_type'],
-            'revisionable_id' => $morph['revisionable_id'],
-            'type' => $eventType->value,
-            'data' => $data,
-            'ip_address' => $this->getIpAddress(),
-            'user_agent' => $this->getUserAgent(),
-            'http_method' => $this->getHttpMethod(),
-            'url' => $this->getUrl(),
-        ];
+        return array_merge(
+            [
+                'dispatched_at' => now()->format('Y-m-d H:i:s.u'),
+                'organization_id' => $organizationId,
+                'user_id' => $userId,
+                'revisionable_type' => $morph['revisionable_type'],
+                'revisionable_id' => $morph['revisionable_id'],
+                'type' => $eventType->value,
+                'data' => $data,
+            ],
+            $this->getRequestContext(),
+        );
     }
 
     protected function dispatchRevisionJob(Model $model, RevisionType $type): void

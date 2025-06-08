@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property string $type
  * @property array<array-key, mixed>|null $data
  * @property string|null $meta
+ * @property string|null $session_id
  * @property string|null $ip_address
  * @property string|null $user_agent
  * @property string|null $http_method
@@ -55,6 +56,7 @@ class Revision extends Model
         'revisionable_id',
         'type',
         'data',
+        'session_id',
         'ip_address',
         'user_agent',
         'http_method',
