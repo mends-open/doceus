@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\Organization;
 use App\Models\Person;
+use App\Models\Email;
+use App\Models\Phone;
 use App\Models\User;
 use Filament\Facades\Filament;
 use Illuminate\Database\Seeder;
@@ -53,7 +55,11 @@ class DatabaseSeeder extends Seeder
 
             Person::factory(random_int(5, 15))
                 ->for($organization)
-                ->create();
+                ->create()
+                ->each(function (Person $person) {
+                    $person->emails()->saveMany(Email::factory()->count(random_int(1, 2))->make());
+                    $person->phones()->saveMany(Phone::factory()->count(random_int(1, 2))->make());
+                });
 
             Auth::logout();
             Filament::setTenant(null);
