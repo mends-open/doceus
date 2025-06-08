@@ -21,12 +21,14 @@ class PersonContactTest extends TestCase
         $initial = Revision::count();
 
         // Attach emails and phones
-        $person->emails()->saveMany($emails = Email::factory()->count(2)->make());
-        $person->phones()->saveMany($phones = Phone::factory()->count(2)->make());
+        $emails = Email::factory()->count(2)->create();
+        $phones = Phone::factory()->count(2)->create();
+        $person->emails()->attach($emails->pluck('id'));
+        $person->phones()->attach($phones->pluck('id'));
 
         $this->assertCount(2, $person->emails);
         $this->assertCount(2, $person->phones);
-        $this->assertSame($initial + 4, Revision::count());
+        $this->assertSame($initial + 8, Revision::count());
 
         // Update first email
         $email = $person->emails()->first();
@@ -38,18 +40,19 @@ class PersonContactTest extends TestCase
         ]);
 
         // Detach one email
-        $email->delete();
-        $this->assertModelMissing($email);
+        $pivot = \App\Models\EmailPerson::where('email_id', $email->id)
+            ->where('person_id', $person->id)
+            ->first();
+        $person->emails()->detach($email->id);
         $this->assertCount(1, $person->refresh()->emails);
         $this->assertDatabaseHas('revisions', [
-            'revisionable_type' => MorphClass::Email->value,
-            'revisionable_id' => $email->id,
+            'revisionable_type' => MorphClass::EmailPerson->value,
+            'revisionable_id' => $pivot->id,
             'type' => RevisionType::Deleted->value,
         ]);
 
         // Sync phones
-        $person->phones()->each(fn(Phone $p) => $p->delete());
-        $person->phones()->saveMany(Phone::factory()->count(3)->make());
+        $person->phones()->sync(Phone::factory()->count(3)->create()->pluck('id'));
         $this->assertCount(3, $person->refresh()->phones);
     }
 }
