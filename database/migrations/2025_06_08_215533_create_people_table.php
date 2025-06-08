@@ -20,8 +20,6 @@ return new class extends Migration
             $table->text('id_number')->nullable();
             $table->enum('gender', ['male', 'female', 'other'])->nullable();
             $table->date('birth_date')->nullable();
-            $table->text('email')->nullable();
-            $table->text('phone')->nullable();
             $table->foreignIdFor(Organization::class);
             $table->timestamps();
             $table->softDeletes();
