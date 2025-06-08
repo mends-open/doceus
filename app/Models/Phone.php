@@ -6,6 +6,26 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * 
+ *
+ * @property int $id
+ * @property int $person_id
+ * @property mixed $phone
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Person $person
+ * @method static \Database\Factories\PhoneFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Phone newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Phone newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Phone query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Phone whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Phone whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Phone wherePersonId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Phone wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Phone whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Phone extends Model
 {
     use HasFactory;

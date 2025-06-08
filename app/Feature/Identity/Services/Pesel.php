@@ -9,7 +9,7 @@ class Pesel
 {
     public static function isValid(string $pesel): bool
     {
-        if (!preg_match('/^\d{11}$/', $pesel)) {
+        if (! preg_match('/^\d{11}$/', $pesel)) {
             return false;
         }
 
@@ -25,7 +25,7 @@ class Pesel
 
     public static function extractBirthDate(string $pesel): ?Carbon
     {
-        if (!self::isValid($pesel)) {
+        if (! self::isValid($pesel)) {
             return null;
         }
 
@@ -55,11 +55,12 @@ class Pesel
 
     public static function extractGender(string $pesel): ?Gender
     {
-        if (!self::isValid($pesel)) {
+        if (! self::isValid($pesel)) {
             return null;
         }
 
         $digit = (int) $pesel[9];
+
         return ($digit % 2) ? Gender::Male : Gender::Female;
     }
 }

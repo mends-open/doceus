@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
+ * 
+ *
  * @property int $id
  * @property \Illuminate\Support\Carbon $dispatched_at
  * @property string $created_at
@@ -26,7 +28,6 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property-read Organization|null $organization
  * @property-read Model|\Eloquent|null $revisionable
  * @property-read User|null $user
- *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision query()
@@ -34,13 +35,16 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision whereData($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision whereDispatchedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision whereIpAddress($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision whereMeta($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision whereOrganizationId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision whereRevisionableId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision whereRevisionableType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision whereSessionId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision whereUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision whereUserAgent($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision whereUserId($value)
- *
  * @mixin \Eloquent
  */
 class Revision extends Model
