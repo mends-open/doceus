@@ -17,9 +17,7 @@ class RevisionableObserver
 
     public function updated(Model $model): void
     {
-        $revisionData = $this->buildRevisionData($model, RevisionType::Updated, $this->getUserId(), $this->getOrganizationId());
-
-        if (! empty($revisionData['data'])) {
+        if (! empty($this->getChangedAttributes($model))) {
             $this->dispatchRevisionJob($model, RevisionType::Updated);
         }
     }
