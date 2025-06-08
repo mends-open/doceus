@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Gender;
 use App\Feature\Revision\Interfaces\Revisionable;
 use App\Feature\Revision\Observers\RevisionableObserver;
 use App\Feature\Revision\Traits\LogsRevisions;
@@ -18,6 +19,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $first_name
  * @property string $last_name
  * @property string $pesel
+ * @property string|null $id_number
+ * @property \App\Enums\Gender|null $gender
+ * @property \Illuminate\Support\Carbon|null $birth_date
  * @property string $email
  * @property string $phone
  * @property int $organization_id
@@ -55,6 +59,9 @@ class Person extends Model implements Revisionable, Sqidable
         'first_name',
         'last_name',
         'pesel',
+        'id_number',
+        'gender',
+        'birth_date',
         'email',
         'phone',
         'organization_id',
@@ -67,14 +74,20 @@ class Person extends Model implements Revisionable, Sqidable
         'email',
         'phone',
         'pesel',
+        'id_number',
+        'gender',
+        'birth_date',
     ];
 
     protected $casts = [
         'first_name' => 'encrypted',
         'last_name' => 'encrypted',
         'pesel' => 'encrypted',
+        'id_number' => 'encrypted',
         'email' => 'encrypted',
         'phone' => 'encrypted',
+        'gender' => Gender::class,
+        'birth_date' => 'date',
     ];
 
     public function organization(): BelongsTo

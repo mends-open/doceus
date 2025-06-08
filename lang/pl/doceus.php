@@ -59,5 +59,13 @@ return [
         'exact-eleven-digits' => 'PESEL musi składać się dokładnie z 11 cyfr.',
         'invalid' => 'Niepoprawny numer PESEL.',
     ],
+    'gender' => [
+        'label' => 'Płeć',
+        'male' => 'Mężczyzna',
+        'female' => 'Kobieta',
+        'other' => 'Inna',
+    ],
+    'birth_date' => 'Data urodzenia',
+    'id_number' => 'Numer dokumentu',
     'settings' => 'Ustawienia',
 ];

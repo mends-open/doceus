@@ -17,6 +17,9 @@ return new class extends Migration
             $table->text('first_name');
             $table->text('last_name');
             $table->text('pesel')->nullable();
+            $table->text('id_number')->nullable();
+            $table->enum('gender', ['male', 'female', 'other'])->nullable();
+            $table->date('birth_date')->nullable();
             $table->text('email')->nullable();
             $table->text('phone')->nullable();
             $table->foreignIdFor(Organization::class);

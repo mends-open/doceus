@@ -5,6 +5,7 @@ namespace App\Filament\Clusters\Managment\Resources;
 use App\Filament\Clusters\Managment;
 use App\Filament\Clusters\Managment\Resources\PersonResource\Pages;
 use App\Models\Person;
+use App\Enums\Gender;
 use Eloquent;
 use Filament\Facades\Filament;
 use Filament\Forms;
@@ -40,6 +41,20 @@ class PersonResource extends Resource
                 ->label(__('PESEL'))
                 ->required()
                 ->mask('99999999999'),
+
+            TextInput::make('id_number')
+                ->label(__('ID Number'))
+                ->maxLength(255),
+
+            Forms\Components\Select::make('gender')
+                ->label(__('doceus.gender.label'))
+                ->options(
+                    collect(Gender::cases())->mapWithKeys(fn($case) => [$case->value => $case->label()])->toArray()
+                )
+                ->enum(Gender::class),
+
+            Forms\Components\DatePicker::make('birth_date')
+                ->label(__('Birth Date')),
 
             TextInput::make('email')
                 ->label(__('Email'))
@@ -83,6 +98,16 @@ class PersonResource extends Resource
                     ->label(__('Email'))
                     ->searchable()
                     ->limit(30),
+
+                TextColumn::make('gender')
+                    ->label(__('doceus.gender.label'))
+                    ->formatStateUsing(fn(?Gender $state) => $state?->label())
+                    ->sortable(),
+
+                TextColumn::make('birth_date')
+                    ->label(__('Birth Date'))
+                    ->date()
+                    ->sortable(),
 
                 TextColumn::make('created_at')
                     ->label(__('Created'))
