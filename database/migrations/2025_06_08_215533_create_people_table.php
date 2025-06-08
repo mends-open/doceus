@@ -16,9 +16,9 @@ return new class extends Migration
             $table->id();
             $table->text('first_name');
             $table->text('last_name');
-            $table->text('pesel');
-            $table->text('email');
-            $table->text('phone');
+            $table->text('pesel')->nullable();
+            $table->text('email')->nullable();
+            $table->text('phone')->nullable();
             $table->foreignIdFor(Organization::class);
             $table->timestamps();
             $table->softDeletes();
