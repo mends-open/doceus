@@ -9,19 +9,15 @@ use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 /**
- * @property string $organization_id
- * @property string $user_id
+ * 
  *
+ * @property int $organization_id
+ * @property int $user_id
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrganizationUser newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrganizationUser newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrganizationUser query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrganizationUser whereOrganizationId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrganizationUser whereUserId($value)
- *
- * @property int $id
- *
- * @method static \Illuminate\Database\Eloquent\Builder<static>|OrganizationUser whereId($value)
- *
  * @mixin \Eloquent
  */
 #[ObservedBy([RevisionableObserver::class])]

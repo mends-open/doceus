@@ -16,35 +16,33 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * @property string $id
+ * 
+ *
+ * @property int $id
  * @property OrganizationType $type
+ * @property mixed $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property string|null $deleted_at
- * @property-read string $name
- *
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization whereType($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization whereUpdatedAt($value)
- *
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read string|null $sqid
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Person> $people
  * @property-read int|null $people_count
  * @property-read \App\Models\OrganizationUser|null $pivot
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
  * @property-read int|null $users_count
- *
  * @method static \Database\Factories\OrganizationFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization withoutTrashed()
- *
  * @mixin \Eloquent
  */
 #[ObservedBy([RevisionableObserver::class])]

@@ -49,14 +49,12 @@ class PersonResource extends Resource
             Forms\Components\Select::make('gender')
                 ->label(__('doceus.gender.label'))
                 ->options(
-                    collect(Gender::cases())->mapWithKeys(fn($case) => [$case->value => $case->label()])->toArray()
+                    collect(Gender::cases())->mapWithKeys(fn ($case) => [$case->value => $case->label()])->toArray()
                 )
                 ->enum(Gender::class),
 
             Forms\Components\DatePicker::make('birth_date')
                 ->label(__('Birth Date')),
-
-
 
             Hidden::make('organization_id')
                 ->default(fn () => Filament::getTenant()?->getKey())
@@ -85,10 +83,9 @@ class PersonResource extends Resource
                     ->searchable()
                     ->limit(20),
 
-
                 TextColumn::make('gender')
                     ->label(__('doceus.gender.label'))
-                    ->formatStateUsing(fn(?Gender $state) => $state?->label())
+                    ->formatStateUsing(fn (?Gender $state) => $state?->label())
                     ->sortable(),
 
                 TextColumn::make('birth_date')
