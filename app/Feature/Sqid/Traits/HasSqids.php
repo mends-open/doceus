@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domain\Sqid\Traits;
+namespace App\Feature\Sqid\Traits;
 
-use App\Domain\Sqid\Sqid;
+use App\Feature\Sqid\Sqid;
 use Sqids\Sqids;
 
 trait HasSqids

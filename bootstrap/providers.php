@@ -5,5 +5,5 @@ return [
     App\Providers\HorizonServiceProvider::class,
     App\Providers\TelescopeServiceProvider::class,
     App\Providers\Filament\AppPanelProvider::class,
-    App\Domain\MorphClass\Providers\MorphClassServiceProvider::class,
+    \App\Feature\MorphClass\Providers\MorphClassServiceProvider::class,
 ];

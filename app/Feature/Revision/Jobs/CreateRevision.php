@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domain\Revision\Jobs;
+namespace App\Feature\Revision\Jobs;
 
-use App\Domain\Revision\Models\Revision;
+use App\Feature\Revision\Models\Revision;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Model;

@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use App\Domain\Revision\Interfaces\Revisionable;
-use App\Domain\Revision\Observers\RevisionableObserver;
-use App\Domain\Revision\Traits\LogsRevisions;
+use App\Feature\Revision\Interfaces\Revisionable;
+use App\Feature\Revision\Observers\RevisionableObserver;
+use App\Feature\Revision\Traits\LogsRevisions;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 

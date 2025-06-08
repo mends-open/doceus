@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Revision\Enums;
+namespace App\Feature\Revision\Enums;
 
 use App\Traits\HasTranslatableLabel;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Revision\Models;
+namespace App\Feature\Revision\Models;
 
 use App\Models\Organization;
 use App\Models\User;

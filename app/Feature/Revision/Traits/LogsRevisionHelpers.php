@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domain\Revision\Traits;
+namespace App\Feature\Revision\Traits;
 
-use App\Domain\Revision\Enums\RevisionType;
+use App\Feature\Revision\Enums\RevisionType;
 use Illuminate\Database\Eloquent\Model;
 
 trait LogsRevisionHelpers
