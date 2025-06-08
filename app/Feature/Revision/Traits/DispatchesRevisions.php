@@ -3,6 +3,7 @@
 namespace App\Feature\Revision\Traits;
 
 use App\Feature\Revision\Enums\RevisionType;
+use App\Feature\Revision\Interfaces\Revisionable;
 use App\Feature\Revision\Jobs\CreateRevision;
 use Illuminate\Database\Eloquent\Model;
 
@@ -48,7 +49,7 @@ trait DispatchesRevisions
         Model $model,
         RevisionType $eventType,
         ?int $userId,
-        ?int $tenantId,
+        ?int $organizationId,
         mixed $forcedType = null,
         mixed $forcedId = null
     ): array {
@@ -64,7 +65,7 @@ trait DispatchesRevisions
 
         return [
             'dispatched_at' => now()->format('Y-m-d H:i:s.u'),
-            'organization_id' => $tenantId,
+            'organization_id' => $organizationId,
             'user_id' => $userId,
             'revisionable_type' => $morph['revisionable_type'],
             'revisionable_id' => $morph['revisionable_id'],
@@ -75,10 +76,17 @@ trait DispatchesRevisions
 
     protected function dispatchRevisionJob(Model $model, RevisionType $type): void
     {
-        if (! method_exists($model, 'getRevisionable')) {
+        if (! $model instanceof Revisionable) {
             return;
         }
-        $revisionData = $this->buildRevisionData($model, $type, $this->getUserId(), $this->getOrganizationId());
-        dispatch(new CreateRevision($revisionData, $model));
+
+        $revisionData = $this->buildRevisionData(
+            $model,
+            $type,
+            $this->getUserId(),
+            $this->getOrganizationId()
+        );
+
+        CreateRevision::dispatch($revisionData, $model);
     }
 }
