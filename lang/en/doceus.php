@@ -59,5 +59,13 @@ return [
         'exact-eleven-digits' => 'The PESEL must be exactly 11 digits.',
         'invalid' => 'The PESEL number is invalid.',
     ],
+    'gender' => [
+        'label' => 'Gender',
+        'male' => 'Male',
+        'female' => 'Female',
+        'other' => 'Other',
+    ],
+    'birth_date' => 'Birth Date',
+    'id_number' => 'ID Number',
     'settings' => 'Settings',
 ];
