@@ -1,0 +1,65 @@
+<?php
+
+namespace App\Domain\Revision\Observers;
+
+use App\Domain\Revision\Enums\RevisionType;
+use App\Domain\Revision\Jobs\CreateRevision;
+use App\Domain\Revision\Traits\LogsRevisionHelpers;
+use Illuminate\Database\Eloquent\Model;
+
+class RevisionableObserver
+{
+    use LogsRevisionHelpers;
+
+    protected function userId(): ?int
+    {
+        return auth()->id() ?? null;
+    }
+
+    protected function tenantId(): ?int
+    {
+        $tenant = filament()?->getTenant();
+
+        return $tenant?->id ?? null;
+    }
+
+    protected function dispatchRevisionJob(Model $model, RevisionType $type): void
+    {
+        if (! method_exists($model, 'getRevisionable')) {
+            return;
+        }
+        $revisionData = $this->buildRevisionData($model, $type, $this->userId(), $this->tenantId());
+        dispatch(new CreateRevision($revisionData, $model));
+    }
+
+    public function created(Model $model): void
+    {
+        $this->dispatchRevisionJob($model, RevisionType::Created);
+    }
+
+    public function updated(Model $model): void
+    {
+        if (! method_exists($model, 'getRevisionable')) {
+            return;
+        }
+        $revisionData = $this->buildRevisionData($model, RevisionType::Updated, $this->userId(), $this->tenantId());
+        if (! empty($revisionData['data'])) {
+            dispatch(new CreateRevision($revisionData, $model));
+        }
+    }
+
+    public function deleted(Model $model): void
+    {
+        $this->dispatchRevisionJob($model, RevisionType::Deleted);
+    }
+
+    public function restored(Model $model): void
+    {
+        $this->dispatchRevisionJob($model, RevisionType::Restored);
+    }
+
+    public function forceDeleted(Model $model): void
+    {
+        $this->dispatchRevisionJob($model, RevisionType::ForceDeleted);
+    }
+}

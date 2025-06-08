@@ -2,14 +2,18 @@
 
 namespace App\Models;
 
-use App\Contracts\Sqids\Sqidable;
+use App\Domain\Revision\Interfaces\Revisionable;
+use App\Domain\Revision\Observers\RevisionableObserver;
+use App\Domain\Revision\Traits\LogsRevisions;
+use App\Domain\Sqid\Interfaces\Sqidable;
+use App\Domain\Sqid\Traits\HasSqids;
 use App\Enums\Language;
 use App\Traits\HasDisplayName;
-use App\Traits\Revisionable;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasTenants;
 use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -53,15 +57,33 @@ use Illuminate\Support\Collection;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
  *
+ * @property-read string|null $sqid
+ * @property-read \App\Models\OrganizationUser|null $pivot
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Organization> $organizations
+ * @property-read int|null $organizations_count
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutTrashed()
+ *
  * @mixin \Eloquent
  */
-class User extends Authenticatable implements FilamentUser, HasTenants, MustVerifyEmail, Sqidable
+#[ObservedBy([RevisionableObserver::class])]
+class User extends Authenticatable implements FilamentUser, HasTenants, MustVerifyEmail, Revisionable, Sqidable
 {
-    use HasDisplayName, HasFactory, Notifiable, Revisionable, SoftDeletes;
+    use HasDisplayName, HasFactory, HasSqids, LogsRevisions, Notifiable, SoftDeletes;
 
     protected $fillable = [
         'email',
         'password',
+        'first_name',
+        'last_name',
+        'pesel',
+        'language',
+    ];
+
+    protected array $revisionable = [
+        'email',
         'first_name',
         'last_name',
         'pesel',

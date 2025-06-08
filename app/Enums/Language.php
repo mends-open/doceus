@@ -4,14 +4,14 @@ namespace App\Enums;
 
 enum Language: string
 {
-    case EN = 'en';
-    case PL = 'pl';
+    case English = 'en';
+    case Polish = 'pl';
 
     public function label(): string
     {
         return match ($this) {
-            self::EN => __('doceus.language.en'),
-            self::PL => __('doceus.language.pl'),
+            self::English => __('doceus.language.en'),
+            self::Polish => __('doceus.language.pl'),
         };
     }
 }

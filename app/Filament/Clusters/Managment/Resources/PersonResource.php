@@ -13,6 +13,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TrashedFilter;
 
 class PersonResource extends Resource
 {
@@ -57,6 +58,9 @@ class PersonResource extends Resource
         ]);
     }
 
+    /**
+     * @throws \Exception
+     */
     public static function table(Tables\Table $table): Tables\Table
     {
         return $table
@@ -86,10 +90,12 @@ class PersonResource extends Resource
                     ->sortable(),
             ])
             ->filters([
-                // Add filters here if needed in the future.
-            ])
+                TrashedFilter::make()])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ForceDeleteAction::make(),
+                Tables\Actions\RestoreAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

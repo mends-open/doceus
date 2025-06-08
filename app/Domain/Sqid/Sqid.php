@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Sqids;
+namespace App\Domain\Sqid;
 
 use Illuminate\Support\Str;
 use Sqids\Sqids;

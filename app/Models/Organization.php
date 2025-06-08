@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
-use App\Contracts\Sqids\Sqidable;
+use App\Domain\Revision\Interfaces\Revisionable;
+use App\Domain\Revision\Observers\RevisionableObserver;
+use App\Domain\Revision\Traits\LogsRevisions;
+use App\Domain\Sqid\Interfaces\Sqidable;
+use App\Domain\Sqid\Traits\HasSqids;
 use App\Enums\OrganizationType;
-use App\Traits\Revisionable;
-use App\Traits\Sqids\HasSqids;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -29,13 +32,25 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization whereUpdatedAt($value)
  *
+ * @property-read string|null $sqid
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Person> $people
+ * @property-read int|null $people_count
+ * @property-read \App\Models\OrganizationUser|null $pivot
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
+ * @property-read int|null $users_count
+ *
+ * @method static \Database\Factories\OrganizationFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization withoutTrashed()
+ *
  * @mixin \Eloquent
  */
-class Organization extends Model implements Sqidable
+#[ObservedBy([RevisionableObserver::class])]
+class Organization extends Model implements Revisionable, Sqidable
 {
-    use HasFactory, HasSqids, Revisionable, SoftDeletes;
-
-    protected $guarded = [];
+    use HasFactory, HasSqids, LogsRevisions, SoftDeletes;
 
     protected $casts = [
         'type' => OrganizationType::class,
@@ -43,6 +58,11 @@ class Organization extends Model implements Sqidable
     ];
 
     protected $fillable = [
+        'type',
+        'name',
+    ];
+
+    protected array $revisionable = [
         'type',
         'name',
     ];
