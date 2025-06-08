@@ -6,14 +6,6 @@ use App\Feature\Revision\Interfaces\Revisionable;
 use App\Feature\Revision\Observers\RevisionableObserver;
 use App\Feature\Revision\Traits\LogsRevisions;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
-#[ObservedBy([RevisionableObserver::class])]
-class Phone extends Model implements Revisionable
-    use HasFactory, LogsRevisions;
-    protected array $revisionable = [
-        'person_id',
-        'phone',
-    ];
-
 use App\Feature\Sqid\Interfaces\Sqidable;
 use App\Feature\Sqid\Traits\HasSqids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
