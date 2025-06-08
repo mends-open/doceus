@@ -21,6 +21,26 @@ trait DispatchesRevisions
         return $organization?->id ?? null;
     }
 
+    protected function getIpAddress(): ?string
+    {
+        return request()->ip();
+    }
+
+    protected function getUserAgent(): ?string
+    {
+        return request()->userAgent();
+    }
+
+    protected function getHttpMethod(): ?string
+    {
+        return request()->method();
+    }
+
+    protected function getUrl(): ?string
+    {
+        return request()->fullUrl();
+    }
+
     protected function getRevisableAttributes(Model $model): array
     {
         $fields = $model->getRevisionable();
@@ -71,6 +91,10 @@ trait DispatchesRevisions
             'revisionable_id' => $morph['revisionable_id'],
             'type' => $eventType->value,
             'data' => $data,
+            'ip_address' => $this->getIpAddress(),
+            'user_agent' => $this->getUserAgent(),
+            'http_method' => $this->getHttpMethod(),
+            'url' => $this->getUrl(),
         ];
     }
 

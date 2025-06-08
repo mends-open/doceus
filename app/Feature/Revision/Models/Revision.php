@@ -19,6 +19,10 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property string $type
  * @property array<array-key, mixed>|null $data
  * @property string|null $meta
+ * @property string|null $ip_address
+ * @property string|null $user_agent
+ * @property string|null $http_method
+ * @property string|null $url
  * @property-read Organization|null $organization
  * @property-read Model|\Eloquent|null $revisionable
  * @property-read User|null $user
@@ -51,6 +55,10 @@ class Revision extends Model
         'revisionable_id',
         'type',
         'data',
+        'ip_address',
+        'user_agent',
+        'http_method',
+        'url',
     ];
 
     protected $casts = [
