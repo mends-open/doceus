@@ -2,6 +2,7 @@
 
 namespace App\Rules;
 
+use App\Feature\Person\Utils\Pesel;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -14,13 +15,8 @@ class ValidPesel implements ValidationRule
 
             return;
         }
-        $weights = [1, 3, 7, 9, 1, 3, 7, 9, 1, 3];
-        $sum = 0;
-        for ($i = 0; $i < 10; $i++) {
-            $sum += $weights[$i] * (int) $value[$i];
-        }
-        $control = (10 - ($sum % 10)) % 10;
-        if ($control !== (int) $value[10]) {
+
+        if (! Pesel::isValid($value)) {
             $fail(__('doceus.pesel.invalid'));
         }
     }

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\Gender;
+use App\Feature\Person\Enums\Gender;
 use App\Feature\Revision\Interfaces\Revisionable;
 use App\Feature\Revision\Observers\RevisionableObserver;
 use App\Feature\Revision\Traits\LogsRevisions;
@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $last_name
  * @property string $pesel
  * @property string|null $id_number
- * @property \App\Enums\Gender|null $gender
+ * @property \App\Feature\Person\Enums\Gender|null $gender
  * @property \Illuminate\Support\Carbon|null $birth_date
  * @property string $email
  * @property string $phone

@@ -5,7 +5,7 @@ namespace App\Filament\Clusters\Managment\Resources;
 use App\Filament\Clusters\Managment;
 use App\Filament\Clusters\Managment\Resources\PersonResource\Pages;
 use App\Models\Person;
-use App\Enums\Gender;
+use App\Feature\Person\Enums\Gender;
 use Eloquent;
 use Filament\Facades\Filament;
 use Filament\Forms;
