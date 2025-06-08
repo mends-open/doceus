@@ -8,4 +8,6 @@ enum MorphClass: string
     case Organization = 'organization';
     case OrganizationUser = 'organization_user';
     case Person = 'person';
+    case Phone = 'phone';
+    case Email = 'email';
 }
