@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Domain\Revision\Observers;
+namespace App\Feature\Revision\Observers;
 
-use App\Domain\Revision\Enums\RevisionType;
-use App\Domain\Revision\Jobs\CreateRevision;
-use App\Domain\Revision\Traits\LogsRevisionHelpers;
+use App\Feature\Revision\Enums\RevisionType;
+use App\Feature\Revision\Jobs\CreateRevision;
+use App\Feature\Revision\Traits\LogsRevisionHelpers;
 use Illuminate\Database\Eloquent\Model;
 
 class RevisionableObserver

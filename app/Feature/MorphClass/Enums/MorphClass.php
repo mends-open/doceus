@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\MorphClass\Enums;
+namespace App\Feature\MorphClass\Enums;
 
 enum MorphClass: string
 {

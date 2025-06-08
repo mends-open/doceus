@@ -1,7 +1,7 @@
 <?php
 
-use App\Domain\MorphClass\Enums\MorphClass;
-use App\Domain\Revision\Enums\RevisionType;
+use App\Feature\MorphClass\Enums\MorphClass;
+use App\Feature\Revision\Enums\RevisionType;
 use App\Models\Organization;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Revision\Interfaces;
+namespace App\Feature\Revision\Interfaces;
 
 interface Revisionable
 {

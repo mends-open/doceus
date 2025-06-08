@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Revision\Traits;
+namespace App\Feature\Revision\Traits;
 
 trait LogsRevisions
 {

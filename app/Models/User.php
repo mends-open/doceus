@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use App\Domain\Revision\Interfaces\Revisionable;
-use App\Domain\Revision\Observers\RevisionableObserver;
-use App\Domain\Revision\Traits\LogsRevisions;
-use App\Domain\Sqid\Interfaces\Sqidable;
-use App\Domain\Sqid\Traits\HasSqids;
 use App\Enums\Language;
+use App\Feature\Revision\Interfaces\Revisionable;
+use App\Feature\Revision\Observers\RevisionableObserver;
+use App\Feature\Revision\Traits\LogsRevisions;
+use App\Feature\Sqid\Interfaces\Sqidable;
+use App\Feature\Sqid\Traits\HasSqids;
 use App\Traits\HasDisplayName;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasTenants;

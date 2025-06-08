@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domain\MorphClass\Providers;
+namespace App\Feature\MorphClass\Providers;
 
-use App\Domain\MorphClass\Enums\MorphClass;
+use App\Feature\MorphClass\Enums\MorphClass;
 use App\Models\Organization;
 use App\Models\OrganizationUser;
 use App\Models\Person;
