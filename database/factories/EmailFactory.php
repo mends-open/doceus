@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Email;
-use App\Models\Person;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class EmailFactory extends Factory
@@ -13,7 +12,6 @@ class EmailFactory extends Factory
     public function definition(): array
     {
         return [
-            'person_id' => Person::factory(),
             'email' => $this->faker->unique()->safeEmail,
         ];
     }

@@ -8,6 +8,8 @@ use App\Models\OrganizationUser;
 use App\Models\Person;
 use App\Models\Phone;
 use App\Models\Email;
+use App\Models\EmailPerson;
+use App\Models\PersonPhone;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
@@ -34,6 +36,8 @@ class MorphClassServiceProvider extends ServiceProvider
             MorphClass::Person->value => Person::class,
             MorphClass::Phone->value => Phone::class,
             MorphClass::Email->value => Email::class,
+            MorphClass::EmailPerson->value => EmailPerson::class,
+            MorphClass::PersonPhone->value => PersonPhone::class,
         ]);
     }
 }

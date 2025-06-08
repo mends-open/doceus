@@ -53,12 +53,15 @@ class DatabaseSeeder extends Seeder
 
             Filament::setTenant($organization);
 
+            $emailsPool = Email::factory(random_int(10, 20))->create();
+            $phonesPool = Phone::factory(random_int(10, 20))->create();
+
             Person::factory(random_int(5, 15))
                 ->for($organization)
                 ->create()
-                ->each(function (Person $person) {
-                    $person->emails()->saveMany(Email::factory()->count(random_int(1, 2))->make());
-                    $person->phones()->saveMany(Phone::factory()->count(random_int(1, 2))->make());
+                ->each(function (Person $person) use ($emailsPool, $phonesPool) {
+                    $person->emails()->attach($emailsPool->random(random_int(1, 2))->pluck('id'));
+                    $person->phones()->attach($phonesPool->random(random_int(1, 2))->pluck('id'));
                 });
 
             Auth::logout();

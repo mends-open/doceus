@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
-use App\Feature\Identity\Enums\Gender;
+use App\Models\EmailPerson;
+use App\Models\PersonPhone;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Feature\Revision\Interfaces\Revisionable;
 use App\Feature\Revision\Observers\RevisionableObserver;
 use App\Feature\Revision\Traits\LogsRevisions;
@@ -67,10 +69,10 @@ class Person extends Model implements Revisionable, Sqidable
         'id_number',
         'gender',
         'birth_date',
-        'email',
-        'phone',
-        'organization_id',
-    ];
+    public function emails(): BelongsToMany
+        return $this->belongsToMany(Email::class)->using(EmailPerson::class);
+    public function phones(): BelongsToMany
+        return $this->belongsToMany(Phone::class)->using(PersonPhone::class);
 
     protected array $revisionable = [
         'organization_id',
