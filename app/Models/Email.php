@@ -2,12 +2,18 @@
 
 namespace App\Models;
 
+use App\Feature\Revision\Interfaces\Revisionable;
+use App\Feature\Revision\Observers\RevisionableObserver;
+use App\Feature\Revision\Traits\LogsRevisions;
+use App\Feature\Sqid\Interfaces\Sqidable;
+use App\Feature\Sqid\Traits\HasSqids;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property int $person_id
@@ -26,9 +32,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Email whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Email extends Model
+
+#[ObservedBy([RevisionableObserver::class])]
+class Email extends Model implements Revisionable, Sqidable
 {
-    use HasFactory;
+    use HasFactory, HasSqids, LogsRevisions;
 
     protected $fillable = [
         'person_id',
