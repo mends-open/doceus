@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Utils;
+namespace App\Feature\Person\Utils;
 
-use App\Enums\Gender;
+use App\Feature\Person\Enums\Gender;
 use Carbon\Carbon;
 
 class Pesel
