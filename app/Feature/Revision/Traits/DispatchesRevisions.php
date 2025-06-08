@@ -31,11 +31,6 @@ trait DispatchesRevisions
         return request()->userAgent();
     }
 
-    protected function getHttpMethod(): ?string
-    {
-        return request()->method();
-    }
-
     protected function getUrl(): ?string
     {
         return request()->header('referer') ?? request()->fullUrl();
@@ -52,7 +47,6 @@ trait DispatchesRevisions
             'session_id' => $this->getSessionId(),
             'ip_address' => $this->getIpAddress(),
             'user_agent' => $this->getUserAgent(),
-            'http_method' => $this->getHttpMethod(),
             'url' => $this->getUrl(),
         ];
     }

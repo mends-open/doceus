@@ -27,7 +27,6 @@ return new class extends Migration
             $table->string('session_id')->nullable()->index();
             $table->string('ip_address')->nullable();
             $table->string('user_agent')->nullable();
-            $table->string('http_method', 10)->nullable();
             $table->string('url', 2048)->nullable();
         });
     }

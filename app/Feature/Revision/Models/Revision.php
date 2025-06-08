@@ -22,7 +22,6 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property string|null $session_id
  * @property string|null $ip_address
  * @property string|null $user_agent
- * @property string|null $http_method
  * @property string|null $url
  * @property-read Organization|null $organization
  * @property-read Model|\Eloquent|null $revisionable
@@ -59,7 +58,6 @@ class Revision extends Model
         'session_id',
         'ip_address',
         'user_agent',
-        'http_method',
         'url',
     ];
 
