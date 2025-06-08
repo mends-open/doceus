@@ -7,8 +7,8 @@ use App\Traits\HasTranslatableLabel;
 enum OrganizationType: string
 {
     use HasTranslatableLabel;
-    case INDIVIDUAL = 'individual';
-    case ENTITY = 'entity';
+    case Individual = 'individual';
+    case Entity = 'entity';
 
     protected function translationPrefix(): string
     {
