@@ -116,7 +116,7 @@ class RevisionTest extends TestCase
             'type' => RevisionType::Created->value,
         ]);
 
-        $person->update(['email' => 'updated@example.com']);
+        $person->update(['first_name' => 'Updated']);
         $this->assertSame($initial + 2, Revision::count());
         $this->assertDatabaseHas('revisions', [
             'revisionable_type' => MorphClass::Person->value,
