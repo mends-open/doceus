@@ -6,9 +6,9 @@ use App\Models\Organization;
 use App\Models\Person;
 use App\Models\User;
 use Filament\Facades\Filament;
-use Illuminate\Support\Facades\Auth;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Support\Facades\Auth;
 
 class DatabaseSeeder extends Seeder
 {

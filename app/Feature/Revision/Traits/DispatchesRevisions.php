@@ -3,18 +3,31 @@
 namespace App\Feature\Revision\Traits;
 
 use App\Feature\Revision\Enums\RevisionType;
+use App\Feature\Revision\Jobs\CreateRevision;
 use Illuminate\Database\Eloquent\Model;
 
-trait LogsRevisionHelpers
+trait DispatchesRevisions
 {
-    protected function revisionableRaw(Model $model): array
+    protected function getUserId(): ?int
+    {
+        return auth()->id() ?? null;
+    }
+
+    protected function getOrganizationId(): ?int
+    {
+        $organization = filament()?->getTenant();
+
+        return $organization?->id ?? null;
+    }
+
+    protected function getRevisableAttributes(Model $model): array
     {
         $fields = $model->getRevisionable();
 
         return array_intersect_key($model->getAttributes(), array_flip($fields));
     }
 
-    protected function changedRevisionableRaw(Model $model): array
+    protected function getChangedAttributes(Model $model): array
     {
         $changed = array_keys($model->getChanges());
         $fields = $model->getRevisionable();
@@ -40,8 +53,8 @@ trait LogsRevisionHelpers
         mixed $forcedId = null
     ): array {
         $data = match ($eventType) {
-            RevisionType::Created => $this->revisionableRaw($model),
-            RevisionType::Updated => $this->changedRevisionableRaw($model),
+            RevisionType::Created => $this->getRevisableAttributes($model),
+            RevisionType::Updated => $this->getChangedAttributes($model),
             RevisionType::Deleted,
             RevisionType::ForceDeleted,
             RevisionType::Restored => null,
@@ -50,7 +63,7 @@ trait LogsRevisionHelpers
         $morph = $this->resolveRevisionableMorph($model, $forcedType, $forcedId);
 
         return [
-            'dispatched_at' => now()->format('Y-m-d H:i:s.u') ,
+            'dispatched_at' => now()->format('Y-m-d H:i:s.u'),
             'organization_id' => $tenantId,
             'user_id' => $userId,
             'revisionable_type' => $morph['revisionable_type'],
@@ -58,5 +71,14 @@ trait LogsRevisionHelpers
             'type' => $eventType->value,
             'data' => $data,
         ];
+    }
+
+    protected function dispatchRevisionJob(Model $model, RevisionType $type): void
+    {
+        if (! method_exists($model, 'getRevisionable')) {
+            return;
+        }
+        $revisionData = $this->buildRevisionData($model, $type, $this->getUserId(), $this->getOrganizationId());
+        dispatch(new CreateRevision($revisionData, $model));
     }
 }
