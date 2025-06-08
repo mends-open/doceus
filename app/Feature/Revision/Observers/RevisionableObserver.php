@@ -50,6 +50,11 @@ class RevisionableObserver
 
     public function deleted(Model $model): void
     {
+        if ((method_exists($model, 'isForceDeleting') && $model->isForceDeleting()) ||
+            (property_exists($model, 'forceDeleting') && $model->forceDeleting)) {
+            return;
+        }
+
         $this->dispatchRevisionJob($model, RevisionType::Deleted);
     }
 
