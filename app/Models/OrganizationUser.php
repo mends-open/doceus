@@ -29,8 +29,6 @@ class OrganizationUser extends Pivot implements Revisionable
 {
     use LogsRevisions;
 
-    public $incrementing = true;
-
     protected array $revisionable = [
         'organization_id',
         'user_id',
