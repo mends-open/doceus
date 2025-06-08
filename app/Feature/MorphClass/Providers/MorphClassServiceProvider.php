@@ -6,6 +6,8 @@ use App\Feature\MorphClass\Enums\MorphClass;
 use App\Models\Organization;
 use App\Models\OrganizationUser;
 use App\Models\Person;
+use App\Models\Phone;
+use App\Models\Email;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
@@ -30,6 +32,8 @@ class MorphClassServiceProvider extends ServiceProvider
             MorphClass::User->value => User::class,
             MorphClass::OrganizationUser->value => OrganizationUser::class,
             MorphClass::Person->value => Person::class,
+            MorphClass::Phone->value => Phone::class,
+            MorphClass::Email->value => Email::class,
         ]);
     }
 }
