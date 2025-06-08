@@ -107,7 +107,8 @@ class RevisionTest extends TestCase
     public function test_person_revisions_for_crud(): void
     {
         $initial = Revision::count();
-        $person = Person::factory()->create();
+        $org = Organization::factory()->create();
+        $person = Person::factory()->for($org)->create();
         $this->assertSame($initial + 1, Revision::count());
         $this->assertDatabaseHas('revisions', [
             'revisionable_type' => MorphClass::Person->value,

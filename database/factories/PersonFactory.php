@@ -15,7 +15,7 @@ class PersonFactory extends Factory
         return [
             'first_name' => $this->faker->firstName,
             'last_name' => $this->faker->lastName,
-            'pesel' => $this->faker->numerify('#############'),
+            'pesel' => $this->faker->numerify('###########'),
             'email' => $this->faker->unique()->safeEmail,
             'phone' => $this->faker->phoneNumber,
             'organization_id' => Organization::factory(),

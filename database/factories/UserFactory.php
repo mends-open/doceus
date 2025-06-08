@@ -21,7 +21,7 @@ class UserFactory extends Factory
             'password' => 'password', // Will be hashed automatically by your cast
             'first_name' => $this->faker->firstName,
             'last_name' => $this->faker->lastName,
-            'pesel' => $this->faker->numerify('#############'), // 11-digit pesel if needed
+            'pesel' => $this->faker->numerify('###########'), // 11-digit pesel
             'language' => $this->faker->randomElement($languages),
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),
