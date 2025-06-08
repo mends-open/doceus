@@ -38,7 +38,7 @@ trait DispatchesRevisions
 
     protected function getUrl(): ?string
     {
-        return request()->fullUrl();
+        return request()->header('referer') ?? request()->fullUrl();
     }
 
     protected function getRevisableAttributes(Model $model): array
