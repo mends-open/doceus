@@ -22,7 +22,7 @@ class CreateRevision implements ShouldQueue
         $this->morphTarget = $morphTarget;
     }
 
-    public function handle()
+    public function handle(): void
     {
         $revision = new Revision($this->revisionData);
 
