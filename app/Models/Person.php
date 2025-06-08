@@ -2,16 +2,23 @@
 
 namespace App\Models;
 
-use App\Feature\Identity\Enums\Gender;
-use App\Feature\Revision\Interfaces\Revisionable;
-use App\Feature\Revision\Observers\RevisionableObserver;
-use App\Feature\Revision\Traits\LogsRevisions;
-use App\Feature\Sqid\Interfaces\Sqidable;
-use App\Feature\Sqid\Traits\HasSqids;
-use Illuminate\Database\Eloquent\Attributes\ObservedBy;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\Email;
+use App\Models\Phone;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Email> $emails
+ * @property-read int|null $emails_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Phone> $phones
+ * @property-read int|null $phones_count
+    public function emails(): HasMany
+    {
+        return $this->hasMany(Email::class);
+    }
+
+    public function phones(): HasMany
+    {
+        return $this->hasMany(Phone::class);
+    }
+
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**

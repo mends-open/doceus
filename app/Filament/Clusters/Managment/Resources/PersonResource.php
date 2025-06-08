@@ -56,16 +56,7 @@ class PersonResource extends Resource
             Forms\Components\DatePicker::make('birth_date')
                 ->label(__('Birth Date')),
 
-            TextInput::make('email')
-                ->label(__('Email'))
-                ->email()
-                ->required()
-                ->maxLength(255),
 
-            TextInput::make('phone')
-                ->label(__('Phone'))
-                ->tel()
-                ->maxLength(50),
 
             Hidden::make('organization_id')
                 ->default(fn () => Filament::getTenant()?->getKey())
@@ -94,10 +85,6 @@ class PersonResource extends Resource
                     ->searchable()
                     ->limit(20),
 
-                TextColumn::make('email')
-                    ->label(__('Email'))
-                    ->searchable()
-                    ->limit(30),
 
                 TextColumn::make('gender')
                     ->label(__('doceus.gender.label'))
