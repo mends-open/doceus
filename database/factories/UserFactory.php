@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 class UserFactory extends Factory
 {
     protected $model = User::class;
+    protected static ?string $fakerLocale = 'pl_PL';
 
     public function definition(): array
     {
