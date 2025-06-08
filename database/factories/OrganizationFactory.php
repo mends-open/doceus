@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class OrganizationFactory extends Factory
 {
     protected $model = Organization::class;
-    protected static ?string $fakerLocale = 'pl_PL';
 
     public function definition(): array
     {
