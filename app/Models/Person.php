@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Feature\Identity\Enums\Gender;
 use App\Models\EmailPerson;
 use App\Models\PersonPhone;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -18,7 +19,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property mixed $first_name
@@ -69,10 +70,7 @@ class Person extends Model implements Revisionable, Sqidable
         'id_number',
         'gender',
         'birth_date',
-    public function emails(): BelongsToMany
-        return $this->belongsToMany(Email::class)->using(EmailPerson::class);
-    public function phones(): BelongsToMany
-        return $this->belongsToMany(Phone::class)->using(PersonPhone::class);
+        ];
 
     protected array $revisionable = [
         'organization_id',
@@ -102,15 +100,15 @@ class Person extends Model implements Revisionable, Sqidable
         return $this->belongsTo(Organization::class);
     }
 
-    public function emails(): HasMany
+    public function emails(): BelongsToMany
     {
-        return $this->hasMany(Email::class);
+        return $this->belongsToMany(Email::class)->using(EmailPerson::class);
+    }
+    public function phones(): BelongsToMany
+    {
+        return $this->belongsToMany(Phone::class)->using(PersonPhone::class);
     }
 
-    public function phones(): HasMany
-    {
-        return $this->hasMany(Phone::class);
-    }
     public function getTenantKeyName(): string
     {
         return 'organization_id';
