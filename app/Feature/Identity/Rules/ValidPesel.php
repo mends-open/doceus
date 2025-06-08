@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Rules;
+namespace App\Feature\Identity\Rules;
 
-use App\Feature\Person\Utils\Pesel;
+use App\Feature\Identity\Services\Pesel;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 

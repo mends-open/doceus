@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Rules\ValidPesel;
+use App\Feature\Identity\Rules\ValidPesel;
 use Illuminate\Support\Facades\Validator;
 use Tests\TestCase;
 

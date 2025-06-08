@@ -2,10 +2,10 @@
 
 namespace App\Filament\Clusters\Managment\Resources;
 
+use App\Feature\Identity\Enums\Gender;
 use App\Filament\Clusters\Managment;
 use App\Filament\Clusters\Managment\Resources\PersonResource\Pages;
 use App\Models\Person;
-use App\Feature\Person\Enums\Gender;
 use Eloquent;
 use Filament\Facades\Filament;
 use Filament\Forms;
