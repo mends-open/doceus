@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Feature\Identity\Enums\Gender;
 use App\Models\ContactPoint;
 use App\Models\Practitioner;
+use App\Feature\Identity\Enums\ContactableType;
 use App\Feature\Revision\Interfaces\Revisionable;
 use App\Feature\Revision\Observers\RevisionableObserver;
 use App\Feature\Revision\Traits\LogsRevisions;
@@ -87,7 +88,8 @@ class Person extends Model implements Revisionable, Sqidable
 
     public function contactPoints(): HasMany
     {
-        return $this->hasMany(ContactPoint::class, 'contactable_id');
+        return $this->hasMany(ContactPoint::class, 'contactable_id')
+            ->where('contactable_type', ContactableType::Person);
     }
 
     public function practitioner(): HasOne
