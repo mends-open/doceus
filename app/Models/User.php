@@ -11,6 +11,9 @@ use App\Feature\Sqid\Interfaces\Sqidable;
 use App\Feature\Sqid\Traits\HasSqids;
 use App\Traits\HasDisplayName;
 use App\Models\Organization;
+use App\Models\OrganizationPractitioner;
+use App\Models\Practitioner;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasTenants;
 use Filament\Panel;
@@ -43,8 +46,9 @@ use Illuminate\Support\Collection;
  * @property-read string|null $sqid
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
- * @property-read \App\Models\OrganizationUser|null $pivot
+ * @property-read OrganizationPractitioner|null $pivot
  * @property-read Person|null $person
+ * @property-read Practitioner|null $practitioner
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Organization> $organizations
  * @property-read int|null $organizations_count
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
@@ -116,11 +120,19 @@ class User extends Authenticatable implements FilamentUser, HasTenants, MustVeri
         return true;
     }
 
-    /* user has person_id, also Practitioner has person_id, and has many Orgs via OrganizationPractitioner, therefore we can fetch many organizations for each user, which person is also a practitionwer
-     public function organizations(): BelongsToMany
-
+    /**
+     * User is linked to organizations through their practitioner profile.
+     */
+    public function organizations(): BelongsToMany
     {
-        //
+        return $this->belongsToMany(
+            Organization::class,
+            'organization_practitioner',
+            'practitioner_id',
+            'organization_id'
+        )
+            ->using(OrganizationPractitioner::class)
+            ->whereIn('organization_practitioner.practitioner_id', $this->practitioner()->select('id'));
     }
 
     public function person(): BelongsTo
@@ -128,11 +140,10 @@ class User extends Authenticatable implements FilamentUser, HasTenants, MustVeri
         return $this->belongsTo(Person::class);
     }
 
-    public function practitioner(): BelongsTo
+    public function practitioner(): HasOne
     {
-        //
+        return $this->hasOne(Practitioner::class, 'person_id', 'person_id');
     }
-    */
 
     protected static function booted(): void
     {
