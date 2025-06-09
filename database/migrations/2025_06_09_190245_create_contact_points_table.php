@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\ContactableType;
 use App\Feature\Identity\Enums\ContactPointSystem;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -16,6 +17,7 @@ return new class extends Migration
         Schema::create('contact_points', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('contactable_id');
+            $table->enum('contactable_type', Arr::pluck(ContactableType::cases(), 'value'));
             $table->enum('contactable_type', Arr::pluck(ContactPointSystem::cases(), 'value'));
             $table->text('value');
             $table->softDeletes();
