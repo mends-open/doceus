@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Clusters\Managment\Resources\PersonResource\Pages;
+namespace App\Filament\Resources\PersonResource\Pages;
 
-use App\Filament\Clusters\Managment\Resources\PersonResource;
+use App\Filament\Resources\PersonResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
