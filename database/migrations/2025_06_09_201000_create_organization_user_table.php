@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Organization;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,17 +13,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('people', function (Blueprint $table) {
+        Schema::create('organization_user', function (Blueprint $table) {
             $table->id();
-            $table->text('first_name');
-            $table->text('last_name');
-            $table->text('pesel')->nullable();
-            $table->text('id_number')->nullable();
-            $table->enum('gender', ['male', 'female', 'other'])->nullable();
-            $table->date('birth_date')->nullable();
             $table->foreignIdFor(Organization::class);
+            $table->foreignIdFor(User::class);
+            $table->unique(['organization_id', 'user_id']);
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('people');
+        Schema::dropIfExists('organization_user');
     }
 };

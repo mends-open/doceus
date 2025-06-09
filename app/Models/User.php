@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use App\Enums\Language;
+use App\Models\Person;
 use App\Feature\Revision\Interfaces\Revisionable;
 use App\Feature\Revision\Observers\RevisionableObserver;
 use App\Feature\Revision\Traits\LogsRevisions;
 use App\Feature\Sqid\Interfaces\Sqidable;
 use App\Feature\Sqid\Traits\HasSqids;
 use App\Traits\HasDisplayName;
+use App\Models\Organization;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasTenants;
 use Filament\Panel;
@@ -17,6 +19,7 @@ use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -28,10 +31,8 @@ use Illuminate\Support\Collection;
  *
  * @property int $id
  * @property string $email
- * @property mixed|null $first_name
- * @property mixed|null $last_name
- * @property mixed|null $pesel
  * @property string|null $language
+ * @property int|null $person_id
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property string $password
  * @property string|null $remember_token
@@ -43,6 +44,7 @@ use Illuminate\Support\Collection;
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \App\Models\OrganizationUser|null $pivot
+ * @property-read Person|null $person
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Organization> $organizations
  * @property-read int|null $organizations_count
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
@@ -54,12 +56,9 @@ use Illuminate\Support\Collection;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmailVerifiedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereFirstName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereLanguage($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereLastName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePesel($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withTrashed()
@@ -72,19 +71,15 @@ class User extends Authenticatable implements FilamentUser, HasTenants, MustVeri
     use HasDisplayName, HasFactory, HasSqids, LogsRevisions, Notifiable, SoftDeletes;
 
     protected $fillable = [
+        'person_id',
         'email',
         'password',
-        'first_name',
-        'last_name',
-        'pesel',
         'language',
     ];
 
     protected array $revisionable = [
+        'person_id',
         'email',
-        'first_name',
-        'last_name',
-        'pesel',
         'language',
     ];
 
@@ -96,9 +91,6 @@ class User extends Authenticatable implements FilamentUser, HasTenants, MustVeri
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
-        'first_name' => 'encrypted',
-        'last_name' => 'encrypted',
-        'pesel' => 'encrypted',
     ];
 
     protected function language(): Attribute
@@ -124,8 +116,22 @@ class User extends Authenticatable implements FilamentUser, HasTenants, MustVeri
         return true;
     }
 
-    public function organizations(): belongsToMany
+    public function organizations(): BelongsToMany
     {
         return $this->belongsToMany(Organization::class)->using(OrganizationUser::class);
+    }
+
+    public function person(): BelongsTo
+    {
+        return $this->belongsTo(Person::class);
+    }
+
+    protected static function booted(): void
+    {
+        static::creating(function (self $user) {
+            if (!$user->person_id) {
+                $user->person()->associate(Person::factory()->create());
+            }
+        });
     }
 }

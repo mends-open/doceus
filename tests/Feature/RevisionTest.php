@@ -27,7 +27,7 @@ class RevisionTest extends TestCase
             'type' => RevisionType::Created->value,
         ]);
 
-        $user->update(['first_name' => 'Updated']);
+        $user->update(['email' => 'updated@example.com']);
         $this->assertSame($initial + 2, Revision::count());
         $this->assertDatabaseHas('revisions', [
             'revisionable_type' => MorphClass::User->value,
@@ -106,9 +106,8 @@ class RevisionTest extends TestCase
 
     public function test_person_revisions_for_crud(): void
     {
-        $org = Organization::factory()->create();
         $initial = Revision::count();
-        $person = Person::factory()->for($org)->create();
+        $person = Person::factory()->create();
         $this->assertSame($initial + 1, Revision::count());
         $this->assertDatabaseHas('revisions', [
             'revisionable_type' => MorphClass::Person->value,
