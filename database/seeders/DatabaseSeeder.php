@@ -5,8 +5,6 @@ namespace Database\Seeders;
 use App\Models\Organization;
 use App\Models\Person;
 use App\Models\ContactPoint;
-use App\Models\Practitioner;
-use App\Models\OrganizationPractitioner;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -22,9 +20,8 @@ class DatabaseSeeder extends Seeder
         $users = User::factory(5)->create();
 
         $users->each(function (User $user) use ($organizations) {
-            $practitioner = Practitioner::create(['person_id' => $user->person_id]);
             $orgs = $organizations->random(random_int(1, $organizations->count()));
-            $practitioner->organizations()->attach($orgs->pluck('id'));
+            $user->practitioner->organizations()->attach($orgs->pluck('id'));
         });
 
         // Seed additional persons for each organization
