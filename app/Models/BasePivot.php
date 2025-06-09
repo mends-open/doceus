@@ -7,13 +7,10 @@ use App\Feature\Revision\Observers\RevisionableObserver;
 use App\Feature\Revision\Traits\LogsRevisions;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class PractitionerQualification extends BaseModel
+#[ObservedBy([RevisionableObserver::class])]
+class BasePivot extends Pivot implements Revisionable
 {
-    protected array $revisionable = [
-        'practitioner_id',
-        'qualification',
-        'valid_from',
-        'valid_to',
-    ];
+    use LogsRevisions;
 }
