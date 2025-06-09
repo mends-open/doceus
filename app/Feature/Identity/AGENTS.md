@@ -1,0 +1,6 @@
+- This directory holds all logic for user, person, patient, and identity management.
+- Keep code modular: group models, actions, policies, events, etc. by “Identity” feature.
+- Use Laravel conventions where possible—don’t fight the framework.
+- Utilities here should be reusable across app features.
+- Comment any domain-specific rules or quirks.
+- Avoid cross-feature dependencies unless absolutely necessary.
