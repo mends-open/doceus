@@ -17,3 +17,4 @@ class ListPatients extends ListRecords
         ];
     }
 }
+

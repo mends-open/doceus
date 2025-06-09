@@ -17,3 +17,4 @@ class EditPatient extends EditRecord
         ];
     }
 }
+
