@@ -6,6 +6,7 @@ use App\Feature\Identity\Enums\Gender;
 use App\Models\ContactPoint;
 use App\Models\Practitioner;
 use App\Feature\Identity\Enums\ContactableType;
+use App\Feature\Identity\Enums\ContactPointSystem;
 use App\Feature\Revision\Interfaces\Revisionable;
 use App\Feature\Revision\Observers\RevisionableObserver;
 use App\Feature\Revision\Traits\LogsRevisions;
@@ -87,6 +88,22 @@ class Person extends BaseModel
     {
         return $this->hasMany(ContactPoint::class, 'contactable_id')
             ->where('contactable_type', ContactableType::Person);
+    }
+
+    /**
+     * Person email addresses.
+     */
+    public function emails(): HasMany
+    {
+        return $this->contactPoints()->where('system', ContactPointSystem::Email);
+    }
+
+    /**
+     * Person phone numbers.
+     */
+    public function phones(): HasMany
+    {
+        return $this->contactPoints()->where('system', ContactPointSystem::Phone);
     }
 
     public function practitioner(): HasOne

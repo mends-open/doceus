@@ -15,7 +15,9 @@ return new class extends Migration
     {
         Schema::create('practitioner_qualifications', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Practitioner::class);
+            $table->foreignIdFor(Practitioner::class)
+                ->constrained()
+                ->cascadeOnDelete();
             $table->enum('qualification', Arr::pluck(PrectitionerQualification::cases(), 'value'));
             $table->timestamp('valid_from')->nullable();
             $table->timestamp('valid_to')->nullable();

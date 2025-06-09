@@ -14,9 +14,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('organization_patient', function (Blueprint $table) {
-            $table->foreignIdFor(Organization::class);
-            $table->foreignIdFor(Patient::class);
+            $table->foreignIdFor(Organization::class)
+                ->constrained()
+                ->cascadeOnDelete();
+            $table->foreignIdFor(Patient::class)
+                ->constrained()
+                ->cascadeOnDelete();
             $table->timestamps();
+
+            $table->primary(['organization_id', 'patient_id']);
         });
     }
 

@@ -20,7 +20,7 @@ class RevisionTest extends TestCase
     {
         $initial = Revision::count();
         $user = User::factory()->create();
-        $this->assertSame($initial + 1, Revision::count());
+        $this->assertSame($initial + 3, Revision::count());
         $this->assertDatabaseHas('revisions', [
             'revisionable_type' => MorphClass::User->value,
             'revisionable_id' => $user->id,
@@ -28,7 +28,7 @@ class RevisionTest extends TestCase
         ]);
 
         $user->update(['email' => 'updated@example.com']);
-        $this->assertSame($initial + 2, Revision::count());
+        $this->assertSame($initial + 4, Revision::count());
         $this->assertDatabaseHas('revisions', [
             'revisionable_type' => MorphClass::User->value,
             'revisionable_id' => $user->id,
@@ -36,7 +36,7 @@ class RevisionTest extends TestCase
         ]);
 
         $user->delete();
-        $this->assertSame($initial + 3, Revision::count());
+        $this->assertSame($initial + 5, Revision::count());
         $this->assertDatabaseHas('revisions', [
             'revisionable_type' => MorphClass::User->value,
             'revisionable_id' => $user->id,
@@ -44,7 +44,7 @@ class RevisionTest extends TestCase
         ]);
 
         $user->restore();
-        $this->assertSame($initial + 4, Revision::count());
+        $this->assertSame($initial + 6, Revision::count());
         $this->assertDatabaseHas('revisions', [
             'revisionable_type' => MorphClass::User->value,
             'revisionable_id' => $user->id,
@@ -52,7 +52,7 @@ class RevisionTest extends TestCase
         ]);
 
         $user->forceDelete();
-        $this->assertSame($initial + 5, Revision::count());
+        $this->assertSame($initial + 7, Revision::count());
         $this->assertDatabaseHas('revisions', [
             'revisionable_type' => MorphClass::User->value,
             'revisionable_id' => $user->id,
@@ -169,7 +169,7 @@ class RevisionTest extends TestCase
         ]);
 
         // Detach from organization side
-        $org->users()->detach($user->id);
+        $org->practitioners()->detach($user->practitioner->id);
         $this->assertDatabaseHas('revisions', [
             'revisionable_type' => MorphClass::OrganizationPractitioner->value,
             'revisionable_id' => $pivot->id,

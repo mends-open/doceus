@@ -13,17 +13,26 @@ class EditProfile extends BasePage
             'form' => $this->form(
                 $this->makeForm()
                     ->schema([
-                        $this->getEmailFormComponent()->disabled(),
+                        $this->getEmailDisplayComponent(),
                         $this->getFirstNameFormComponent(),
                         $this->getLastNameFormComponent(),
                         $this->getPeselFormComponent(),
                     ])
                     ->operation('edit')
-                    ->model($this->getUser())
+                    ->model($this->getUser()->person)
                     ->statePath('data')
                     ->inlineLabel(! static::isSimple()),
             ),
         ];
+    }
+
+    protected function getEmailDisplayComponent(): TextInput
+    {
+        return TextInput::make('email')
+            ->label(__('Email'))
+            ->default($this->getUser()->email)
+            ->disabled()
+            ->dehydrated(false);
     }
 
     protected function getFirstNameFormComponent(): TextInput
