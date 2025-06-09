@@ -11,6 +11,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('person_phone', function (Blueprint $table) {
+            $table->id();
             $table->foreignIdFor(Person::class)->index();
             $table->foreignIdFor(Phone::class)->index();
             $table->unique(['person_id', 'phone_id']);

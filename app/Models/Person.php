@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- *
+ * 
  *
  * @property int $id
  * @property mixed $first_name
@@ -32,6 +32,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read PersonPhone|EmailPerson|null $pivot
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Email> $emails
  * @property-read int|null $emails_count
  * @property-read string|null $sqid

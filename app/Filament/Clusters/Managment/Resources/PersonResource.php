@@ -3,32 +3,6 @@
 namespace App\Filament\Clusters\Managment\Resources;
 
 use Filament\Forms\Components\Select;
-            Select::make('emails')
-                ->label(__('Emails'))
-                ->relationship('emails', 'email')
-                ->multiple()
-                ->preload()
-                ->searchable()
-                ->createOptionForm([
-                    TextInput::make('email')
-                        ->label(__('Email'))
-                        ->email()
-                        ->required(),
-                ]),
-
-            Select::make('phones')
-                ->label(__('Phones'))
-                ->relationship('phones', 'phone')
-                ->multiple()
-                ->preload()
-                ->searchable()
-                ->createOptionForm([
-                    TextInput::make('phone')
-                        ->label(__('Phone'))
-                        ->tel()
-                        ->required(),
-                ]),
-
 use App\Feature\Identity\Enums\Gender;
 use App\Filament\Clusters\Managment;
 use App\Filament\Clusters\Managment\Resources\PersonResource\Pages;
@@ -82,10 +56,33 @@ class PersonResource extends Resource
 
             Forms\Components\DatePicker::make('birth_date')
                 ->label(__('Birth Date')),
-
             Hidden::make('organization_id')
-                ->default(fn () => Filament::getTenant()?->getKey())
+                ->default(fn () => Filament::getTenant()?->getKey())    
                 ->required(),
+            Select::make('emails')
+                ->label(__('Emails'))
+                ->relationship('emails', 'email')
+                ->multiple()
+                ->preload()
+                ->searchable()
+                ->createOptionForm([
+                    TextInput::make('email')
+                        ->label(__('Email'))
+                        ->email()
+                        ->required(),
+                ]),
+            Select::make('phones')
+                ->label(__('Phones'))
+                ->relationship('phones', 'phone')
+                ->multiple()
+                ->preload()
+                ->searchable()
+                ->createOptionForm([
+                    TextInput::make('phone')
+                        ->label(__('Phone'))
+                        ->tel()
+                        ->required(),
+                ]),
         ]);
     }
 
