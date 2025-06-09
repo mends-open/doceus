@@ -28,9 +28,6 @@ use Illuminate\Support\Collection;
  *
  * @property int $id
  * @property string $email
- * @property mixed|null $first_name
- * @property mixed|null $last_name
- * @property mixed|null $pesel
  * @property string|null $language
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property string $password
@@ -54,12 +51,9 @@ use Illuminate\Support\Collection;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmailVerifiedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereFirstName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereLanguage($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereLastName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePesel($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withTrashed()
@@ -74,17 +68,11 @@ class User extends Authenticatable implements FilamentUser, HasTenants, MustVeri
     protected $fillable = [
         'email',
         'password',
-        'first_name',
-        'last_name',
-        'pesel',
         'language',
     ];
 
     protected array $revisionable = [
         'email',
-        'first_name',
-        'last_name',
-        'pesel',
         'language',
     ];
 
@@ -96,9 +84,6 @@ class User extends Authenticatable implements FilamentUser, HasTenants, MustVeri
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
-        'first_name' => 'encrypted',
-        'last_name' => 'encrypted',
-        'pesel' => 'encrypted',
     ];
 
     protected function language(): Attribute
