@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Practitioner;
+use App\Models\OrganizationPractitioner;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -27,9 +29,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read string|null $sqid
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Person> $people
  * @property-read int|null $people_count
- * @property-read \App\Models\OrganizationUser|null $pivot
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
- * @property-read int|null $users_count
+ * @property-read OrganizationPractitioner|null $pivot
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Practitioner> $practitioners
+ * @property-read int|null $practitioners_count
  * @method static \Database\Factories\OrganizationFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization newQuery()
@@ -65,9 +67,10 @@ class Organization extends Model implements Revisionable, Sqidable
         'name',
     ];
 
-    public function users(): BelongsToMany
+    public function practitioners(): BelongsToMany
     {
-        return $this->BelongsToMany(User::class)->using(OrganizationUser::class);
+        return $this->belongsToMany(Practitioner::class)
+            ->using(OrganizationPractitioner::class);
     }
 
     public function people(): HasMany

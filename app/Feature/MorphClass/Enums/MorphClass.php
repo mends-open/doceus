@@ -6,7 +6,7 @@ enum MorphClass: string
 {
     case User = 'user';
     case Organization = 'organization';
-    case OrganizationUser = 'organization_user';
+    case OrganizationPractitioner = 'organization_practitioner';
     case Person = 'person';
     case ContactPoint = 'contact_point';
 }

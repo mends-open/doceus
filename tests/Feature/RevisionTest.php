@@ -6,7 +6,7 @@ use App\Feature\MorphClass\Enums\MorphClass;
 use App\Feature\Revision\Enums\RevisionType;
 use App\Feature\Revision\Models\Revision;
 use App\Models\Organization;
-use App\Models\OrganizationUser;
+use App\Models\OrganizationPractitioner;
 use App\Models\Person;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -157,13 +157,13 @@ class RevisionTest extends TestCase
 
         // Attach from user side
         $user->organizations()->attach($org->id);
-        $pivot = OrganizationUser::where('user_id', $user->id)
+        $pivot = OrganizationPractitioner::where('practitioner_id', $user->practitioner->id)
             ->where('organization_id', $org->id)
             ->first();
         $this->assertNotNull($pivot);
         $this->assertGreaterThan($initial, Revision::count());
         $this->assertDatabaseHas('revisions', [
-            'revisionable_type' => MorphClass::OrganizationUser->value,
+            'revisionable_type' => MorphClass::OrganizationPractitioner->value,
             'revisionable_id' => $pivot->id,
             'type' => RevisionType::Created->value,
         ]);
@@ -171,7 +171,7 @@ class RevisionTest extends TestCase
         // Detach from organization side
         $org->users()->detach($user->id);
         $this->assertDatabaseHas('revisions', [
-            'revisionable_type' => MorphClass::OrganizationUser->value,
+            'revisionable_type' => MorphClass::OrganizationPractitioner->value,
             'revisionable_id' => $pivot->id,
             'type' => RevisionType::Deleted->value,
         ]);
@@ -179,12 +179,12 @@ class RevisionTest extends TestCase
         // Sync from user side with new organization
         $org2 = Organization::factory()->create();
         $user->organizations()->sync([$org2->id]);
-        $pivot2 = OrganizationUser::where('user_id', $user->id)
+        $pivot2 = OrganizationPractitioner::where('practitioner_id', $user->practitioner->id)
             ->where('organization_id', $org2->id)
             ->first();
         $this->assertNotNull($pivot2);
         $this->assertDatabaseHas('revisions', [
-            'revisionable_type' => MorphClass::OrganizationUser->value,
+            'revisionable_type' => MorphClass::OrganizationPractitioner->value,
             'revisionable_id' => $pivot2->id,
             'type' => RevisionType::Created->value,
         ]);

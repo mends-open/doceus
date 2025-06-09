@@ -4,7 +4,7 @@ namespace App\Feature\MorphClass\Providers;
 
 use App\Feature\MorphClass\Enums\MorphClass;
 use App\Models\Organization;
-use App\Models\OrganizationUser;
+use App\Models\OrganizationPractitioner;
 use App\Models\Person;
 use App\Models\ContactPoint;
 use App\Models\User;
@@ -29,7 +29,7 @@ class MorphClassServiceProvider extends ServiceProvider
         Relation::enforceMorphMap([
             MorphClass::Organization->value => Organization::class,
             MorphClass::User->value => User::class,
-            MorphClass::OrganizationUser->value => OrganizationUser::class,
+            MorphClass::OrganizationPractitioner->value => OrganizationPractitioner::class,
             MorphClass::Person->value => Person::class,
             MorphClass::ContactPoint->value => ContactPoint::class,
         ]);
