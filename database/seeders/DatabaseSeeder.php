@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Organization;
 use App\Models\Person;
 use App\Models\ContactPoint;
+use App\Models\Patient;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -40,6 +41,20 @@ class DatabaseSeeder extends Seeder
 
                     ContactPoint::factory(random_int(1, 2))
                         ->for($person, 'person')
+                        ->phone()
+                        ->create();
+                });
+
+            Patient::factory(random_int(3, 8))
+                ->create()
+                ->each(function (Patient $patient) {
+                    ContactPoint::factory(random_int(1, 2))
+                        ->for($patient->person, 'person')
+                        ->email()
+                        ->create();
+
+                    ContactPoint::factory(random_int(1, 2))
+                        ->for($patient->person, 'person')
                         ->phone()
                         ->create();
                 });
