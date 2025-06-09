@@ -16,6 +16,22 @@ trait HasDisplayName
             return Str::title("{$this->first_name} {$this->last_name}");
         }
 
+        if (method_exists($this, 'person') && $this->relationLoaded('person')) {
+            $person = $this->person;
+
+            if (! empty($person->first_name ?? null) && ! empty($person->last_name ?? null)) {
+                return Str::title("{$person->first_name} {$person->last_name}");
+            }
+
+            if (! empty($person->first_name ?? null)) {
+                return Str::title($person->first_name);
+            }
+
+            if (! empty($person->last_name ?? null)) {
+                return Str::title($person->last_name);
+            }
+        }
+
         if (! empty($this->first_name ?? null)) {
             return Str::title($this->first_name);
         }
