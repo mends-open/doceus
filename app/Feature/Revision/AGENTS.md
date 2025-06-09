@@ -1,0 +1,6 @@
+- This folder manages tracking and storing revisions for all Eloquent models.
+- Follow Laravel/Eloquent standards for observers, events, and revision models.
+- Capture all CRUD changes (create, update, delete) with relevant metadata (user, timestamp, model, changed data).
+- Keep revision storage and retrieval efficient and simple.
+- Don’t leak sensitive data in revision logs.
+- Comment any custom revision logic or edge cases.

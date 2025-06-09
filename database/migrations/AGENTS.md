@@ -1,0 +1,5 @@
+- Write migrations using standard Laravel features and syntax.
+- Favor database integrity: use foreign keys, timestamps, soft deletes.
+- Design tables for medical data and future FHIR compatibility, but don’t break Laravel conventions.
+- If in doubt, choose clarity and maintainability over strict FHIR compliance.
+- Comment any schema decisions that may need later FHIR adjustments.
