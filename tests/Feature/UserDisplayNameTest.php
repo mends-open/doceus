@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Person;
 use App\Models\User;
 use Tests\TestCase;
 
@@ -9,28 +10,31 @@ class UserDisplayNameTest extends TestCase
 {
     public function test_generates_name_from_first_and_last_name(): void
     {
-        $user = User::make([
+        $user = new User;
+        $user->setRelation('person', Person::make([
             'first_name' => 'john',
             'last_name' => 'doe',
-        ]);
+        ]));
 
         $this->assertSame('John Doe', $user->name);
     }
 
     public function test_generates_name_from_first_name_only(): void
     {
-        $user = User::make([
+        $user = new User;
+        $user->setRelation('person', Person::make([
             'first_name' => 'jane',
-        ]);
+        ]));
 
         $this->assertSame('Jane', $user->name);
     }
 
     public function test_generates_name_from_last_name_only(): void
     {
-        $user = User::make([
+        $user = new User;
+        $user->setRelation('person', Person::make([
             'last_name' => 'smith',
-        ]);
+        ]));
 
         $this->assertSame('Smith', $user->name);
     }

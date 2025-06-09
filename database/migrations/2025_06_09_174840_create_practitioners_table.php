@@ -14,7 +14,9 @@ return new class extends Migration
     {
         Schema::create('practitioners', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Person::class);
+            $table->foreignIdFor(Person::class)
+                ->constrained()
+                ->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });

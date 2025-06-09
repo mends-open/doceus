@@ -26,7 +26,11 @@ return new class extends Migration
         });
 
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignIdFor(Person::class)->nullable()->after('id');
+            $table->foreignIdFor(Person::class)
+                ->nullable()
+                ->after('id')
+                ->constrained()
+                ->nullOnDelete();
         });
     }
 
