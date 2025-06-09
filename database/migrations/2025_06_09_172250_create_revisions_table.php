@@ -20,15 +20,9 @@ return new class extends Migration
             $table->enum('revisionable_type', Arr::pluck(MorphClass::cases(), 'value'))->index();
             $table->unsignedBigInteger('revisionable_id')->nullable()->index();
             $table->foreignIdFor(Organization::class)
-                ->nullable()
-                ->constrained()
-                ->nullOnDelete()
-                ->index();
+                ->nullable();
             $table->foreignIdFor(User::class)
-                ->nullable()
-                ->constrained()
-                ->nullOnDelete()
-                ->index();
+                ->nullable();
             $table->jsonb('data')->nullable()->index();
             $table->jsonb('meta')->nullable();
             $table->timestamp('dispatched_at', 6);
