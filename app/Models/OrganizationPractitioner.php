@@ -12,12 +12,8 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @property int $organization_id
  * @property int $practitioner_id
  */
-#[ObservedBy([RevisionableObserver::class])]
-class OrganizationPractitioner extends Pivot implements Revisionable
+class OrganizationPractitioner extends BasePivot
 {
-    use LogsRevisions;
-
-    public $incrementing = false;
 
     protected array $revisionable = [
         'organization_id',
