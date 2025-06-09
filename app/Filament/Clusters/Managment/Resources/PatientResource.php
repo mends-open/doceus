@@ -57,7 +57,7 @@ class PatientResource extends Resource
 
             Select::make('person.emails')
                 ->label(__('Emails'))
-                ->relationship('person.emails', 'email')
+                ->relationship('person.emails', 'value')
                 ->multiple()
                 ->preload()
                 ->searchable()
@@ -70,7 +70,7 @@ class PatientResource extends Resource
 
             Select::make('person.phones')
                 ->label(__('Phones'))
-                ->relationship('person.phones', 'phone')
+                ->relationship('person.phones', 'value')
                 ->multiple()
                 ->preload()
                 ->searchable()
