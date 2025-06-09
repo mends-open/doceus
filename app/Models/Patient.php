@@ -14,6 +14,11 @@ use App\Models\OrganizationPatient;
 
 class Patient extends BaseModel
 {
+
+    protected $fillable = [
+        'person_id',
+    ];
+
     protected array $revisionable = [
         'person_id',
     ];
