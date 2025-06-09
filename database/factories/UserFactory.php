@@ -5,7 +5,6 @@ namespace Database\Factories;
 use App\Enums\Language;
 use App\Models\User;
 use App\Models\Person;
-use App\Models\Practitioner;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -13,12 +12,6 @@ class UserFactory extends Factory
 {
     protected $model = User::class;
 
-    public function configure(): static
-    {
-        return $this->afterCreating(function (User $user) {
-            Practitioner::create(['person_id' => $user->person_id]);
-        });
-    }
 
     public function definition(): array
     {
