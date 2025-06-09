@@ -27,7 +27,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $email
@@ -116,15 +116,23 @@ class User extends Authenticatable implements FilamentUser, HasTenants, MustVeri
         return true;
     }
 
-    public function organizations(): BelongsToMany
+    /* user has person_id, also Practitioner has person_id, and has many Orgs via OrganizationPractitioner, therefore we can fetch many organizations for each user, which person is also a practitionwer
+     public function organizations(): BelongsToMany
+
     {
-        return $this->belongsToMany(Organization::class)->using(OrganizationUser::class);
+        //
     }
 
     public function person(): BelongsTo
     {
         return $this->belongsTo(Person::class);
     }
+
+    public function practitioner(): BelongsTo
+    {
+        //
+    }
+    */
 
     protected static function booted(): void
     {

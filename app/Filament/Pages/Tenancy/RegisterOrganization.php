@@ -2,7 +2,7 @@
 
 namespace App\Filament\Pages\Tenancy;
 
-use App\Enums\OrganizationType;
+use App\Feature\Identity\Enums\OrganizationType;
 use App\Models\Organization;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;

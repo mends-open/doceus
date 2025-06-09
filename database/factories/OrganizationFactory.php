@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Enums\OrganizationType;
+use App\Feature\Identity\Enums\OrganizationType;
 use App\Models\Organization;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
