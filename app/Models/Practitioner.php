@@ -2,6 +2,10 @@
 
 namespace App\Models;
 
+use App\Feature\Revision\Interfaces\Revisionable;
+use App\Feature\Revision\Observers\RevisionableObserver;
+use App\Feature\Revision\Traits\LogsRevisions;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -15,9 +19,13 @@ use App\Models\OrganizationPractitioner;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Organization> $organizations
  * @property-read int|null $organizations_count
  */
-class Practitioner extends Model
+class Practitioner extends BaseModel
 {
     protected $fillable = [
+        'person_id',
+    ];
+
+    protected array $revisionable = [
         'person_id',
     ];
 

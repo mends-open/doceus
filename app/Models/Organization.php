@@ -47,11 +47,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization withoutTrashed()
  * @mixin \Eloquent
  */
-#[ObservedBy([RevisionableObserver::class])]
-class Organization extends Model implements Revisionable, Sqidable
+class Organization extends BaseModel
 {
-    use HasFactory, HasSqids, LogsRevisions, SoftDeletes;
-
     protected $casts = [
         'type' => OrganizationType::class,
         'name' => 'encrypted',

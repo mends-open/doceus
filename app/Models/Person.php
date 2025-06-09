@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property mixed $first_name
@@ -54,11 +54,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Person withoutTrashed()
  * @mixin \Eloquent
  */
-#[ObservedBy([RevisionableObserver::class])]
-class Person extends Model implements Revisionable, Sqidable
+class Person extends BaseModel
 {
-    use HasFactory, HasSqids, LogsRevisions, SoftDeletes;
-
     protected $fillable = [
         'first_name',
         'last_name',

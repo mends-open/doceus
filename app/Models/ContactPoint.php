@@ -24,11 +24,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read Person $person
  * @method static \Database\Factories\ContactPointFactory factory($count = null, $state = [])
  */
-#[ObservedBy([RevisionableObserver::class])]
-class ContactPoint extends Model implements Revisionable
+class ContactPoint extends BaseModel
 {
-    use HasFactory, LogsRevisions;
-
     protected $fillable = [
         'contactable_id',
         'contactable_type',
