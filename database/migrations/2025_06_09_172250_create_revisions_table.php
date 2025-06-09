@@ -14,16 +14,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('revisions', function (Blueprint $table) {
-            $table->id();
-            $table->timestamp('dispatched_at', 6); // app-level timestamp
-            $table->timestamp('created_at', 6)->useCurrent();
+            $table->id(); // Always first
+
+            $table->enum('type', Arr::pluck(RevisionType::cases(), 'value'));
+            $table->enum('revisionable_type', Arr::pluck(MorphClass::cases(), 'value'))->index();
+            $table->unsignedBigInteger('revisionable_id')->nullable()->index();
             $table->foreignIdFor(Organization::class)->nullable()->index();
             $table->foreignIdFor(User::class)->nullable()->index();
-            $table->unsignedBigInteger('revisionable_id')->nullable()->index();
-            $table->enum('revisionable_type', Arr::pluck(MorphClass::cases(), 'value'))->index();
-            $table->enum('type', Arr::pluck(RevisionType::cases(), 'value'));
-            $table->jsonb('data')->index()->nullable();
+            $table->jsonb('data')->nullable()->index();
             $table->jsonb('meta')->nullable();
+            $table->timestamp('dispatched_at', 6);
+            $table->timestamp('created_at', 6)->useCurrent();
             $table->string('session_id')->nullable()->index();
             $table->string('ip_address')->nullable();
             $table->string('user_agent')->nullable();

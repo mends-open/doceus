@@ -15,6 +15,6 @@ foreach ($_ENV as $key => $value) {
 
 return [
     'length' => env('SQID_LENGTH', 10),
-    'alphabet' => env('SQID_ALPHABET'),
+    'alphabet' => env('SQID_ALPHABET', 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'),
     'alphabets' => $alphabets,
 ];

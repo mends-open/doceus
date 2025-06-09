@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Organization;
-use App\Models\User;
+use App\Models\Practitioner;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('organization_user', function (Blueprint $table) {
-            $table->id();
-            $table->foreignIdFor(Organization::class)->index();
-            $table->foreignIdFor(User::class)->index();
-            $table->unique(['organization_id', 'user_id']);
+        Schema::create('organization_practitioner', function (Blueprint $table) {
+            $table->foreignIdFor(Organization::class);
+            $table->foreignIdFor(Practitioner::class);
+            $table->timestamps();
         });
     }
 
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('organization_user');
+        Schema::dropIfExists('organization_practitioner');
     }
 };
