@@ -148,9 +148,26 @@ class User extends Authenticatable implements FilamentUser, HasTenants, MustVeri
     protected static function booted(): void
     {
         static::creating(function (self $user) {
-            if (!$user->person_id) {
+            if (! $user->person_id) {
                 $user->person()->associate(Person::factory()->create());
             }
         });
+
+        static::created(function (self $user) {
+            if (! $user->practitioner()->exists()) {
+                $user->practitioner()->create(['person_id' => $user->person_id]);
+            }
+        });
+    }
+
+    /**
+     * Create a new organization and attach the user's practitioner.
+     */
+    public function createOrganization(array $attributes): Organization
+    {
+        $organization = Organization::create($attributes);
+        $this->practitioner->organizations()->attach($organization);
+
+        return $organization;
     }
 }
