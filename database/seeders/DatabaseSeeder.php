@@ -4,8 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Organization;
 use App\Models\Person;
-use App\Models\Email;
-use App\Models\Phone;
+use App\Models\ContactPoint;
 use App\Models\User;
 use Filament\Facades\Filament;
 use Illuminate\Database\Seeder;
@@ -53,15 +52,18 @@ class DatabaseSeeder extends Seeder
 
             Filament::setTenant($organization);
 
-            $emailsPool = Email::factory(random_int(10, 20))->create();
-            $phonesPool = Phone::factory(random_int(10, 20))->create();
-
             Person::factory(random_int(5, 15))
-                ->for($organization)
                 ->create()
-                ->each(function (Person $person) use ($emailsPool, $phonesPool) {
-                    $person->emails()->attach($emailsPool->random(random_int(1, 2))->pluck('id'));
-                    $person->phones()->attach($phonesPool->random(random_int(1, 2))->pluck('id'));
+                ->each(function (Person $person) {
+                    ContactPoint::factory(random_int(1, 2))
+                        ->for($person, 'person')
+                        ->email()
+                        ->create();
+
+                    ContactPoint::factory(random_int(1, 2))
+                        ->for($person, 'person')
+                        ->phone()
+                        ->create();
                 });
 
             Auth::logout();
