@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\OrganizationType;
+use App\Feature\Identity\Enums\OrganizationType;
 use App\Feature\Revision\Interfaces\Revisionable;
 use App\Feature\Revision\Observers\RevisionableObserver;
 use App\Feature\Revision\Traits\LogsRevisions;
@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property OrganizationType $type

@@ -3,4 +3,3 @@
 - Generate realistic, privacy-safe medical sample data.
 - Don’t add FHIR complexity—factories should stay simple and maintainable.
 - Comment any unusual or non-obvious field logic.
-
