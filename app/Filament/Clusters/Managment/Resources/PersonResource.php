@@ -9,7 +9,10 @@ use App\Models\Person;
 use Eloquent;
 use Filament\Facades\Filament;
 use Filament\Forms;
+use App\Feature\Identity\Enums\ContactableType;
+use App\Feature\Identity\Enums\ContactPointSystem;
 use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
@@ -59,30 +62,34 @@ class PersonResource extends Resource
             Hidden::make('organization_id')
                 ->default(fn () => Filament::getTenant()?->getKey())
                 ->required(),
-            Select::make('emails')
+            Repeater::make('emails')
                 ->label(__('Emails'))
-                ->relationship('emails', 'value')
-                ->multiple()
-                ->preload()
-                ->searchable()
-                ->createOptionForm([
+                ->relationship()
+                ->schema([
+                    Hidden::make('contactable_type')
+                        ->default(ContactableType::Person),
+                    Hidden::make('system')
+                        ->default(ContactPointSystem::Email),
                     TextInput::make('value')
                         ->label(__('Email'))
                         ->email()
                         ->required(),
-                ]),
-            Select::make('phones')
+                ])
+                ->defaultItems(0),
+            Repeater::make('phones')
                 ->label(__('Phones'))
-                ->relationship('phones', 'value')
-                ->multiple()
-                ->preload()
-                ->searchable()
-                ->createOptionForm([
+                ->relationship()
+                ->schema([
+                    Hidden::make('contactable_type')
+                        ->default(ContactableType::Person),
+                    Hidden::make('system')
+                        ->default(ContactPointSystem::Phone),
                     TextInput::make('value')
                         ->label(__('Phone'))
                         ->tel()
                         ->required(),
-                ]),
+                ])
+                ->defaultItems(0),
         ]);
     }
 
