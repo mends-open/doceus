@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Patients\Schemas;
 
 use App\Feature\Identity\Enums\ContactPointSystem;
+use App\Feature\Identity\Enums\ContactableType;
 use App\Feature\Identity\Enums\Gender;
 use Filament\Forms\Components\DatePicker;
 use Filament\Schemas\Components\Group;
@@ -42,7 +43,17 @@ class PatientForm
                                     ->required(),
                                 TextInput::make('value')
                                     ->required(),
-                            ]),
+                            ])
+                            ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
+                                $data['contactable_type'] = ContactableType::Person->value;
+
+                                return $data;
+                            })
+                            ->mutateRelationshipDataBeforeSaveUsing(function (array $data): array {
+                                $data['contactable_type'] = ContactableType::Person->value;
+
+                                return $data;
+                            }),
                     ]),
             ]);
     }

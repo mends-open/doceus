@@ -52,4 +52,15 @@ class ContactPoint extends BaseModel
         return $this->belongsTo(Person::class, 'contactable_id')
             ->where('contactable_type', ContactableType::Person);
     }
+
+    protected static function booted(): void
+    {
+        parent::booted();
+
+        static::creating(function (self $point) {
+            if (! $point->contactable_type) {
+                $point->contactable_type = ContactableType::Person;
+            }
+        });
+    }
 }
