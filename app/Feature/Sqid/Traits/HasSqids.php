@@ -58,4 +58,27 @@ trait HasSqids
 
         return $id !== null ? $this->where('id', $id)->firstOrFail() : null;
     }
+
+    /**
+     * Modify the query used for explicit record resolution.
+     */
+    public function resolveRouteBindingQuery($query, $value, $field = null)
+    {
+        $alphabet = Sqid::modelAlphabet(static::class);
+        if ($alphabet) {
+            $config = config('sqid');
+            $sqids = new Sqids(
+                alphabet: $alphabet,
+                minLength: $config['length'] ?? 10
+            );
+            $decoded = $sqids->decode($value);
+            $id = isset($decoded[0]) ? (int) $decoded[0] : null;
+        } else {
+            $id = Sqid::decode($value);
+        }
+
+        return $id !== null
+            ? $query->where($field ?? $this->getRouteKeyName(), $id)
+            : $query->whereRaw('0 = 1');
+    }
 }
