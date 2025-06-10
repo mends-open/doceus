@@ -58,4 +58,19 @@ class PersonContactTest extends TestCase
             ->create();
         $this->assertCount(6, $person->refresh()->contactPoints);
     }
+
+    public function test_create_contact_point_via_relationship_sets_type(): void
+    {
+        $person = Person::factory()->create();
+
+        $person->contactPoints()->create([
+            'system' => 'email',
+            'value' => 'test@example.com',
+        ]);
+
+        $point = $person->contactPoints()->first();
+
+        $this->assertNotNull($point);
+        $this->assertSame('person', $point->contactable_type->value);
+    }
 }
