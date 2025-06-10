@@ -8,6 +8,7 @@ use App\Filament\Pages\Tenancy\RegisterOrganization;
 use App\Http\Middleware\SetUserLocale;
 use App\Models\Organization;
 use Exception;
+use Filament\FontProviders\GoogleFontProvider;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
