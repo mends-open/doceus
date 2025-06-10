@@ -8,8 +8,12 @@ use App\Filament\Clusters\Managment\Resources\PatientResource\Pages;
 use App\Models\Patient;
 use Eloquent;
 use Filament\Forms;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use App\Feature\Identity\Enums\ContactableType;
+use App\Feature\Identity\Enums\ContactPointSystem;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -55,31 +59,33 @@ class PatientResource extends Resource
             Forms\Components\DatePicker::make('person.birth_date')
                 ->label(__('Birth Date')),
 
-            Select::make('person.emails')
+            Repeater::make('person.emails')
                 ->label(__('Emails'))
-                ->relationship('person.emails', 'value')
-                ->multiple()
-                ->preload()
-                ->searchable()
-                ->createOptionForm([
+                ->schema([
+                    Hidden::make('contactable_type')
+                        ->default(ContactableType::Person),
+                    Hidden::make('system')
+                        ->default(ContactPointSystem::Email),
                     TextInput::make('value')
                         ->label(__('Email'))
                         ->email()
                         ->required(),
-                ]),
+                ])
+                ->defaultItems(0),
 
-            Select::make('person.phones')
+            Repeater::make('person.phones')
                 ->label(__('Phones'))
-                ->relationship('person.phones', 'value')
-                ->multiple()
-                ->preload()
-                ->searchable()
-                ->createOptionForm([
+                ->schema([
+                    Hidden::make('contactable_type')
+                        ->default(ContactableType::Person),
+                    Hidden::make('system')
+                        ->default(ContactPointSystem::Phone),
                     TextInput::make('value')
                         ->label(__('Phone'))
                         ->tel()
                         ->required(),
-                ]),
+                ])
+                ->defaultItems(0),
         ]);
     }
 

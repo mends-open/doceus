@@ -3,6 +3,8 @@
 namespace App\Filament\Clusters\Managment\Resources\PatientResource\Pages;
 
 use App\Filament\Clusters\Managment\Resources\PatientResource;
+use App\Feature\Identity\Enums\ContactableType;
+use App\Feature\Identity\Enums\ContactPointSystem;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
@@ -21,12 +23,53 @@ class EditPatient extends EditRecord
             'birth_date',
         ]);
 
+        $data['person']['emails'] = $this->record->person->emails
+            ->pluck('value')
+            ->map(fn ($value) => ['value' => $value])
+            ->toArray();
+
+        $data['person']['phones'] = $this->record->person->phones
+            ->pluck('value')
+            ->map(fn ($value) => ['value' => $value])
+            ->toArray();
+
         return $data;
     }
 
     protected function mutateFormDataBeforeSave(array $data): array
     {
-        $this->record->person->update($data['person'] ?? []);
+        $personData = $data['person'] ?? [];
+
+        $emails = collect($personData['emails'] ?? [])
+            ->pluck('value')
+            ->filter()
+            ->toArray();
+        $phones = collect($personData['phones'] ?? [])
+            ->pluck('value')
+            ->filter()
+            ->toArray();
+
+        unset($personData['emails'], $personData['phones']);
+
+        $this->record->person->update($personData);
+
+        $this->record->person->emails()->delete();
+        foreach ($emails as $email) {
+            $this->record->person->contactPoints()->create([
+                'contactable_type' => ContactableType::Person,
+                'system' => ContactPointSystem::Email,
+                'value' => $email,
+            ]);
+        }
+
+        $this->record->person->phones()->delete();
+        foreach ($phones as $phone) {
+            $this->record->person->contactPoints()->create([
+                'contactable_type' => ContactableType::Person,
+                'system' => ContactPointSystem::Phone,
+                'value' => $phone,
+            ]);
+        }
 
         unset($data['person']);
 
