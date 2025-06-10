@@ -2,7 +2,6 @@
 
 namespace App\Filament\Clusters\Managment\Resources;
 
-use Filament\Forms\Components\Select;
 use App\Feature\Identity\Enums\Gender;
 use App\Filament\Clusters\Managment;
 use App\Filament\Clusters\Managment\Resources\PersonResource\Pages;
@@ -11,6 +10,7 @@ use Eloquent;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -57,28 +57,28 @@ class PersonResource extends Resource
             Forms\Components\DatePicker::make('birth_date')
                 ->label(__('Birth Date')),
             Hidden::make('organization_id')
-                ->default(fn () => Filament::getTenant()?->getKey())    
+                ->default(fn () => Filament::getTenant()?->getKey())
                 ->required(),
             Select::make('emails')
                 ->label(__('Emails'))
-                ->relationship('emails', 'email')
+                ->relationship('emails', 'value')
                 ->multiple()
                 ->preload()
                 ->searchable()
                 ->createOptionForm([
-                    TextInput::make('email')
+                    TextInput::make('value')
                         ->label(__('Email'))
                         ->email()
                         ->required(),
                 ]),
             Select::make('phones')
                 ->label(__('Phones'))
-                ->relationship('phones', 'phone')
+                ->relationship('phones', 'value')
                 ->multiple()
                 ->preload()
                 ->searchable()
                 ->createOptionForm([
-                    TextInput::make('phone')
+                    TextInput::make('value')
                         ->label(__('Phone'))
                         ->tel()
                         ->required(),
