@@ -7,10 +7,9 @@ use App\Feature\Identity\Enums\ContactableType;
 use App\Feature\Identity\Enums\Gender;
 use Filament\Forms\Components\DatePicker;
 use Filament\Schemas\Components\Group;
-use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
+use App\Models\ContactPoint;
 use Filament\Schemas\Schema;
 
 class PatientForm
@@ -22,38 +21,51 @@ class PatientForm
                 Group::make()
                     ->relationship('person')
                     ->schema([
-                        Textarea::make('first_name')
+                        TextInput::make('first_name')
                             ->required()
                             ->columnSpanFull(),
-                        Textarea::make('last_name')
+                        TextInput::make('last_name')
                             ->required()
                             ->columnSpanFull(),
-                        Textarea::make('pesel')
+                        TextInput::make('pesel')
                             ->columnSpanFull(),
-                        Textarea::make('id_number')
+                        TextInput::make('id_number')
                             ->columnSpanFull(),
                         Select::make('gender')
                             ->options(Gender::class),
                         DatePicker::make('birth_date'),
-                        Repeater::make('contactPoints')
-                            ->relationship()
-                            ->schema([
-                                Select::make('system')
-                                    ->options(ContactPointSystem::class)
-                                    ->required(),
+                        Select::make('emails')
+                            ->label('Emails')
+                            ->relationship('emails', 'value')
+                            ->createOptionForm([
                                 TextInput::make('value')
+                                    ->label('Email')
                                     ->required(),
                             ])
-                            ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
+                            ->createOptionUsing(function (array $data): int {
+                                $data['system'] = ContactPointSystem::Email->value;
                                 $data['contactable_type'] = ContactableType::Person->value;
 
-                                return $data;
+                                return ContactPoint::create($data)->getKey();
                             })
-                            ->mutateRelationshipDataBeforeSaveUsing(function (array $data): array {
+                            ->multiple()
+                            ->preload(),
+                        Select::make('phones')
+                            ->label('Phones')
+                            ->relationship('phones', 'value')
+                            ->createOptionForm([
+                                TextInput::make('value')
+                                    ->label('Phone')
+                                    ->required(),
+                            ])
+                            ->createOptionUsing(function (array $data): int {
+                                $data['system'] = ContactPointSystem::Phone->value;
                                 $data['contactable_type'] = ContactableType::Person->value;
 
-                                return $data;
-                            }),
+                                return ContactPoint::create($data)->getKey();
+                            })
+                            ->multiple()
+                            ->preload(),
                     ]),
             ]);
     }
