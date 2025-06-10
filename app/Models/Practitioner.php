@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use App\Feature\Revision\Interfaces\Revisionable;
 use App\Feature\Revision\Observers\RevisionableObserver;
 use App\Feature\Revision\Traits\LogsRevisions;
@@ -16,7 +17,7 @@ use App\Models\OrganizationPractitioner;
  * @property int $id
  * @property int $person_id
  * @property-read Person $person
- * @property-read \Illuminate\Database\Eloquent\Collection<int, Organization> $organizations
+ * @property-read Collection<int, Organization> $organizations
  * @property-read int|null $organizations_count
  */
 class Practitioner extends BaseModel

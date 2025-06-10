@@ -2,6 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Collection;
+use Database\Factories\OrganizationFactory;
+use Illuminate\Database\Eloquent\Builder;
 use App\Feature\Identity\Enums\OrganizationType;
 use App\Feature\Revision\Interfaces\Revisionable;
 use App\Feature\Revision\Observers\RevisionableObserver;
@@ -23,28 +27,28 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $id
  * @property OrganizationType $type
  * @property mixed $name
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
  * @property-read string|null $sqid
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Person> $people
+ * @property-read Collection<int, Person> $people
  * @property-read int|null $people_count
  * @property-read OrganizationPractitioner|null $pivot
- * @property-read \Illuminate\Database\Eloquent\Collection<int, Practitioner> $practitioners
+ * @property-read Collection<int, Practitioner> $practitioners
  * @property-read int|null $practitioners_count
- * @method static \Database\Factories\OrganizationFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization whereType($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization withTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Organization withoutTrashed()
+ * @method static OrganizationFactory factory($count = null, $state = [])
+ * @method static Builder<static>|Organization newModelQuery()
+ * @method static Builder<static>|Organization newQuery()
+ * @method static Builder<static>|Organization onlyTrashed()
+ * @method static Builder<static>|Organization query()
+ * @method static Builder<static>|Organization whereCreatedAt($value)
+ * @method static Builder<static>|Organization whereDeletedAt($value)
+ * @method static Builder<static>|Organization whereId($value)
+ * @method static Builder<static>|Organization whereName($value)
+ * @method static Builder<static>|Organization whereType($value)
+ * @method static Builder<static>|Organization whereUpdatedAt($value)
+ * @method static Builder<static>|Organization withTrashed()
+ * @method static Builder<static>|Organization withoutTrashed()
  * @mixin \Eloquent
  */
 class Organization extends BaseModel

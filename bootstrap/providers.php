@@ -1,9 +1,15 @@
 <?php
 
+use App\Providers\AppServiceProvider;
+use App\Providers\HorizonServiceProvider;
+use App\Providers\TelescopeServiceProvider;
+use App\Providers\Filament\AppPanelProvider;
+use App\Feature\Polymorphic\Providers\PolymorphicServiceProvider;
+
 return [
-    App\Providers\AppServiceProvider::class,
-    App\Providers\HorizonServiceProvider::class,
-    App\Providers\TelescopeServiceProvider::class,
-    App\Providers\Filament\AppPanelProvider::class,
-    \App\Feature\Polymorphic\Providers\PolymorphicServiceProvider::class,
+    AppServiceProvider::class,
+    HorizonServiceProvider::class,
+    TelescopeServiceProvider::class,
+    AppPanelProvider::class,
+    PolymorphicServiceProvider::class,
 ];

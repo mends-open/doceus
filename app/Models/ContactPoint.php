@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Carbon;
+use Database\Factories\ContactPointFactory;
 use App\Feature\Identity\Enums\ContactPointSystem;
 use App\Feature\Identity\Enums\ContactableType;
 use App\Feature\Revision\Interfaces\Revisionable;
@@ -18,11 +20,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property ContactableType $contactable_type
  * @property ContactPointSystem $system
  * @property string $value
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
  * @property-read Person $person
- * @method static \Database\Factories\ContactPointFactory factory($count = null, $state = [])
+ * @method static ContactPointFactory factory($count = null, $state = [])
  */
 class ContactPoint extends BaseModel
 {
