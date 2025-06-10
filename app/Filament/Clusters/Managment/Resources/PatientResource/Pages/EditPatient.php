@@ -24,13 +24,23 @@ class EditPatient extends EditRecord
         ]);
 
         $data['person']['emails'] = $this->record->person->emails
-            ->pluck('value')
-            ->map(fn ($value) => ['value' => $value])
+            ->map(
+                fn ($point) => [
+                    'value' => $point->value,
+                    'contactable_type' => ContactableType::Person,
+                    'system' => ContactPointSystem::Email,
+                ],
+            )
             ->toArray();
 
         $data['person']['phones'] = $this->record->person->phones
-            ->pluck('value')
-            ->map(fn ($value) => ['value' => $value])
+            ->map(
+                fn ($point) => [
+                    'value' => $point->value,
+                    'contactable_type' => ContactableType::Person,
+                    'system' => ContactPointSystem::Phone,
+                ],
+            )
             ->toArray();
 
         return $data;
