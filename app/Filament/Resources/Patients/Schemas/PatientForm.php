@@ -10,7 +10,9 @@ use Filament\Schemas\Components\Group;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use App\Models\ContactPoint;
+use App\Models\Patient;
 use Filament\Schemas\Schema;
+use Illuminate\Database\Eloquent\Builder;
 
 class PatientForm
 {
@@ -36,7 +38,21 @@ class PatientForm
                         DatePicker::make('birth_date'),
                         Select::make('emails')
                             ->label('Emails')
-                            ->relationship('emails', 'value')
+                            ->relationship(
+                                'emails',
+                                'value',
+                                modifyQueryUsing: function (Builder $query, ?string $search, ?Patient $record) {
+                                    $query
+                                        ->where('system', ContactPointSystem::Email)
+                                        ->where(function ($q) use ($record) {
+                                            $q->whereNull('contactable_id');
+                                            if ($record) {
+                                                $q->orWhere('contactable_id', $record->person_id);
+                                            }
+                                        });
+                                },
+                                ignoreRecord: true,
+                            )
                             ->createOptionForm([
                                 TextInput::make('value')
                                     ->label('Email')
@@ -52,7 +68,21 @@ class PatientForm
                             ->preload(),
                         Select::make('phones')
                             ->label('Phones')
-                            ->relationship('phones', 'value')
+                            ->relationship(
+                                'phones',
+                                'value',
+                                modifyQueryUsing: function (Builder $query, ?string $search, ?Patient $record) {
+                                    $query
+                                        ->where('system', ContactPointSystem::Phone)
+                                        ->where(function ($q) use ($record) {
+                                            $q->whereNull('contactable_id');
+                                            if ($record) {
+                                                $q->orWhere('contactable_id', $record->person_id);
+                                            }
+                                        });
+                                },
+                                ignoreRecord: true,
+                            )
                             ->createOptionForm([
                                 TextInput::make('value')
                                     ->label('Phone')

@@ -73,4 +73,25 @@ class PersonContactTest extends TestCase
         $this->assertNotNull($point);
         $this->assertSame('person', $point->contactable_type->value);
     }
+
+    public function test_unused_scope_returns_only_unassigned(): void
+    {
+        ContactPoint::factory()->count(2)->email()->create();
+        $unused = ContactPoint::factory()->count(3)->email()->unused()->create();
+
+        $this->assertCount($unused->count(), ContactPoint::unused()->get());
+    }
+
+    public function test_contact_point_can_be_detached(): void
+    {
+        $point = ContactPoint::factory()->email()->create();
+
+        $point->update(['contactable_id' => null]);
+
+        $this->assertDatabaseHas('contact_points', [
+            'id' => $point->id,
+            'contactable_id' => null,
+            'contactable_type' => null,
+        ]);
+    }
 }

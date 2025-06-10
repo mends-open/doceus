@@ -16,8 +16,9 @@ return new class extends Migration
     {
         Schema::create('contact_points', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('contactable_id');
-            $table->enum('contactable_type', Arr::pluck(ContactableType::cases(), 'value'));
+            $table->unsignedBigInteger('contactable_id')->nullable();
+            $table->enum('contactable_type', Arr::pluck(ContactableType::cases(), 'value'))
+                ->nullable();
             $table->enum('system', Arr::pluck(ContactPointSystem::cases(), 'value'));
             $table->text('value');
             $table->softDeletes();

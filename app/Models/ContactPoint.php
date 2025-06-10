@@ -16,8 +16,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int $id
- * @property int $contactable_id
- * @property ContactableType $contactable_type
+ * @property int|null $contactable_id
+ * @property ContactableType|null $contactable_type
  * @property ContactPointSystem $system
  * @property string $value
  * @property Carbon|null $created_at
@@ -47,6 +47,11 @@ class ContactPoint extends BaseModel
         'system' => ContactPointSystem::class,
     ];
 
+    public function scopeUnused($query)
+    {
+        return $query->whereNull('contactable_id');
+    }
+
     public function person(): BelongsTo
     {
         return $this->belongsTo(Person::class, 'contactable_id')
@@ -57,8 +62,10 @@ class ContactPoint extends BaseModel
     {
         parent::booted();
 
-        static::creating(function (self $point) {
-            if (! $point->contactable_type) {
+        static::saving(function (self $point) {
+            if (blank($point->contactable_id)) {
+                $point->contactable_type = null;
+            } elseif (! $point->contactable_type) {
                 $point->contactable_type = ContactableType::Person;
             }
         });
