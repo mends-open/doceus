@@ -59,4 +59,26 @@ class EditProfile extends BasePage
             ->required()
             ->mask('99999999999');
     }
+
+    /**
+     * Load data from the authenticated user's related Person record.
+     */
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        return $this->getUser()->person->only([
+            'first_name',
+            'last_name',
+            'pesel',
+        ]);
+    }
+
+    /**
+     * Persist profile updates to the Person model instead of the User.
+     */
+    protected function handleRecordUpdate(\Illuminate\Database\Eloquent\Model $record, array $data): \Illuminate\Database\Eloquent\Model
+    {
+        $record->person->update($data);
+
+        return $record;
+    }
 }
