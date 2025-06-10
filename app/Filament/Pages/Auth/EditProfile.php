@@ -37,7 +37,7 @@ class EditProfile extends BasePage
 
     protected function getFirstNameFormComponent(): TextInput
     {
-        return TextInput::make('first_name')
+        return TextInput::make('person.first_name')
             ->label(__('doceus.auth.first_name'))
             ->required()
             ->maxLength(255)
@@ -46,7 +46,7 @@ class EditProfile extends BasePage
 
     protected function getLastNameFormComponent(): TextInput
     {
-        return TextInput::make('last_name')
+        return TextInput::make('person.last_name')
             ->label(__('doceus.auth.last_name'))
             ->required()
             ->maxLength(255);
@@ -54,7 +54,7 @@ class EditProfile extends BasePage
 
     protected function getPeselFormComponent(): TextInput
     {
-        return TextInput::make('pesel')
+        return TextInput::make('person.pesel')
             ->label(__('PESEL'))
             ->required()
             ->mask('99999999999');
@@ -62,14 +62,11 @@ class EditProfile extends BasePage
 
     /**
      * Load data from the authenticated user's related Person record.
+     * @throws \Exception
      */
     protected function mutateFormDataBeforeFill(array $data): array
     {
-        return $this->getUser()->person->only([
-            'first_name',
-            'last_name',
-            'pesel',
-        ]);
+        return $this->getUser()->with('person')->first()->toArray();
     }
 
     /**
