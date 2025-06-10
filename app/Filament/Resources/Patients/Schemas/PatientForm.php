@@ -5,7 +5,7 @@ namespace App\Filament\Resources\Patients\Schemas;
 use App\Feature\Identity\Enums\ContactPointSystem;
 use App\Feature\Identity\Enums\Gender;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\Group;
+use Filament\Schemas\Components\Group;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
