@@ -2,9 +2,9 @@
 
 namespace App\Filament\Clusters\Managment\Resources;
 
+use App\Feature\Identity\Enums\Gender;
 use App\Filament\Clusters\Managment;
 use App\Filament\Clusters\Managment\Resources\PatientResource\Pages;
-use App\Feature\Identity\Enums\Gender;
 use App\Models\Patient;
 use Eloquent;
 use Filament\Forms;
@@ -62,7 +62,7 @@ class PatientResource extends Resource
                 ->preload()
                 ->searchable()
                 ->createOptionForm([
-                    TextInput::make('email')
+                    TextInput::make('value')
                         ->label(__('Email'))
                         ->email()
                         ->required(),
@@ -75,7 +75,7 @@ class PatientResource extends Resource
                 ->preload()
                 ->searchable()
                 ->createOptionForm([
-                    TextInput::make('phone')
+                    TextInput::make('value')
                         ->label(__('Phone'))
                         ->tel()
                         ->required(),
@@ -157,7 +157,6 @@ class PatientResource extends Resource
 
     public static function resolveRecordRouteBinding($key): Eloquent
     {
-        return (new Patient())->resolveRouteBinding($key);
+        return (new Patient)->resolveRouteBinding($key);
     }
 }
-
