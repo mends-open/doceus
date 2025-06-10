@@ -1,6 +1,6 @@
 <?php
 
-use App\Feature\MorphClass\Enums\MorphClass;
+use App\Feature\Polymorphic\Enums\MorphType;
 use App\Feature\Revision\Enums\RevisionType;
 use App\Models\Organization;
 use App\Models\User;
@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id(); // Always first
 
             $table->enum('type', Arr::pluck(RevisionType::cases(), 'value'));
-            $table->enum('revisionable_type', Arr::pluck(MorphClass::cases(), 'value'))->index();
+            $table->enum('revisionable_type', Arr::pluck(MorphType::cases(), 'value'))->index();
             $table->unsignedBigInteger('revisionable_id')->nullable()->index();
             $table->foreignIdFor(Organization::class)
                 ->nullable();

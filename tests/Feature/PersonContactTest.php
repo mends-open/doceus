@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Feature\MorphClass\Enums\MorphClass;
+use App\Feature\Polymorphic\Enums\MorphType;
 use App\Feature\Revision\Enums\RevisionType;
 use App\Feature\Revision\Models\Revision;
 use App\Models\ContactPoint;
@@ -36,7 +36,7 @@ class PersonContactTest extends TestCase
         $email = $emails->first();
         $email->update(['value' => 'updated@example.com']);
         $this->assertDatabaseHas('revisions', [
-            'revisionable_type' => MorphClass::ContactPoint->value,
+            'revisionable_type' => MorphType::ContactPoint->value,
             'revisionable_id' => $email->id,
             'type' => RevisionType::Updated->value,
         ]);
@@ -46,7 +46,7 @@ class PersonContactTest extends TestCase
         $email->delete();
         $this->assertCount(3, $person->refresh()->contactPoints);
         $this->assertDatabaseHas('revisions', [
-            'revisionable_type' => MorphClass::ContactPoint->value,
+            'revisionable_type' => MorphType::ContactPoint->value,
             'revisionable_id' => $emailId,
             'type' => RevisionType::Deleted->value,
         ]);

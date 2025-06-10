@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Enums\Language;
+use App\Feature\Identity\Enums\Language;
 use App\Models\User;
 use App\Models\Person;
 use Illuminate\Database\Eloquent\Factories\Factory;

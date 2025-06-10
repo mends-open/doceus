@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use App\Feature\Identity\Enums\Gender;
 use App\Feature\Identity\Enums\OrganizationType;
 use App\Feature\Revision\Enums\RevisionType;
-use App\Enums\Language;
+use App\Feature\Identity\Enums\Language;
 use Tests\TestCase;
 
 class EnumLabelTest extends TestCase
