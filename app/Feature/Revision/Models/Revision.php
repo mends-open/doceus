@@ -2,6 +2,8 @@
 
 namespace App\Feature\Revision\Models;
 
+use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use App\Models\Organization;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
@@ -9,10 +11,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
- * 
+ *
  *
  * @property int $id
- * @property \Illuminate\Support\Carbon $dispatched_at
+ * @property Carbon $dispatched_at
  * @property string $created_at
  * @property int|null $organization_id
  * @property int|null $user_id
@@ -28,23 +30,23 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property-read Organization|null $organization
  * @property-read Model|\Eloquent|null $revisionable
  * @property-read User|null $user
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision whereData($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision whereDispatchedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision whereIpAddress($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision whereMeta($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision whereOrganizationId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision whereRevisionableId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision whereRevisionableType($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision whereSessionId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision whereType($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision whereUrl($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision whereUserAgent($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Revision whereUserId($value)
+ * @method static Builder<static>|Revision newModelQuery()
+ * @method static Builder<static>|Revision newQuery()
+ * @method static Builder<static>|Revision query()
+ * @method static Builder<static>|Revision whereCreatedAt($value)
+ * @method static Builder<static>|Revision whereData($value)
+ * @method static Builder<static>|Revision whereDispatchedAt($value)
+ * @method static Builder<static>|Revision whereId($value)
+ * @method static Builder<static>|Revision whereIpAddress($value)
+ * @method static Builder<static>|Revision whereMeta($value)
+ * @method static Builder<static>|Revision whereOrganizationId($value)
+ * @method static Builder<static>|Revision whereRevisionableId($value)
+ * @method static Builder<static>|Revision whereRevisionableType($value)
+ * @method static Builder<static>|Revision whereSessionId($value)
+ * @method static Builder<static>|Revision whereType($value)
+ * @method static Builder<static>|Revision whereUrl($value)
+ * @method static Builder<static>|Revision whereUserAgent($value)
+ * @method static Builder<static>|Revision whereUserId($value)
  * @mixin \Eloquent
  */
 class Revision extends Model

@@ -2,22 +2,19 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\Pages\Auth\EditProfile;
-use App\Filament\Pages\Auth\Register;
-use App\Filament\Pages\Tenancy\RegisterOrganization;
+use App\Filament\Auth\Pages\EditProfile;
 use App\Http\Middleware\SetUserLocale;
 use App\Models\Organization;
 use Exception;
-use Filament\FontProviders\GoogleFontProvider;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages;
+use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\Widgets;
+use Filament\Widgets\AccountWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -36,29 +33,30 @@ class AppPanelProvider extends PanelProvider
             ->default()
             ->id('app')
             ->path('')
-            ->tenant(Organization::class)
+            ->tenant(Organization::class, ownershipRelationship: 'organizations')
             ->tenantRoutePrefix('organization')
-            ->tenantRegistration(RegisterOrganization::class)
             ->passwordReset()
             ->profile(EditProfile::class)
-            ->registration(Register::class)
+            ->registration()
             ->emailVerification()
+            ->emailChangeVerification()
             ->login()
             ->colors([
                 'primary' => Color::Neutral,
             ])
-            ->maxContentWidth('full')
+            ->unsavedChangesAlerts()
             ->topNavigation()
+            ->databaseTransactions()
             ->breadcrumbs(false)
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->discoverClusters(in: app_path('Filament/Clusters'), for: 'App\\Filament\\Clusters')
             ->pages([
-                Pages\Dashboard::class,
+                Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
+                AccountWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

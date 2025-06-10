@@ -2,6 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Collection;
+use Database\Factories\PersonFactory;
+use Illuminate\Database\Eloquent\Builder;
 use App\Feature\Identity\Enums\Gender;
 use App\Models\ContactPoint;
 use App\Models\Practitioner;
@@ -28,31 +33,31 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property mixed|null $pesel
  * @property mixed|null $id_number
  * @property Gender|null $gender
- * @property \Illuminate\Support\Carbon|null $birth_date
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property Carbon|null $birth_date
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
  * @property-read string|null $sqid
- * @property-read \Illuminate\Database\Eloquent\Collection<int, ContactPoint> $contactPoints
+ * @property-read Collection<int, ContactPoint> $contactPoints
  * @property-read int|null $contact_points_count
  * @property-read Practitioner|null $practitioner
- * @method static \Database\Factories\PersonFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Person newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Person newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Person onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Person query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Person whereBirthDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Person whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Person whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Person whereFirstName($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Person whereGender($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Person whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Person whereIdNumber($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Person whereLastName($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Person wherePesel($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Person whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Person withTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Person withoutTrashed()
+ * @method static PersonFactory factory($count = null, $state = [])
+ * @method static Builder<static>|Person newModelQuery()
+ * @method static Builder<static>|Person newQuery()
+ * @method static Builder<static>|Person onlyTrashed()
+ * @method static Builder<static>|Person query()
+ * @method static Builder<static>|Person whereBirthDate($value)
+ * @method static Builder<static>|Person whereCreatedAt($value)
+ * @method static Builder<static>|Person whereDeletedAt($value)
+ * @method static Builder<static>|Person whereFirstName($value)
+ * @method static Builder<static>|Person whereGender($value)
+ * @method static Builder<static>|Person whereId($value)
+ * @method static Builder<static>|Person whereIdNumber($value)
+ * @method static Builder<static>|Person whereLastName($value)
+ * @method static Builder<static>|Person wherePesel($value)
+ * @method static Builder<static>|Person whereUpdatedAt($value)
+ * @method static Builder<static>|Person withTrashed()
+ * @method static Builder<static>|Person withoutTrashed()
  * @mixin \Eloquent
  */
 class Person extends BaseModel
@@ -88,6 +93,18 @@ class Person extends BaseModel
     {
         return $this->hasMany(ContactPoint::class, 'contactable_id')
             ->where('contactable_type', ContactableType::Person);
+    }
+
+    public function organizations(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            Organization::class,
+            OrganizationPatient::class,
+            'patient_id',
+            'id',
+            'id',
+            'organization_id'
+        );
     }
 
     /**
