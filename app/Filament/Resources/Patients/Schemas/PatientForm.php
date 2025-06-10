@@ -10,7 +10,7 @@ use Filament\Schemas\Components\Group;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use App\Models\ContactPoint;
-use App\Models\Patient;
+use App\Models\Person;
 use Filament\Schemas\Schema;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -41,13 +41,13 @@ class PatientForm
                             ->relationship(
                                 'emails',
                                 'value',
-                                modifyQueryUsing: function (Builder $query, ?string $search, ?Patient $record) {
+                                modifyQueryUsing: function (Builder $query, ?string $search, ?Person $record) {
                                     $query
                                         ->where('system', ContactPointSystem::Email)
                                         ->where(function ($q) use ($record) {
                                             $q->whereNull('contactable_id');
                                             if ($record) {
-                                                $q->orWhere('contactable_id', $record->person_id);
+                                                $q->orWhere('contactable_id', $record->id);
                                             }
                                         });
                                 },
@@ -71,13 +71,13 @@ class PatientForm
                             ->relationship(
                                 'phones',
                                 'value',
-                                modifyQueryUsing: function (Builder $query, ?string $search, ?Patient $record) {
+                                modifyQueryUsing: function (Builder $query, ?string $search, ?Person $record) {
                                     $query
                                         ->where('system', ContactPointSystem::Phone)
                                         ->where(function ($q) use ($record) {
                                             $q->whereNull('contactable_id');
                                             if ($record) {
-                                                $q->orWhere('contactable_id', $record->person_id);
+                                                $q->orWhere('contactable_id', $record->id);
                                             }
                                         });
                                 },
