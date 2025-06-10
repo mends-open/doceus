@@ -43,4 +43,12 @@ class ContactPointFactory extends Factory
             'value' => $this->faker->phoneNumber,
         ]);
     }
+
+    public function unused(): static
+    {
+        return $this->state(fn () => [
+            'contactable_id' => null,
+            'contactable_type' => null,
+        ]);
+    }
 }
