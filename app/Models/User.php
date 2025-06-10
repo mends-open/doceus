@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\Language;
+use App\Feature\Identity\Enums\Language;
 use App\Models\Person;
 use App\Feature\Revision\Interfaces\Revisionable;
 use App\Feature\Revision\Observers\RevisionableObserver;

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Feature\MorphClass\Enums;
+namespace App\Feature\Polymorphic\Enums;
 
-enum MorphClass: string
+enum MorphType: string
 {
     case ContactPoint = 'contact_point';
     case OrganizationPatient = 'organization_patient';

@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Feature\MorphClass\Enums\MorphClass;
+use App\Feature\Polymorphic\Enums\MorphType;
 use App\Feature\Revision\Enums\RevisionType;
 use App\Feature\Revision\Models\Revision;
 use App\Models\Organization;
@@ -22,7 +22,7 @@ class RevisionTest extends TestCase
         $user = User::factory()->create();
         $this->assertSame($initial + 3, Revision::count());
         $this->assertDatabaseHas('revisions', [
-            'revisionable_type' => MorphClass::User->value,
+            'revisionable_type' => MorphType::User->value,
             'revisionable_id' => $user->id,
             'type' => RevisionType::Created->value,
         ]);
@@ -30,7 +30,7 @@ class RevisionTest extends TestCase
         $user->update(['email' => 'updated@example.com']);
         $this->assertSame($initial + 4, Revision::count());
         $this->assertDatabaseHas('revisions', [
-            'revisionable_type' => MorphClass::User->value,
+            'revisionable_type' => MorphType::User->value,
             'revisionable_id' => $user->id,
             'type' => RevisionType::Updated->value,
         ]);
@@ -38,7 +38,7 @@ class RevisionTest extends TestCase
         $user->delete();
         $this->assertSame($initial + 5, Revision::count());
         $this->assertDatabaseHas('revisions', [
-            'revisionable_type' => MorphClass::User->value,
+            'revisionable_type' => MorphType::User->value,
             'revisionable_id' => $user->id,
             'type' => RevisionType::Deleted->value,
         ]);
@@ -46,7 +46,7 @@ class RevisionTest extends TestCase
         $user->restore();
         $this->assertSame($initial + 6, Revision::count());
         $this->assertDatabaseHas('revisions', [
-            'revisionable_type' => MorphClass::User->value,
+            'revisionable_type' => MorphType::User->value,
             'revisionable_id' => $user->id,
             'type' => RevisionType::Restored->value,
         ]);
@@ -54,7 +54,7 @@ class RevisionTest extends TestCase
         $user->forceDelete();
         $this->assertSame($initial + 7, Revision::count());
         $this->assertDatabaseHas('revisions', [
-            'revisionable_type' => MorphClass::User->value,
+            'revisionable_type' => MorphType::User->value,
             'revisionable_id' => $user->id,
             'type' => RevisionType::ForceDeleted->value,
         ]);
@@ -66,7 +66,7 @@ class RevisionTest extends TestCase
         $org = Organization::factory()->create();
         $this->assertSame($initial + 1, Revision::count());
         $this->assertDatabaseHas('revisions', [
-            'revisionable_type' => MorphClass::Organization->value,
+            'revisionable_type' => MorphType::Organization->value,
             'revisionable_id' => $org->id,
             'type' => RevisionType::Created->value,
         ]);
@@ -74,7 +74,7 @@ class RevisionTest extends TestCase
         $org->update(['name' => 'Updated']);
         $this->assertSame($initial + 2, Revision::count());
         $this->assertDatabaseHas('revisions', [
-            'revisionable_type' => MorphClass::Organization->value,
+            'revisionable_type' => MorphType::Organization->value,
             'revisionable_id' => $org->id,
             'type' => RevisionType::Updated->value,
         ]);
@@ -82,7 +82,7 @@ class RevisionTest extends TestCase
         $org->delete();
         $this->assertSame($initial + 3, Revision::count());
         $this->assertDatabaseHas('revisions', [
-            'revisionable_type' => MorphClass::Organization->value,
+            'revisionable_type' => MorphType::Organization->value,
             'revisionable_id' => $org->id,
             'type' => RevisionType::Deleted->value,
         ]);
@@ -90,7 +90,7 @@ class RevisionTest extends TestCase
         $org->restore();
         $this->assertSame($initial + 4, Revision::count());
         $this->assertDatabaseHas('revisions', [
-            'revisionable_type' => MorphClass::Organization->value,
+            'revisionable_type' => MorphType::Organization->value,
             'revisionable_id' => $org->id,
             'type' => RevisionType::Restored->value,
         ]);
@@ -98,7 +98,7 @@ class RevisionTest extends TestCase
         $org->forceDelete();
         $this->assertSame($initial + 5, Revision::count());
         $this->assertDatabaseHas('revisions', [
-            'revisionable_type' => MorphClass::Organization->value,
+            'revisionable_type' => MorphType::Organization->value,
             'revisionable_id' => $org->id,
             'type' => RevisionType::ForceDeleted->value,
         ]);
@@ -110,7 +110,7 @@ class RevisionTest extends TestCase
         $person = Person::factory()->create();
         $this->assertSame($initial + 1, Revision::count());
         $this->assertDatabaseHas('revisions', [
-            'revisionable_type' => MorphClass::Person->value,
+            'revisionable_type' => MorphType::Person->value,
             'revisionable_id' => $person->id,
             'type' => RevisionType::Created->value,
         ]);
@@ -118,7 +118,7 @@ class RevisionTest extends TestCase
         $person->update(['first_name' => 'Updated']);
         $this->assertSame($initial + 2, Revision::count());
         $this->assertDatabaseHas('revisions', [
-            'revisionable_type' => MorphClass::Person->value,
+            'revisionable_type' => MorphType::Person->value,
             'revisionable_id' => $person->id,
             'type' => RevisionType::Updated->value,
         ]);
@@ -126,7 +126,7 @@ class RevisionTest extends TestCase
         $person->delete();
         $this->assertSame($initial + 3, Revision::count());
         $this->assertDatabaseHas('revisions', [
-            'revisionable_type' => MorphClass::Person->value,
+            'revisionable_type' => MorphType::Person->value,
             'revisionable_id' => $person->id,
             'type' => RevisionType::Deleted->value,
         ]);
@@ -134,7 +134,7 @@ class RevisionTest extends TestCase
         $person->restore();
         $this->assertSame($initial + 4, Revision::count());
         $this->assertDatabaseHas('revisions', [
-            'revisionable_type' => MorphClass::Person->value,
+            'revisionable_type' => MorphType::Person->value,
             'revisionable_id' => $person->id,
             'type' => RevisionType::Restored->value,
         ]);
@@ -142,7 +142,7 @@ class RevisionTest extends TestCase
         $person->forceDelete();
         $this->assertSame($initial + 5, Revision::count());
         $this->assertDatabaseHas('revisions', [
-            'revisionable_type' => MorphClass::Person->value,
+            'revisionable_type' => MorphType::Person->value,
             'revisionable_id' => $person->id,
             'type' => RevisionType::ForceDeleted->value,
         ]);
@@ -163,7 +163,7 @@ class RevisionTest extends TestCase
         $this->assertNotNull($pivot);
         $this->assertGreaterThan($initial, Revision::count());
         $this->assertDatabaseHas('revisions', [
-            'revisionable_type' => MorphClass::OrganizationPractitioner->value,
+            'revisionable_type' => MorphType::OrganizationPractitioner->value,
             'revisionable_id' => $pivot->id,
             'type' => RevisionType::Created->value,
         ]);
@@ -171,7 +171,7 @@ class RevisionTest extends TestCase
         // Detach from organization side
         $org->practitioners()->detach($user->practitioner->id);
         $this->assertDatabaseHas('revisions', [
-            'revisionable_type' => MorphClass::OrganizationPractitioner->value,
+            'revisionable_type' => MorphType::OrganizationPractitioner->value,
             'revisionable_id' => $pivot->id,
             'type' => RevisionType::Deleted->value,
         ]);
@@ -184,7 +184,7 @@ class RevisionTest extends TestCase
             ->first();
         $this->assertNotNull($pivot2);
         $this->assertDatabaseHas('revisions', [
-            'revisionable_type' => MorphClass::OrganizationPractitioner->value,
+            'revisionable_type' => MorphType::OrganizationPractitioner->value,
             'revisionable_id' => $pivot2->id,
             'type' => RevisionType::Created->value,
         ]);
