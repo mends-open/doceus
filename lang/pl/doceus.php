@@ -51,6 +51,13 @@ return [
         'granted' => 'Przyznano',
         'revoked' => 'Cofnięto',
     ],
+    'revision_type' => [
+        'created' => 'Utworzono',
+        'updated' => 'Zaktualizowano',
+        'deleted' => 'Usunięto',
+        'restored' => 'Przywrócono',
+        'force_deleted' => 'Usunięto trwale',
+    ],
     'language' => [
         'en' => 'Angielski',
         'pl' => 'Polski',
@@ -64,6 +71,7 @@ return [
         'male' => 'Mężczyzna',
         'female' => 'Kobieta',
         'other' => 'Inna',
+        'unknown' => 'Nieznana',
     ],
     'birth_date' => 'Data urodzenia',
     'id_number' => 'Numer dokumentu',

@@ -51,6 +51,13 @@ return [
         'granted' => 'Granted',
         'revoked' => 'Revoked',
     ],
+    'revision_type' => [
+        'created' => 'Created',
+        'updated' => 'Updated',
+        'deleted' => 'Deleted',
+        'restored' => 'Restored',
+        'force_deleted' => 'Force Deleted',
+    ],
     'language' => [
         'en' => 'English',
         'pl' => 'Polish',
@@ -64,6 +71,7 @@ return [
         'male' => 'Male',
         'female' => 'Female',
         'other' => 'Other',
+        'unknown' => 'Unknown',
     ],
     'birth_date' => 'Birth Date',
     'id_number' => 'ID Number',
