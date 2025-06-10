@@ -51,7 +51,6 @@ class PatientForm
                                             }
                                         });
                                 },
-                                ignoreRecord: true,
                             )
                             ->createOptionForm([
                                 TextInput::make('value')
@@ -81,7 +80,6 @@ class PatientForm
                                             }
                                         });
                                 },
-                                ignoreRecord: true,
                             )
                             ->createOptionForm([
                                 TextInput::make('value')
