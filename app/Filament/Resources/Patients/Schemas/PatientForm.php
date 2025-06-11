@@ -58,6 +58,14 @@ class PatientForm
                     ]),
                     Group::make()
                     ->grow(false)
+                    ->schema([
+                        ToggleButtons::make('tag_ids')
+                            ->multiple()
+                            ->default(fn (?Patient $record) => $record?->tags->pluck('id')->map(fn ($id) => (string) $id)->all())
+                            ->options(fn () => \App\Models\Tag::pluck('name', 'id')->toArray())
+                            ->icons(fn () => \App\Models\Tag::pluck('icon', 'id')->toArray())
+                            ->colors(fn () => \App\Models\Tag::pluck('color', 'id')->toArray()),
+                    ])
                 ])
             ]);
     }
