@@ -135,7 +135,12 @@ class User extends Authenticatable implements FilamentUser, HasTenants, MustVeri
             'organization_practitioner',
             'practitioner_id',
             'organization_id'
-        )->using(OrganizationPractitioner::class);
+        )
+            ->using(OrganizationPractitioner::class)
+            ->whereIn(
+                'organization_practitioner.practitioner_id',
+                $this->practitioner()->select('id')
+            );
     }
 
     public function person(): BelongsTo
