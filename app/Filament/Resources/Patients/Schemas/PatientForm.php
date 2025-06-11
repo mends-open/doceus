@@ -4,8 +4,6 @@ namespace App\Filament\Resources\Patients\Schemas;
 
 use App\Feature\Identity\Enums\Gender;
 use App\Feature\Identity\Enums\ContactPointSystem;
-use App\Feature\Identity\Enums\ContactableType;
-use App\Models\ContactPoint;
 use App\Models\Patient;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Repeater;
@@ -47,30 +45,7 @@ class PatientForm
                             ->simple(
                                 TextInput::make('value'),
                             )
-                            ->mutateRelationshipDataBeforeCreateUsing(function (array $data, Patient $record): ?array {
-                                if (ContactPoint::query()
-                                    ->where('contactable_id', $record->person_id)
-                                    ->where('contactable_type', ContactableType::Person)
-                                    ->where('system', ContactPointSystem::Email)
-                                    ->where('value', $data['value'])
-                                    ->exists()) {
-                                    return null;
-                                }
-
-                                $unused = ContactPoint::unused()
-                                    ->where('system', ContactPointSystem::Email)
-                                    ->where('value', $data['value'])
-                                    ->first();
-
-                                if ($unused) {
-                                    $unused->update([
-                                        'contactable_id' => $record->person_id,
-                                        'contactable_type' => ContactableType::Person,
-                                    ]);
-
-                                    return null;
-                                }
-
+                            ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
                                 $data['system'] = ContactPointSystem::Email;
 
                                 return $data;
@@ -85,30 +60,7 @@ class PatientForm
                             ->simple(
                                 TextInput::make('value'),
                             )
-                            ->mutateRelationshipDataBeforeCreateUsing(function (array $data, Patient $record): ?array {
-                                if (ContactPoint::query()
-                                    ->where('contactable_id', $record->person_id)
-                                    ->where('contactable_type', ContactableType::Person)
-                                    ->where('system', ContactPointSystem::Phone)
-                                    ->where('value', $data['value'])
-                                    ->exists()) {
-                                    return null;
-                                }
-
-                                $unused = ContactPoint::unused()
-                                    ->where('system', ContactPointSystem::Phone)
-                                    ->where('value', $data['value'])
-                                    ->first();
-
-                                if ($unused) {
-                                    $unused->update([
-                                        'contactable_id' => $record->person_id,
-                                        'contactable_type' => ContactableType::Person,
-                                    ]);
-
-                                    return null;
-                                }
-
+                            ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
                                 $data['system'] = ContactPointSystem::Phone;
 
                                 return $data;
