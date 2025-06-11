@@ -19,8 +19,6 @@ class PersonFactory extends Factory
             'id_number' => $this->faker->numerify('AA######'),
             'gender' => $this->faker->randomElement(array_map(fn ($g) => $g->value, Gender::cases())),
             'birth_date' => $this->faker->date(),
-            'emails' => [$this->faker->unique()->safeEmail],
-            'phone_numbers' => [$this->faker->phoneNumber],
         ];
     }
 }

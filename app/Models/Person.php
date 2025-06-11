@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Collection;
 use Database\Factories\PersonFactory;
 use Illuminate\Database\Eloquent\Builder;
 use App\Feature\Identity\Enums\Gender;
+use App\Models\ContactPoint;
 use App\Models\Practitioner;
+use App\Feature\Identity\Enums\ContactableType;
+use App\Feature\Identity\Enums\ContactPointSystem;
 use App\Feature\Revision\Interfaces\Revisionable;
 use App\Feature\Revision\Observers\RevisionableObserver;
 use App\Feature\Revision\Traits\LogsRevisions;
@@ -35,6 +38,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
  * @property-read string|null $sqid
+ * @property-read Collection<int, ContactPoint> $contactPoints
+ * @property-read int|null $contact_points_count
  * @property-read Practitioner|null $practitioner
  * @method static PersonFactory factory($count = null, $state = [])
  * @method static Builder<static>|Person newModelQuery()
@@ -64,8 +69,6 @@ class Person extends BaseModel
         'id_number',
         'gender',
         'birth_date',
-        ];
-
     protected array $revisionable = [
         'first_name',
         'last_name',
@@ -73,8 +76,6 @@ class Person extends BaseModel
         'id_number',
         'gender',
         'birth_date',
-    ];
-
     protected $casts = [
         'first_name' => 'encrypted',
         'last_name' => 'encrypted',
@@ -82,7 +83,11 @@ class Person extends BaseModel
         'id_number' => 'encrypted',
         'gender' => Gender::class,
         'birth_date' => 'date',
-    ];
+    public function contactPoints(): HasMany
+    {
+        return $this->hasMany(ContactPoint::class, 'contactable_id')
+            ->where('contactable_type', ContactableType::Person);
+    }
 
     public function organizations(): HasManyThrough
     {
@@ -96,9 +101,20 @@ class Person extends BaseModel
         );
     }
 
-    public function user(): HasOne
+    /**
+     * Person email addresses.
+     */
+    public function emails(): HasMany
     {
-        return $this->hasOne(User::class);
+        return $this->contactPoints()->where('system', ContactPointSystem::Email);
+    }
+
+    /**
+     * Person phone numbers.
+     */
+    public function phones(): HasMany
+    {
+        return $this->contactPoints()->where('system', ContactPointSystem::Phone);
     }
 
     public function practitioner(): HasOne

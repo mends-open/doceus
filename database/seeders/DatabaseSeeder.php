@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Organization;
 use App\Models\Person;
+use App\Models\ContactPoint;
 use App\Models\Patient;
 use App\Models\PractitionerQualification;
 use App\Models\User;
@@ -35,12 +36,33 @@ class DatabaseSeeder extends Seeder
 
         // Seed additional persons for each organization
         $organizations->each(function (Organization $organization) {
-            Person::factory(random_int(5, 15))->create();
+            Person::factory(random_int(5, 15))
+                ->create()
+                ->each(function (Person $person) {
+                    ContactPoint::factory(random_int(1, 2))
+                        ->for($person, 'person')
+                        ->email()
+                        ->create();
+
+                    ContactPoint::factory(random_int(1, 2))
+                        ->for($person, 'person')
+                        ->phone()
+                        ->create();
+                });
 
             Patient::factory(random_int(3, 8))
                 ->create()
                 ->each(function (Patient $patient) use ($organization) {
                     $patient->organizations()->attach($organization);
+                    ContactPoint::factory(random_int(1, 2))
+                        ->for($patient->person, 'person')
+                        ->email()
+                        ->create();
+
+                    ContactPoint::factory(random_int(1, 2))
+                        ->for($patient->person, 'person')
+                        ->phone()
+                        ->create();
                 });
         });
     }

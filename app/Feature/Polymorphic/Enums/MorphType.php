@@ -4,6 +4,7 @@ namespace App\Feature\Polymorphic\Enums;
 
 enum MorphType: string
 {
+    case ContactPoint = 'contact_point';
     case OrganizationPatient = 'organization_patient';
     case Patient = 'patient';
     case PatientPractitioner = 'patient_practitioner';
