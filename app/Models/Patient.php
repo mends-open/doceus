@@ -53,25 +53,4 @@ class Patient extends BaseModel
         return $this->belongsToMany(Organization::class)->using(OrganizationPatient::class);
     }
 
-    public function contactPoints(): HasMany
-    {
-        return $this->hasMany(ContactPoint::class, 'contactable_id', 'person_id')->where('contactable_type', ContactableType::Person);
-    }
-
-    /**
-     * Patient email addresses.
-     */
-    public function emails(): HasMany
-    {
-        return $this->contactPoints()->where('system', ContactPointSystem::Email);
-    }
-
-    /**
-     * Patient phone numbers.
-     */
-    public function phones(): HasMany
-    {
-        return $this->contactPoints()->where('system', ContactPointSystem::Phone);
-    }
-
 }
