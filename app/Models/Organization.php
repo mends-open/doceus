@@ -74,8 +74,9 @@ class Organization extends BaseModel
             ->using(OrganizationPractitioner::class);
     }
 
-    public function people(): HasMany
+    public function patients(): BelongsToMany
     {
-        return $this->hasMany(Person::class);
+        return $this->belongsToMany(Patient::class)
+            ->using(OrganizationPatient::class);
     }
 }

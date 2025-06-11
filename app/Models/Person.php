@@ -69,6 +69,8 @@ class Person extends BaseModel
         'id_number',
         'gender',
         'birth_date',
+        'emails',
+        'phone_numbers'
         ];
 
     protected array $revisionable = [
@@ -78,6 +80,8 @@ class Person extends BaseModel
         'id_number',
         'gender',
         'birth_date',
+        'emails',
+        'phone_numbers'
     ];
 
     protected $casts = [
@@ -87,13 +91,9 @@ class Person extends BaseModel
         'id_number' => 'encrypted',
         'gender' => Gender::class,
         'birth_date' => 'date',
+        'emails' => 'array',
+        'phone_numbers' => 'array',
     ];
-
-    public function contactPoints(): HasMany
-    {
-        return $this->hasMany(ContactPoint::class, 'contactable_id')
-            ->where('contactable_type', ContactableType::Person);
-    }
 
     public function organizations(): HasManyThrough
     {
@@ -107,20 +107,9 @@ class Person extends BaseModel
         );
     }
 
-    /**
-     * Person email addresses.
-     */
-    public function emails(): HasMany
+    public function user(): HasOne
     {
-        return $this->contactPoints()->where('system', ContactPointSystem::Email);
-    }
-
-    /**
-     * Person phone numbers.
-     */
-    public function phones(): HasMany
-    {
-        return $this->contactPoints()->where('system', ContactPointSystem::Phone);
+        return $this->hasOne(User::class);
     }
 
     public function practitioner(): HasOne
