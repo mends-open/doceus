@@ -12,6 +12,21 @@ class EditPatient extends EditRecord
 {
     protected static string $resource = PatientResource::class;
 
+    protected array $tagIds = [];
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        $this->tagIds = $data['tag_ids'] ?? [];
+        unset($data['tag_ids']);
+
+        return $data;
+    }
+
+    protected function afterSave(): void
+    {
+        $this->record->tags()->sync($this->tagIds);
+    }
+
     protected function getHeaderActions(): array
     {
         return [
