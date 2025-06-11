@@ -64,7 +64,7 @@ class PatientForm
                             ->multiple()
                             ->default(fn (?Patient $record) => $record?->tags->pluck('id')->map(fn ($id) => (string) $id)->all())
                             ->options(fn () => \App\Models\Tag::pluck('name', 'id')->toArray())
-                            ->icons(fn () => \App\Models\Tag::pluck('icon', 'id')->toArray())
+                            ->icons(fn () => \App\Models\Tag::all()->mapWithKeys(fn ($tag) => [$tag->id => $tag->icon->value])->toArray())
                             ->colors(fn () => \App\Models\Tag::pluck('color', 'id')->toArray()),
                     ])
                 ])

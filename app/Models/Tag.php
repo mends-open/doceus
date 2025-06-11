@@ -5,6 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Filament\Support\Icons\Heroicon;
+use Illuminate\Support\Carbon;
+
+/**
+ * @property int $id
+ * @property int $organization_id
+ * @property string $name
+ * @property string|null $description
+ * @property string $color
+ * @property Heroicon $icon
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
+ * @property-read Organization $organization
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Patient> $patients
+ */
 
 class Tag extends BaseModel
 {
