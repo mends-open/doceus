@@ -26,7 +26,6 @@ class TagForm
                     ->required(),
                 Select::make('icon')
                     ->options(Heroicon::class)
-                    ->enum(Heroicon::class)
                     ->searchable()
                     ->required(),
             ]);

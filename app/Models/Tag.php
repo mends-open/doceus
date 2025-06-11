@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
-use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Carbon;
 
 /**
@@ -13,7 +12,7 @@ use Illuminate\Support\Carbon;
  * @property string $name
  * @property string|null $description
  * @property string $color
- * @property Heroicon $icon
+ * @property string $icon
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
@@ -31,9 +30,6 @@ class Tag extends BaseModel
         'icon',
     ];
 
-    protected $casts = [
-        'icon' => Heroicon::class,
-    ];
 
     public function organization(): BelongsTo
     {

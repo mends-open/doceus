@@ -7,6 +7,7 @@ use App\Models\Patient;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\ToggleButtons;
+use Filament\Support\Icons\Heroicon;
 use Filament\Schemas\Components\Flex;
 use Filament\Schemas\Components\Group;
 use Filament\Forms\Components\Select;
@@ -64,7 +65,7 @@ class PatientForm
                             ->multiple()
                             ->default(fn (?Patient $record) => $record?->tags->pluck('id')->map(fn ($id) => (string) $id)->all())
                             ->options(fn () => \App\Models\Tag::pluck('name', 'id')->toArray())
-                            ->icons(fn () => \App\Models\Tag::all()->mapWithKeys(fn ($tag) => [$tag->id => $tag->icon->value])->toArray())
+                            ->icons(fn () => \App\Models\Tag::all()->mapWithKeys(fn ($tag) => [$tag->id => Heroicon::from($tag->icon)])->toArray())
                             ->colors(fn () => \App\Models\Tag::pluck('color', 'id')->toArray()),
                     ])
                 ])

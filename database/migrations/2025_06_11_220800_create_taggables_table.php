@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('taggable', function (Blueprint $table) {
+        Schema::create('taggables', function (Blueprint $table) {
             $table->foreignIdFor(Tag::class);
             $table->morphs('taggable');
         });
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('taggable');
+        Schema::dropIfExists('taggables');
     }
 };
