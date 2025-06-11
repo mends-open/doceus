@@ -2,9 +2,7 @@
 
 namespace App\Filament\Resources\Patients\Schemas;
 
-use App\Feature\Identity\Enums\ContactPointSystem;
 use App\Feature\Identity\Enums\Gender;
-use Arr;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Repeater;
 use Filament\Schemas\Components\Group;
@@ -35,14 +33,14 @@ class PatientForm
                         Select::make('gender')
                             ->options(Gender::class),
                         DatePicker::make('birth_date'),
+                        Repeater::make('emails')
+                            ->simple(TextInput::make('value'))
+                            ->minItems(1)
+                            ->defaultItems(1),
+                        Repeater::make('phone_numbers')
+                            ->simple(TextInput::make('value'))
+                            ->minItems(1),
                     ]),
-            Repeater::make('email')
-                ->simple(TextInput::make('value'))
-                ->minItems(1)
-                ->defaultItems(1),
-            Repeater::make('phone')
-                ->simple(TextInput::make('value'))
-                ->minItems(1),
             ]);
     }
 }

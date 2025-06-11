@@ -8,10 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Database\Factories\PersonFactory;
 use Illuminate\Database\Eloquent\Builder;
 use App\Feature\Identity\Enums\Gender;
-use App\Models\ContactPoint;
 use App\Models\Practitioner;
-use App\Feature\Identity\Enums\ContactableType;
-use App\Feature\Identity\Enums\ContactPointSystem;
 use App\Feature\Revision\Interfaces\Revisionable;
 use App\Feature\Revision\Observers\RevisionableObserver;
 use App\Feature\Revision\Traits\LogsRevisions;
@@ -38,8 +35,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
  * @property-read string|null $sqid
- * @property-read Collection<int, ContactPoint> $contactPoints
- * @property-read int|null $contact_points_count
  * @property-read Practitioner|null $practitioner
  * @method static PersonFactory factory($count = null, $state = [])
  * @method static Builder<static>|Person newModelQuery()
