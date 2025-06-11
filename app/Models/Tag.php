@@ -2,10 +2,32 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Filament\Support\Icons\Heroicon;
+
 class Tag extends BaseModel
 {
-    public function organization()
+    protected $fillable = [
+        'organization_id',
+        'name',
+        'description',
+        'color',
+        'icon',
+    ];
+
+    protected $casts = [
+        'icon' => Heroicon::class,
+    ];
+
+    public function organization(): BelongsTo
     {
         return $this->belongsTo(Organization::class);
+    }
+
+    public function patients(): MorphToMany
+    {
+        return $this->morphedByMany(Patient::class, 'taggable')
+            ->using(Taggable::class);
     }
 }

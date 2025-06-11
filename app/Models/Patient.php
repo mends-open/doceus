@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use App\Models\Person;
 use App\Models\Organization;
 use App\Models\OrganizationPatient;
@@ -45,6 +46,12 @@ class Patient extends BaseModel
     public function organizations(): BelongsToMany
     {
         return $this->belongsToMany(Organization::class)->using(OrganizationPatient::class);
+    }
+
+    public function tags(): MorphToMany
+    {
+        return $this->morphToMany(Tag::class, 'taggable')
+            ->using(Taggable::class);
     }
 
 }
