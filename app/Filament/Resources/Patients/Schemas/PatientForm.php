@@ -3,10 +3,11 @@
 namespace App\Filament\Resources\Patients\Schemas;
 
 use App\Feature\Identity\Enums\Gender;
-use App\Feature\Identity\Enums\ContactPointSystem;
 use App\Models\Patient;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Actions;
+use Filament\Forms\Components\Actions\Action;
 use Filament\Schemas\Components\Flex;
 use Filament\Schemas\Components\Group;
 use Filament\Forms\Components\Select;
@@ -34,54 +35,37 @@ class PatientForm
                             ->required(),
                         TextInput::make('pesel'),
                         TextInput::make('id_number'),
+                        TextInput::make('email')
+                            ->email(),
+                        TextInput::make('phone_number'),
                         Select::make('gender')
                             ->options(Gender::class),
                         DatePicker::make('birth_date'),
                     ]),
                     Section::make()
                     ->schema([
-                        Repeater::make('emails')
-                            ->relationship('emails')
-                            ->deletable(false)
-                            ->addAction(fn($action) => $action->extraAttributes(['x-ref' => 'addButton']))
-                            ->simple(
-                                TextInput::make('value')
-                                    ->extraInputAttributes([
-                                        'x-on:keydown.enter.stop.prevent' => '$refs.addButton.click(); $nextTick(() => { const inputs = $el.closest(\'.fi-fo-repeater\').querySelectorAll(\'input\'); inputs[inputs.length - 1]?.focus(); })',
-                                        'x-on:input.debounce.200ms' => 'if (\$el.value === "") { const parts = \$statePath.split("."); parts.pop(); const index = parts.pop(); const repeaterPath = parts.join("."); const items = \$get(repeaterPath) ?? []; items.splice(index, 1); \$set(repeaterPath, items); }',
-                                    ])
-                            )
-                            ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
-                                $data['system'] = ContactPointSystem::Email;
-
-                                return $data;
-                            })
-                            ->mutateRelationshipDataBeforeSaveUsing(function (array $data): array {
-                                $data['system'] = ContactPointSystem::Email;
-
-                                return $data;
-                            }),
-                        Repeater::make('phones')
-                            ->relationship('phones')
-                            ->deletable(false)
-                            ->addAction(fn($action) => $action->extraAttributes(['x-ref' => 'addButton']))
-                            ->simple(
-                                TextInput::make('value')
-                                    ->extraInputAttributes([
-                                        'x-on:keydown.enter.stop.prevent' => '$refs.addButton.click(); $nextTick(() => { const inputs = $el.closest(\'.fi-fo-repeater\').querySelectorAll(\'input\'); inputs[inputs.length - 1]?.focus(); })',
-                                        'x-on:input.debounce.200ms' => 'if (\$el.value === "") { const parts = \$statePath.split("."); parts.pop(); const index = parts.pop(); const repeaterPath = parts.join("."); const items = \$get(repeaterPath) ?? []; items.splice(index, 1); \$set(repeaterPath, items); }',
-                                    ])
-                            )
-                            ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
-                                $data['system'] = ContactPointSystem::Phone;
-
-                                return $data;
-                            })
-                            ->mutateRelationshipDataBeforeSaveUsing(function (array $data): array {
-                                $data['system'] = ContactPointSystem::Phone;
-
-                                return $data;
-                            }),
+                        Actions::make([
+                            Action::make('contacts')
+                                ->label('Additional Contacts')
+                                ->modalHeading('Additional Contacts')
+                                ->modalSubmitAction(false)
+                                ->modalCancelAction(fn ($action) => $action->label('Close'))
+                                ->form([
+                                    Repeater::make('extra_contacts')
+                                        ->statePath('extra_contacts')
+                                        ->simple(
+                                            Group::make([
+                                                Select::make('system')
+                                                    ->options([
+                                                        'email' => 'Email',
+                                                        'phone' => 'Phone',
+                                                        'other' => 'Other',
+                                                    ]),
+                                                TextInput::make('value'),
+                                            ])
+                                        ),
+                                ]),
+                        ])
                     ])
                 ])
             ]);

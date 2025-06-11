@@ -35,6 +35,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property mixed|null $id_number
  * @property Gender|null $gender
  * @property Carbon|null $birth_date
+ * @property string|null $email
+ * @property string|null $phone_number
+ * @property array|null $extra_contacts
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
@@ -71,7 +74,10 @@ class Person extends BaseModel
         'id_number',
         'gender',
         'birth_date',
-        ];
+        'email',
+        'phone_number',
+        'extra_contacts',
+    ];
 
     protected array $revisionable = [
         'first_name',
@@ -80,6 +86,9 @@ class Person extends BaseModel
         'id_number',
         'gender',
         'birth_date',
+        'email',
+        'phone_number',
+        'extra_contacts',
     ];
 
     protected $casts = [
@@ -89,6 +98,7 @@ class Person extends BaseModel
         'id_number' => 'encrypted',
         'gender' => Gender::class,
         'birth_date' => 'date',
+        'extra_contacts' => 'array',
     ];
 
     public function contactPoints(): HasMany
