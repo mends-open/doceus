@@ -11,6 +11,9 @@ use Filament\Schemas\Components\Flex;
 use Filament\Schemas\Components\Group;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Actions\Action;
+use Filament\Schemas\Components\Utilities\Set;
+use Illuminate\Support\Str;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
@@ -42,8 +45,33 @@ class PatientForm
                     ->schema([
                         Repeater::make('emails')
                             ->relationship('emails')
+                            ->deletable(false)
+                            ->modifyAddActionUsing(fn(Action $action) => $action->extraAttributes(['x-ref' => 'addButton']))
                             ->simple(
-                                TextInput::make('value'),
+                                TextInput::make('value')
+                                    ->live()
+                                    ->extraInputAttributes(['x-on:keydown.enter.stop.prevent' => '$refs.addButton.click()'])
+                                    ->afterStateUpdated(function (TextInput $component, Set $set, ?string $state): void {
+                                        if (blank($state)) {
+                                            $repeater = $component->getParentRepeater();
+                                            if (! $repeater) {
+                                                return;
+                                            }
+
+                                            $repeaterPath = $repeater->getStatePath();
+                                            $componentItemStatePath = (string) str($component->getStatePath())
+                                                ->after("{$repeaterPath}.")
+                                                ->after('.');
+                                            $itemKey = (string) str($component->getStatePath())
+                                                ->after("{$repeaterPath}.")
+                                                ->beforeLast(".{$componentItemStatePath}");
+
+                                            $items = $repeater->getRawState();
+                                            unset($items[$itemKey]);
+
+                                            $set($repeaterPath, $items);
+                                        }
+                                    }),
                             )
                             ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
                                 $data['system'] = ContactPointSystem::Email;
@@ -57,8 +85,33 @@ class PatientForm
                             }),
                         Repeater::make('phones')
                             ->relationship('phones')
+                            ->deletable(false)
+                            ->modifyAddActionUsing(fn(Action $action) => $action->extraAttributes(['x-ref' => 'addButton']))
                             ->simple(
-                                TextInput::make('value'),
+                                TextInput::make('value')
+                                    ->live()
+                                    ->extraInputAttributes(['x-on:keydown.enter.stop.prevent' => '$refs.addButton.click()'])
+                                    ->afterStateUpdated(function (TextInput $component, Set $set, ?string $state): void {
+                                        if (blank($state)) {
+                                            $repeater = $component->getParentRepeater();
+                                            if (! $repeater) {
+                                                return;
+                                            }
+
+                                            $repeaterPath = $repeater->getStatePath();
+                                            $componentItemStatePath = (string) str($component->getStatePath())
+                                                ->after("{$repeaterPath}.")
+                                                ->after('.');
+                                            $itemKey = (string) str($component->getStatePath())
+                                                ->after("{$repeaterPath}.")
+                                                ->beforeLast(".{$componentItemStatePath}");
+
+                                            $items = $repeater->getRawState();
+                                            unset($items[$itemKey]);
+
+                                            $set($repeaterPath, $items);
+                                        }
+                                    }),
                             )
                             ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
                                 $data['system'] = ContactPointSystem::Phone;
