@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Feature\Identity\Enums\PrectitionerQualification;
+use App\Feature\Identity\Enums\PractitionerQualification as PractitionerQualificationEnum;
 use App\Feature\Revision\Interfaces\Revisionable;
 use App\Feature\Revision\Observers\RevisionableObserver;
 use App\Feature\Revision\Traits\LogsRevisions;
@@ -28,7 +28,7 @@ class PractitionerQualification extends BaseModel
     ];
 
     protected $casts = [
-        'qualification' => PrectitionerQualification::class,
+        'qualification' => PractitionerQualificationEnum::class,
         'valid_from' => 'datetime',
         'valid_to' => 'datetime',
     ];

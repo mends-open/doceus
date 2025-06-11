@@ -2,7 +2,7 @@
 
 namespace App\Feature\Identity\Enums;
 
-enum PrectitionerQualification: string
+enum PractitionerQualification: string
 {
     case MedicalStudent = 'medical_student';
     case MedicalIntern = 'medical_intern';
