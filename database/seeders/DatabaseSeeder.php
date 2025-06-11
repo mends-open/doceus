@@ -7,6 +7,7 @@ use App\Models\Person;
 use App\Models\ContactPoint;
 use App\Models\Patient;
 use App\Models\PractitionerQualification;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -18,6 +19,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $organizations = Organization::factory(5)->create();
+
+        Tag::factory(5)->create();
 
         $users = User::factory(5)->create();
 
@@ -54,6 +57,9 @@ class DatabaseSeeder extends Seeder
                 ->create()
                 ->each(function (Patient $patient) use ($organization) {
                     $patient->organizations()->attach($organization);
+                    $patient->tags()->attach(
+                        Tag::inRandomOrder()->take(random_int(0, 3))->pluck('id')
+                    );
                     ContactPoint::factory(random_int(1, 2))
                         ->for($patient->person, 'person')
                         ->email()

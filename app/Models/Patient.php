@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Models\Organization;
 use App\Models\OrganizationPatient;
+use App\Models\PatientTag;
+use App\Models\Tag;
 
 class Patient extends BaseModel
 {
@@ -22,6 +24,11 @@ class Patient extends BaseModel
     protected array $revisionable = [
         'person_id',
     ];
+
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class)->using(PatientTag::class);
+    }
 
     public function person(): BelongsTo
     {
