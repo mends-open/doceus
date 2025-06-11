@@ -11,7 +11,6 @@ use Filament\Schemas\Components\Flex;
 use Filament\Schemas\Components\Group;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Actions\Action;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
@@ -44,23 +43,13 @@ class PatientForm
                         Repeater::make('emails')
                             ->relationship('emails')
                             ->deletable(false)
-                            ->addAction(fn(Action $action) => $action->extraAttributes(['x-ref' => 'addButton']))
+                            ->addAction(fn($action) => $action->extraAttributes(['x-ref' => 'addButton']))
                             ->simple(
                                 TextInput::make('value')
                                     ->extraInputAttributes([
-                                        'x-on:keydown.enter.stop.prevent' => '$refs.addButton.click(); $nextTick(() => $el.closest(\'li.fi-fo-repeater-item\').nextElementSibling?.querySelector(\'input\')?.focus())',
+                                        'x-on:keydown.enter.stop.prevent' => '$refs.addButton.click(); $nextTick(() => { const inputs = $el.closest(\'.fi-fo-repeater\').querySelectorAll(\'input\'); inputs[inputs.length - 1]?.focus(); })',
+                                        'x-on:input.debounce.200ms' => "if ($el.value === '') { const parts = $statePath.split('.'); parts.pop(); const index = parts.pop(); const repeaterPath = parts.join('.'); const items = $get(repeaterPath) ?? []; items.splice(index, 1); $set(repeaterPath, items); }",
                                     ])
-                                    ->afterStateUpdatedJs(<<<'JS'
-                                        if ($state === null || $state === '') {
-                                            const parts = $statePath.split('.');
-                                            parts.pop();
-                                            const index = parts.pop();
-                                            const repeaterPath = parts.join('.');
-                                            const items = $get(repeaterPath) ?? [];
-                                            items.splice(index, 1);
-                                            $set(repeaterPath, items);
-                                        }
-                                    JS),
                             )
                             ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
                                 $data['system'] = ContactPointSystem::Email;
@@ -75,23 +64,13 @@ class PatientForm
                         Repeater::make('phones')
                             ->relationship('phones')
                             ->deletable(false)
-                            ->addAction(fn(Action $action) => $action->extraAttributes(['x-ref' => 'addButton']))
+                            ->addAction(fn($action) => $action->extraAttributes(['x-ref' => 'addButton']))
                             ->simple(
                                 TextInput::make('value')
                                     ->extraInputAttributes([
-                                        'x-on:keydown.enter.stop.prevent' => '$refs.addButton.click(); $nextTick(() => $el.closest(\'li.fi-fo-repeater-item\').nextElementSibling?.querySelector(\'input\')?.focus())',
+                                        'x-on:keydown.enter.stop.prevent' => '$refs.addButton.click(); $nextTick(() => { const inputs = $el.closest(\'.fi-fo-repeater\').querySelectorAll(\'input\'); inputs[inputs.length - 1]?.focus(); })',
+                                        'x-on:input.debounce.200ms' => "if ($el.value === '') { const parts = $statePath.split('.'); parts.pop(); const index = parts.pop(); const repeaterPath = parts.join('.'); const items = $get(repeaterPath) ?? []; items.splice(index, 1); $set(repeaterPath, items); }",
                                     ])
-                                    ->afterStateUpdatedJs(<<<'JS'
-                                        if ($state === null || $state === '') {
-                                            const parts = $statePath.split('.');
-                                            parts.pop();
-                                            const index = parts.pop();
-                                            const repeaterPath = parts.join('.');
-                                            const items = $get(repeaterPath) ?? [];
-                                            items.splice(index, 1);
-                                            $set(repeaterPath, items);
-                                        }
-                                    JS),
                             )
                             ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
                                 $data['system'] = ContactPointSystem::Phone;
