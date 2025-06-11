@@ -4,12 +4,13 @@ namespace Database\Factories;
 
 use App\Feature\Identity\Enums\PractitionerQualification as PractitionerQualificationEnum;
 use App\Models\Practitioner;
-use App\Models\PractitionerQualification;
+use App\Models\PractitionerQualification as PractitionerQualificationModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PractitionerQualificationFactory extends Factory
 {
-    protected $model = PractitionerQualification::class;
+    // Explicitly specify model class to avoid enum/model naming conflict
+    protected $model = PractitionerQualificationModel::class;
 
     public function definition(): array
     {
