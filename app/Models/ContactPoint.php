@@ -13,6 +13,9 @@ use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
+use App\Models\Patient;
 
 /**
  * @property int $id
@@ -24,6 +27,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
  * @property-read Person $person
+ * @property-read Model|\App\Models\Organization|Person|null $contactable
+ * @property-read Patient|null $patient
  * @method static ContactPointFactory factory($count = null, $state = [])
  */
 class ContactPoint extends BaseModel
@@ -56,6 +61,23 @@ class ContactPoint extends BaseModel
     {
         return $this->belongsTo(Person::class, 'contactable_id')
             ->where('contactable_type', ContactableType::Person);
+    }
+
+    public function contactable(): MorphTo
+    {
+        return $this->morphTo();
+    }
+
+    public function patient(): HasOneThrough
+    {
+        return $this->hasOneThrough(
+            Patient::class,
+            Person::class,
+            'id',
+            'person_id',
+            'contactable_id',
+            'id'
+        )->where('contactable_type', ContactableType::Person);
     }
 
     protected static function booted(): void

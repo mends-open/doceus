@@ -39,13 +39,15 @@ class PatientForm
                     Section::make()
                     ->schema([
                         Repeater::make('emails')
-                        ->simple(
-                            TextInput::make('value')
-                        ),
+                            ->relationship('person.emails')
+                            ->simple(
+                                TextInput::make('value'),
+                            ),
                         Repeater::make('phones')
-                        ->simple(
-                            TextInput::make('value')
-                        ),
+                            ->relationship('person.phones')
+                            ->simple(
+                                TextInput::make('value'),
+                            ),
                     ])
                 ])
             ]);
