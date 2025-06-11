@@ -48,7 +48,7 @@ class PatientForm
                                 TextInput::make('value')
                                     ->extraInputAttributes([
                                         'x-on:keydown.enter.stop.prevent' => '$refs.addButton.click(); $nextTick(() => { const inputs = $el.closest(\'.fi-fo-repeater\').querySelectorAll(\'input\'); inputs[inputs.length - 1]?.focus(); })',
-                                        'x-on:input.debounce.200ms' => "if ($el.value === '') { const parts = $statePath.split('.'); parts.pop(); const index = parts.pop(); const repeaterPath = parts.join('.'); const items = $get(repeaterPath) ?? []; items.splice(index, 1); $set(repeaterPath, items); }",
+                                        'x-on:input.debounce.200ms' => 'if (\$el.value === "") { const parts = \$statePath.split("."); parts.pop(); const index = parts.pop(); const repeaterPath = parts.join("."); const items = \$get(repeaterPath) ?? []; items.splice(index, 1); \$set(repeaterPath, items); }',
                                     ])
                             )
                             ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
@@ -69,7 +69,7 @@ class PatientForm
                                 TextInput::make('value')
                                     ->extraInputAttributes([
                                         'x-on:keydown.enter.stop.prevent' => '$refs.addButton.click(); $nextTick(() => { const inputs = $el.closest(\'.fi-fo-repeater\').querySelectorAll(\'input\'); inputs[inputs.length - 1]?.focus(); })',
-                                        'x-on:input.debounce.200ms' => "if ($el.value === '') { const parts = $statePath.split('.'); parts.pop(); const index = parts.pop(); const repeaterPath = parts.join('.'); const items = $get(repeaterPath) ?? []; items.splice(index, 1); $set(repeaterPath, items); }",
+                                        'x-on:input.debounce.200ms' => 'if (\$el.value === "") { const parts = \$statePath.split("."); parts.pop(); const index = parts.pop(); const repeaterPath = parts.join("."); const items = \$get(repeaterPath) ?? []; items.splice(index, 1); \$set(repeaterPath, items); }',
                                     ])
                             )
                             ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
