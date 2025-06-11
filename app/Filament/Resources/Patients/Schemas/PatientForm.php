@@ -12,7 +12,6 @@ use Filament\Schemas\Components\Group;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Actions\Action;
-use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
@@ -48,29 +47,20 @@ class PatientForm
                             ->addAction(fn(Action $action) => $action->extraAttributes(['x-ref' => 'addButton']))
                             ->simple(
                                 TextInput::make('value')
-                                    ->live()
-                                    ->extraInputAttributes(['x-on:keydown.enter.stop.prevent' => '$refs.addButton.click()'])
-                                    ->afterStateUpdated(function (TextInput $component, Set $set, ?string $state): void {
-                                        if (blank($state)) {
-                                            $repeater = $component->getParentRepeater();
-                                            if (! $repeater) {
-                                                return;
-                                            }
-
-                                            $repeaterPath = $repeater->getStatePath();
-                                            $componentItemStatePath = (string) str($component->getStatePath())
-                                                ->after("{$repeaterPath}.")
-                                                ->after('.');
-                                            $itemKey = (string) str($component->getStatePath())
-                                                ->after("{$repeaterPath}.")
-                                                ->beforeLast(".{$componentItemStatePath}");
-
-                                            $items = $repeater->getRawState();
-                                            unset($items[$itemKey]);
-
-                                            $set($repeaterPath, $items);
+                                    ->extraInputAttributes([
+                                        'x-on:keydown.enter.stop.prevent' => '$refs.addButton.click(); $nextTick(() => $el.closest(\'li.fi-fo-repeater-item\').nextElementSibling?.querySelector(\'input\')?.focus())',
+                                    ])
+                                    ->afterStateUpdatedJs(<<<'JS'
+                                        if ($state === null || $state === '') {
+                                            const parts = $statePath.split('.');
+                                            parts.pop();
+                                            const index = parts.pop();
+                                            const repeaterPath = parts.join('.');
+                                            const items = $get(repeaterPath) ?? [];
+                                            items.splice(index, 1);
+                                            $set(repeaterPath, items);
                                         }
-                                    }),
+                                    JS),
                             )
                             ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
                                 $data['system'] = ContactPointSystem::Email;
@@ -88,29 +78,20 @@ class PatientForm
                             ->addAction(fn(Action $action) => $action->extraAttributes(['x-ref' => 'addButton']))
                             ->simple(
                                 TextInput::make('value')
-                                    ->live()
-                                    ->extraInputAttributes(['x-on:keydown.enter.stop.prevent' => '$refs.addButton.click()'])
-                                    ->afterStateUpdated(function (TextInput $component, Set $set, ?string $state): void {
-                                        if (blank($state)) {
-                                            $repeater = $component->getParentRepeater();
-                                            if (! $repeater) {
-                                                return;
-                                            }
-
-                                            $repeaterPath = $repeater->getStatePath();
-                                            $componentItemStatePath = (string) str($component->getStatePath())
-                                                ->after("{$repeaterPath}.")
-                                                ->after('.');
-                                            $itemKey = (string) str($component->getStatePath())
-                                                ->after("{$repeaterPath}.")
-                                                ->beforeLast(".{$componentItemStatePath}");
-
-                                            $items = $repeater->getRawState();
-                                            unset($items[$itemKey]);
-
-                                            $set($repeaterPath, $items);
+                                    ->extraInputAttributes([
+                                        'x-on:keydown.enter.stop.prevent' => '$refs.addButton.click(); $nextTick(() => $el.closest(\'li.fi-fo-repeater-item\').nextElementSibling?.querySelector(\'input\')?.focus())',
+                                    ])
+                                    ->afterStateUpdatedJs(<<<'JS'
+                                        if ($state === null || $state === '') {
+                                            const parts = $statePath.split('.');
+                                            parts.pop();
+                                            const index = parts.pop();
+                                            const repeaterPath = parts.join('.');
+                                            const items = $get(repeaterPath) ?? [];
+                                            items.splice(index, 1);
+                                            $set(repeaterPath, items);
                                         }
-                                    }),
+                                    JS),
                             )
                             ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
                                 $data['system'] = ContactPointSystem::Phone;
