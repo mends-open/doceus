@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Feature\Identity\Enums\PractitionerQualification;
 use App\Models\Practitioner;
-use App\Models\PractitionerQualification;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PractitionerQualificationFactory extends Factory
