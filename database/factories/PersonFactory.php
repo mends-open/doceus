@@ -21,7 +21,6 @@ class PersonFactory extends Factory
             'birth_date' => $this->faker->date(),
             'email' => $this->faker->unique()->safeEmail,
             'phone_number' => $this->faker->phoneNumber,
-            'extra_contacts' => [],
         ];
     }
 }

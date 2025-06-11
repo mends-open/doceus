@@ -8,7 +8,6 @@ use App\Models\OrganizationPatient;
 use App\Models\OrganizationPractitioner;
 use App\Models\Patient;
 use App\Models\Person;
-use App\Models\ContactPoint;
 use App\Models\Practitioner;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -39,7 +38,6 @@ class PolymorphicServiceProvider extends ServiceProvider
             MorphType::OrganizationPatient->value => OrganizationPatient::class,
             MorphType::PatientPractitioner->value => OrganizationPractitioner::class,
             MorphType::PractitionerQualification->value => OrganizationPractitioner::class,
-            MorphType::ContactPoint->value => ContactPoint::class,
         ]);
     }
 }
