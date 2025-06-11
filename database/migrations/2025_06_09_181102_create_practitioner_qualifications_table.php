@@ -1,6 +1,6 @@
 <?php
 
-use App\Feature\Identity\Enums\PrectitionerQualification;
+use App\Feature\Identity\Enums\PractitionerQualification;
 use App\Models\Practitioner;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('practitioner_qualifications', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Practitioner::class);
-            $table->enum('qualification', Arr::pluck(PrectitionerQualification::cases(), 'value'));
+            $table->enum('qualification', Arr::pluck(PractitionerQualification::cases(), 'value'));
             $table->timestamp('valid_from')->nullable();
             $table->timestamp('valid_to')->nullable();
             $table->timestamps();
