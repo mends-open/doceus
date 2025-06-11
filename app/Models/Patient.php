@@ -10,10 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Models\ContactPoint;
 use App\Models\Person;
-use App\Feature\Identity\Enums\ContactableType;
-use App\Feature\Identity\Enums\ContactPointSystem;
 use App\Models\Organization;
 use App\Models\OrganizationPatient;
 use Illuminate\Database\Eloquent\Collection;
@@ -27,9 +24,6 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $deleted_at
  * @property-read Person $person
  * @property-read Collection<int, Organization> $organizations
- * @property-read Collection<int, ContactPoint> $contactPoints
- * @property-read Collection<int, ContactPoint> $emails
- * @property-read Collection<int, ContactPoint> $phones
  */
 
 class Patient extends BaseModel
