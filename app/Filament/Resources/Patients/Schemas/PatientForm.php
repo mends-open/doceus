@@ -13,7 +13,6 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Actions\Action;
 use Filament\Schemas\Components\Utilities\Set;
-use Illuminate\Support\Str;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
@@ -46,7 +45,7 @@ class PatientForm
                         Repeater::make('emails')
                             ->relationship('emails')
                             ->deletable(false)
-                            ->modifyAddActionUsing(fn(Action $action) => $action->extraAttributes(['x-ref' => 'addButton']))
+                            ->addAction(fn(Action $action) => $action->extraAttributes(['x-ref' => 'addButton']))
                             ->simple(
                                 TextInput::make('value')
                                     ->live()
@@ -86,7 +85,7 @@ class PatientForm
                         Repeater::make('phones')
                             ->relationship('phones')
                             ->deletable(false)
-                            ->modifyAddActionUsing(fn(Action $action) => $action->extraAttributes(['x-ref' => 'addButton']))
+                            ->addAction(fn(Action $action) => $action->extraAttributes(['x-ref' => 'addButton']))
                             ->simple(
                                 TextInput::make('value')
                                     ->live()
