@@ -28,7 +28,7 @@ class TagsTable
                     ->toggleable(isToggledHiddenByDefault: true),
                 ColorColumn::make('color'),
                 IconColumn::make('icon')
-                    ->icon(fn(string|Heroicon|null $state) => Heroicon::tryFrom($state) ?? $state),
+                    ->icon(fn(string|Heroicon|null $state) => $state instanceof Heroicon ? $state : Heroicon::tryFrom($state)),
                 TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()

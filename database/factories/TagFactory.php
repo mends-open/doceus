@@ -15,13 +15,14 @@ class TagFactory extends Factory
     public function definition(): array
     {
         $colors = array_keys(Color::all());
-        $icons = Heroicon::cases();
+        $icons = array_map(fn (Heroicon $icon) => $icon->value, Heroicon::cases());
 
         return [
             'organization_id' => Organization::factory(),
             'name' => $this->faker->word,
             'description' => $this->faker->sentence,
             'color' => $this->faker->randomElement($colors),
+            // Store the icon value so casts can rehydrate the enum
             'icon' => $this->faker->randomElement($icons),
         ];
     }
