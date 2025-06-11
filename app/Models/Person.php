@@ -86,8 +86,8 @@ class Person extends BaseModel
         'id_number' => 'encrypted',
         'gender' => Gender::class,
         'birth_date' => 'date',
-        'emails' => 'array',
-        'phone_numbers' => 'array',
+        'emails' => 'encrypted:array',
+        'phone_numbers' => 'encrypted:array',
     ];
 
     public function organizations(): HasManyThrough

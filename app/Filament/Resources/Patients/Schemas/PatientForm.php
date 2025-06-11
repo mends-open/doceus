@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Patients\Schemas;
 use App\Feature\Identity\Enums\Gender;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\ToggleButtons;
 use Filament\Schemas\Components\Group;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -30,7 +31,8 @@ class PatientForm
                             ->required(),
                         TextInput::make('pesel'),
                         TextInput::make('id_number'),
-                        Select::make('gender')
+                        ToggleButtons::make('gender')
+                            ->inline()
                             ->options(Gender::class),
                         DatePicker::make('birth_date'),
                         Repeater::make('emails')

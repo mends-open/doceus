@@ -21,8 +21,8 @@ return new class extends Migration
             $table->text('id_number')->nullable();
             $table->enum('gender', Arr::pluck(Gender::cases(), 'value'))->nullable();
             $table->date('birth_date')->nullable();
-            $table->jsonb('emails');
-            $table->jsonb('phone_numbers');
+            $table->text('emails');
+            $table->text('phone_numbers');
             $table->timestamps();
             $table->softDeletes();
         });
