@@ -22,7 +22,6 @@ class TagFactory extends Factory
             'name' => $this->faker->word,
             'description' => $this->faker->sentence,
             'color' => $this->faker->randomElement($colors),
-            // Store the icon value so casts can rehydrate the enum
             'icon' => $this->faker->randomElement($icons),
         ];
     }
