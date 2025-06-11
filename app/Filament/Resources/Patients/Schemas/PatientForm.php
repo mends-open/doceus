@@ -6,11 +6,14 @@ use App\Feature\Identity\Enums\Gender;
 use App\Models\Patient;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\ToggleButtons;
 use Filament\Schemas\Components\Flex;
 use Filament\Schemas\Components\Group;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
 
 class PatientForm
@@ -24,39 +27,37 @@ class PatientForm
             ->columns(1)
             ->components([
                 Flex::make([
-                    Section::make()
+                    Group::make()
                     ->relationship('person')
                     ->schema([
-                        TextInput::make('first_name')
-                            ->required(),
-                        TextInput::make('last_name')
-                            ->required(),
-                        TextInput::make('pesel'),
-                        TextInput::make('id_number'),
-                        TextInput::make('email')
-                            ->email(),
-                        TextInput::make('phone_number'),
-                        Select::make('gender')
-                            ->options(Gender::class),
-                        DatePicker::make('birth_date'),
+                        Tabs::make()
+                        ->tabs([
+                            Tab::make('Personal Information')
+                            ->schema([
+                                TextInput::make('first_name')
+                                    ->required(),
+                                TextInput::make('last_name')
+                                    ->required(),
+                                TextInput::make('pesel'),
+                                TextInput::make('id_number'),
+                                ToggleButtons::make('gender')
+                                    ->options(Gender::class)
+                                ->colors([
+                                    'malee' => 'success',
+                                    'female' => 'sky',
+                                ]),
+                                DatePicker::make('birth_date'),
+                            ]),
+                            Tab::make('Contact Information')
+                            ->schema([
+                                TextInput::make('email')
+                                    ->email(),
+                                TextInput::make('phone_number'),
+                            ])
+                        ]),
                     ]),
-                    Section::make()
-                    ->label('Additional Contacts')
-                    ->schema([
-                        Repeater::make('extra_contacts')
-                            ->statePath('extra_contacts')
-                            ->simple(
-                                Group::make([
-                                    Select::make('system')
-                                        ->options([
-                                            'email' => 'Email',
-                                            'phone' => 'Phone',
-                                            'other' => 'Other',
-                                        ]),
-                                    TextInput::make('value'),
-                                ])
-                            ),
-                    ])
+                    Group::make()
+                    ->grow(false)
                 ])
             ]);
     }
