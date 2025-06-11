@@ -6,8 +6,6 @@ use App\Feature\Identity\Enums\Gender;
 use App\Models\Patient;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\Actions;
-use Filament\Forms\Components\Actions\Action;
 use Filament\Schemas\Components\Flex;
 use Filament\Schemas\Components\Group;
 use Filament\Forms\Components\Select;
@@ -43,29 +41,21 @@ class PatientForm
                         DatePicker::make('birth_date'),
                     ]),
                     Section::make()
+                    ->label('Additional Contacts')
                     ->schema([
-                        Actions::make([
-                            Action::make('contacts')
-                                ->label('Additional Contacts')
-                                ->modalHeading('Additional Contacts')
-                                ->modalSubmitAction(false)
-                                ->modalCancelAction(fn ($action) => $action->label('Close'))
-                                ->form([
-                                    Repeater::make('extra_contacts')
-                                        ->statePath('extra_contacts')
-                                        ->simple(
-                                            Group::make([
-                                                Select::make('system')
-                                                    ->options([
-                                                        'email' => 'Email',
-                                                        'phone' => 'Phone',
-                                                        'other' => 'Other',
-                                                    ]),
-                                                TextInput::make('value'),
-                                            ])
-                                        ),
-                                ]),
-                        ])
+                        Repeater::make('extra_contacts')
+                            ->statePath('extra_contacts')
+                            ->simple(
+                                Group::make([
+                                    Select::make('system')
+                                        ->options([
+                                            'email' => 'Email',
+                                            'phone' => 'Phone',
+                                            'other' => 'Other',
+                                        ]),
+                                    TextInput::make('value'),
+                                ])
+                            ),
                     ])
                 ])
             ]);
