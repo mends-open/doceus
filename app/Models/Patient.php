@@ -11,9 +11,26 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\ContactPoint;
+use App\Models\Person;
 use App\Feature\Identity\Enums\ContactableType;
+use App\Feature\Identity\Enums\ContactPointSystem;
 use App\Models\Organization;
 use App\Models\OrganizationPatient;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Carbon;
+
+/**
+ * @property int $id
+ * @property int $person_id
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
+ * @property-read Person $person
+ * @property-read Collection<int, Organization> $organizations
+ * @property-read Collection<int, ContactPoint> $contactPoints
+ * @property-read Collection<int, ContactPoint> $emails
+ * @property-read Collection<int, ContactPoint> $phones
+ */
 
 class Patient extends BaseModel
 {
@@ -39,6 +56,22 @@ class Patient extends BaseModel
     public function contactPoints(): HasMany
     {
         return $this->hasMany(ContactPoint::class, 'contactable_id', 'person_id')->where('contactable_type', ContactableType::Person);
+    }
+
+    /**
+     * Patient email addresses.
+     */
+    public function emails(): HasMany
+    {
+        return $this->contactPoints()->where('system', ContactPointSystem::Email);
+    }
+
+    /**
+     * Patient phone numbers.
+     */
+    public function phones(): HasMany
+    {
+        return $this->contactPoints()->where('system', ContactPointSystem::Phone);
     }
 
 }

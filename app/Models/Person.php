@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Feature\Identity\Enums\Gender;
 use App\Models\ContactPoint;
 use App\Models\Practitioner;
+use App\Models\Patient;
 use App\Feature\Identity\Enums\ContactableType;
 use App\Feature\Identity\Enums\ContactPointSystem;
 use App\Feature\Revision\Interfaces\Revisionable;
@@ -41,6 +42,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read Collection<int, ContactPoint> $contactPoints
  * @property-read int|null $contact_points_count
  * @property-read Practitioner|null $practitioner
+ * @property-read Patient|null $patient
  * @method static PersonFactory factory($count = null, $state = [])
  * @method static Builder<static>|Person newModelQuery()
  * @method static Builder<static>|Person newQuery()
@@ -126,5 +128,10 @@ class Person extends BaseModel
     public function practitioner(): HasOne
     {
         return $this->hasOne(Practitioner::class);
+    }
+
+    public function patient(): HasOne
+    {
+        return $this->hasOne(Patient::class);
     }
 }

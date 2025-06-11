@@ -16,10 +16,13 @@ class PatientContactPointsRelationTest extends TestCase
         $patient = Patient::factory()->create();
         $other = Patient::factory()->create();
 
-        $point1 = ContactPoint::factory()->for($patient->person, 'person')->create();
-        $point2 = ContactPoint::factory()->for($other->person, 'person')->create();
+        $email = ContactPoint::factory()->email()->for($patient->person, 'person')->create();
+        $phone = ContactPoint::factory()->phone()->for($patient->person, 'person')->create();
+        $otherEmail = ContactPoint::factory()->email()->for($other->person, 'person')->create();
 
-        $this->assertTrue($patient->contactPoints->contains($point1));
-        $this->assertFalse($patient->contactPoints->contains($point2));
+        $this->assertTrue($patient->contactPoints->contains($email));
+        $this->assertTrue($patient->emails->contains($email));
+        $this->assertTrue($patient->phones->contains($phone));
+        $this->assertFalse($patient->emails->contains($otherEmail));
     }
 }
