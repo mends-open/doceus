@@ -64,8 +64,6 @@ class Person extends BaseModel
         'id_number',
         'gender',
         'birth_date',
-        'emails',
-        'phone_numbers'
         ];
 
     protected array $revisionable = [
@@ -75,8 +73,6 @@ class Person extends BaseModel
         'id_number',
         'gender',
         'birth_date',
-        'emails',
-        'phone_numbers'
     ];
 
     protected $casts = [
@@ -86,8 +82,6 @@ class Person extends BaseModel
         'id_number' => 'encrypted',
         'gender' => Gender::class,
         'birth_date' => 'date',
-        'emails' => 'encrypted:array',
-        'phone_numbers' => 'encrypted:array',
     ];
 
     public function organizations(): HasManyThrough

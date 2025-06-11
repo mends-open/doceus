@@ -3,8 +3,10 @@
 namespace App\Filament\Resources\Patients\Schemas;
 
 use App\Feature\Identity\Enums\Gender;
+use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Schemas\Components\Group;
 use Filament\Forms\Components\Select;
@@ -41,8 +43,9 @@ class PatientForm
                             ->defaultItems(1),
                         Repeater::make('phone_numbers')
                             ->simple(TextInput::make('value'))
-                            ->minItems(1),
-                    ]),
+                            ->minItems(1)
+                            ->defaultItems(1)
+                ]),
             ]);
     }
 }
