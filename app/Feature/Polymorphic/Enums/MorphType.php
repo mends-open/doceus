@@ -13,4 +13,6 @@ enum MorphType: string
     case Organization = 'organization';
     case OrganizationPractitioner = 'organization_practitioner';
     case Person = 'person';
+    case Tag = 'tag';
+    case Taggable = 'taggable';
 }

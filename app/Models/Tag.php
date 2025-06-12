@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Carbon;
+use App\Feature\Tags\Enums\TagColor;
 
 /**
  * @property int $id
@@ -26,6 +27,10 @@ class Tag extends BaseModel
         'name',
         'description',
         'color',
+    ];
+
+    protected $casts = [
+        'color' => TagColor::class,
     ];
 
 
