@@ -31,6 +31,7 @@ class PatientForm
                     ->relationship('person')
                     ->schema([
                         Tabs::make()
+                            ->columns(2)
                         ->tabs([
                             Tab::make('Personal Information')
                             ->schema([
@@ -42,6 +43,7 @@ class PatientForm
                                 TextInput::make('id_number'),
                                 ToggleButtons::make('gender')
                                     ->options(Gender::class)
+                                    ->inline()
                                     ->enum(Gender::class)
                                     ->colors([
                                         Gender::Male->value => 'success',
@@ -58,10 +60,11 @@ class PatientForm
                         ]),
                     ]),
                     Group::make()
-                    ->grow(false)
+                        ->grow(false)
                     ->schema([
                         ToggleButtons::make('tag_ids')
                             ->multiple()
+                            ->inline()
                             ->default(fn (?Patient $record) => $record?->tags->pluck('id')->map(fn ($id) => (string) $id)->all())
                             ->options(fn () => \App\Models\Tag::pluck('name', 'id')->toArray())
                             ->colors(fn () => \App\Models\Tag::pluck('color', 'id')->toArray()),
