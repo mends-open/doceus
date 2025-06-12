@@ -7,6 +7,7 @@ use App\Filament\Resources\Patients\Pages\EditPatient;
 use App\Filament\Resources\Patients\Pages\ListPatients;
 use App\Filament\Resources\Patients\Schemas\PatientForm;
 use App\Filament\Resources\Patients\Tables\PatientsTable;
+use App\Filament\Resources\Patients\RelationManagers;
 use App\Models\Patient;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -30,6 +31,13 @@ class PatientResource extends Resource
     public static function table(Table $table): Table
     {
         return PatientsTable::configure($table);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            RelationManagers\TagsRelationManager::class,
+        ];
     }
 
     public static function getPages(): array
