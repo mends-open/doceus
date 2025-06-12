@@ -34,9 +34,10 @@ class TagSelector
                     ->maxWidth(Width::ExtraSmall)
                     ->multiple()
                     ->inline()
-                    ->suffixAction(
+                    ->afterContent(
                         Action::make('createTag')
                             ->icon(Heroicon::Plus)
+                            ->iconButton()
                             ->form([
                                 TextInput::make('name')->required(),
                                 ToggleButtons::make('color')
