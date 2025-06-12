@@ -7,7 +7,6 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Schema;
 use Filament\Support\Colors\Color;
-use Filament\Support\Icons\Heroicon;
 
 class TagForm
 {
@@ -22,10 +21,6 @@ class TagForm
                 Textarea::make('description'),
                 Select::make('color')
                     ->options(array_combine($colors, array_map('ucfirst', $colors)))
-                    ->searchable()
-                    ->required(),
-                Select::make('icon')
-                    ->options(Heroicon::class)
                     ->searchable()
                     ->required(),
             ]);
