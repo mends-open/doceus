@@ -9,9 +9,13 @@ use Filament\Forms\Components\ToggleButtons;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Components\Group;
+use Filament\Support\Enums\Width;
 
 class PersonForm
 {
+    /**
+     * @throws \Exception
+     */
     public static function make(): Group
     {
         return Group::make()
