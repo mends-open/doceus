@@ -12,7 +12,6 @@ use Illuminate\Support\Carbon;
  * @property string $name
  * @property string|null $description
  * @property string $color
- * @property string $icon
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
@@ -27,7 +26,6 @@ class Tag extends BaseModel
         'name',
         'description',
         'color',
-        'icon',
     ];
 
 
