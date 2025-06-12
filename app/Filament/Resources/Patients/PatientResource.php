@@ -9,20 +9,22 @@ use App\Filament\Resources\Patients\Schemas\PatientForm;
 use App\Filament\Resources\Patients\Tables\PatientsTable;
 use App\Filament\Resources\Patients\RelationManagers;
 use App\Models\Patient;
-use BackedEnum;
+use Exception;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PatientResource extends Resource
 {
     protected static ?string $model = Patient::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|null|\BackedEnum $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    /**
+     * @throws Exception
+     */
     public static function form(Schema $schema): Schema
     {
         return PatientForm::configure($schema);
@@ -31,13 +33,6 @@ class PatientResource extends Resource
     public static function table(Table $table): Table
     {
         return PatientsTable::configure($table);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            RelationManagers\TagsRelationManager::class,
-        ];
     }
 
     public static function getPages(): array
@@ -49,7 +44,7 @@ class PatientResource extends Resource
         ];
     }
 
-    public static function getEloquentQuery(): Builder
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
     {
         return parent::getEloquentQuery()
             ->withoutGlobalScopes([

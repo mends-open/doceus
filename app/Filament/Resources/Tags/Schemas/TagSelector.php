@@ -1,26 +1,32 @@
 <?php
 
-namespace App\Filament\Resources\Patients\Schemas;
+namespace App\Filament\Resources\Tags\Schemas;
 
+use App\Feature\Tags\Enums\TagColor;
 use App\Models\Patient;
 use App\Models\Tag;
 use BackedEnum;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Schemas\Components\Group;
+use Filament\Support\Enums\Width;
 
 class TagSelector
 {
+    /**
+     * @throws \Exception
+     */
     public static function make(): Group
     {
         return Group::make()
             ->grow(false)
             ->schema([
                 ToggleButtons::make('tag_ids')
+                    ->maxWidth(Width::ExtraSmall)
                     ->multiple()
                     ->inline()
                     ->default(fn (?Patient $record) => $record?->tags
                         ->pluck('id')
-                        ->map(fn (int $id) => (string) $id)
+                        ->map( fn (int $id) => (string) $id)
                         ->all())
                     ->options(fn () => Tag::all()->mapWithKeys(fn (Tag $tag) => [
                         (string) $tag->id => $tag->name,
