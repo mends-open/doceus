@@ -18,7 +18,6 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Organization::class);
             $table->text('name');
-            $table->text('description')->nullable();
             $table->enum('color', array_keys(Color::all()));
             $table->enum('icon', array_column(Heroicon::cases(), 'value'));
             $table->softDeletes();
