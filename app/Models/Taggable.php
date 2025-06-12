@@ -13,5 +13,7 @@ use Illuminate\Support\Carbon;
  */
 class Taggable extends BaseMorphPivot
 {
-    // This pivot model is intentionally minimal.
+    protected $table = 'taggables';
+
+    public $incrementing = false;
 }
