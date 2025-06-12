@@ -14,6 +14,17 @@ class EditPatient extends EditRecord
 
     protected array $tagIds = [];
 
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        $data['tag_ids'] = $this->record
+            ->tags()
+            ->pluck('id')
+            ->map(fn (int $id) => (string) $id)
+            ->all();
+
+        return $data;
+    }
+
     protected function mutateFormDataBeforeSave(array $data): array
     {
         $this->tagIds = $data['tag_ids'] ?? [];

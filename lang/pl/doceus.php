@@ -73,6 +73,9 @@ return [
         'other' => 'Inna',
         'unknown' => 'Nieznana',
     ],
+    'tag_color' => [
+        'label' => 'Kolor',
+    ],
     'birth_date' => 'Data urodzenia',
     'id_number' => 'Numer dokumentu',
     'settings' => 'Ustawienia',
