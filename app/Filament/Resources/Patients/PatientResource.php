@@ -33,13 +33,6 @@ class PatientResource extends Resource
         return PatientsTable::configure($table);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            RelationManagers\TagsRelationManager::class,
-        ];
-    }
-
     public static function getPages(): array
     {
         return [

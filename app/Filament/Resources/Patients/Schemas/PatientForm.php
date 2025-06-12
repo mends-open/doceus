@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Patients\Schemas;
 
+use App\Filament\Resources\Tags\Schemas\TagSelector;
 use Filament\Schemas\Components\Flex;
 use Filament\Schemas\Schema;
 

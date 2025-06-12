@@ -1,15 +1,18 @@
 <?php
 
-namespace App\Filament\Resources\Patients\Schemas;
+namespace App\Filament\Resources\Tags\Schemas;
 
 use App\Models\Patient;
 use App\Models\Tag;
-use BackedEnum;
+use Exception;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Schemas\Components\Group;
 
 class TagSelector
 {
+    /**
+     * @throws Exception
+     */
     public static function make(): Group
     {
         return Group::make()
