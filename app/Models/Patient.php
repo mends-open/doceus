@@ -51,7 +51,8 @@ class Patient extends BaseModel
     public function tags(): MorphToMany
     {
         return $this->morphToMany(Tag::class, 'taggable')
-            ->using(Taggable::class);
+            ->using(Taggable::class)
+            ->withTimestamps();
     }
 
 }
