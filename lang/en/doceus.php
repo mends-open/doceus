@@ -75,6 +75,12 @@ return [
     ],
     'tag_color' => [
         'label' => 'Color',
+        'success' => 'Success',
+        'warning' => 'Warning',
+        'danger' => 'Danger',
+        'info' => 'Info',
+        'primary' => 'Primary',
+        'gray' => 'Gray',
     ],
     'birth_date' => 'Birth Date',
     'id_number' => 'ID Number',

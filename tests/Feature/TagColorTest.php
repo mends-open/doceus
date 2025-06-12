@@ -13,9 +13,9 @@ class TagColorTest extends TestCase
 
     public function test_tag_color_casts_to_enum(): void
     {
-        $tag = Tag::factory()->create(['color' => TagColor::Blue->value]);
+        $tag = Tag::factory()->create(['color' => TagColor::Primary->value]);
 
         $this->assertInstanceOf(TagColor::class, $tag->color);
-        $this->assertSame(TagColor::Blue, $tag->color);
+        $this->assertSame(TagColor::Primary, $tag->color);
     }
 }

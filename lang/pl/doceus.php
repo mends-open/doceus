@@ -75,6 +75,12 @@ return [
     ],
     'tag_color' => [
         'label' => 'Kolor',
+        'success' => 'Sukces',
+        'warning' => 'Ostrzeżenie',
+        'danger' => 'Błąd',
+        'info' => 'Informacja',
+        'primary' => 'Podstawowy',
+        'gray' => 'Szary',
     ],
     'birth_date' => 'Data urodzenia',
     'id_number' => 'Numer dokumentu',
