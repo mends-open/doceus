@@ -1,44 +1,21 @@
 # AGENTS.md
 
-## Purpose
+**One page, all rules.**
 
-This file defines essential rules and expectations for anyone (AI or human) working in this codebase.
+## Structure
 
----
+- `app/Feature/<Feature>` – domain logic (models, actions, policies).
+- `app/Filament/Clusters/<Feature>` – admin UI for that feature.
+- `database/migrations` – one migration per change; always add FKs, indexes, `timestamps()`, `softDeletes()`.
+- `laravel-docs/` – **git submodule** with official Laravel docs. Edit or update docs only inside this folder.
 
-## General Guidelines
+## Guidelines
 
-- Use Laravel conventions for all features, models, migrations, and controllers.
-- Organize code by “Feature” (feature-based structure, not pure DDD).
-- FHIR compatibility is a goal, but do not overcomplicate code or fight Laravel’s best practices.
+1. Stick to Laravel + PSR‑12 conventions.
+2. Organize everything by feature; avoid cross‑feature coupling.
+3. Aim for FHIR‑friendly schemas, but never fight core Laravel features.
+4. No PHI, secrets, or `.env` files in the repo.
+5. Run Composer, tests, and static analysis **locally** before pushing.
+6. Comment any non‑obvious medical or FHIR logic right in the code.
 
----
-
-## Feature Structure
-
-- Each domain (e.g., Identity, Revisions, Appointments, FHIR Models) lives in its own `Features/<Name>` folder.
-- Place all related models, actions, policies, and utilities together per feature.
-- Minimize cross-feature dependencies.
-
----
-
-## Data and Migrations
-
-- Favor database integrity: use foreign keys, indexes, timestamps, and soft deletes.
-- Migrations must be clean, clear, and self-contained.
-- Use comments to explain any medical or FHIR-specific schema logic.
-
----
-
-## Coding and Testing
-
-- Use PSR-12 and Laravel standards.
-- Write and update tests for important business logic.
-- Don’t leak PHI or sensitive data in logs, tests, or seeds.
-- Test and run Composer locally before pushing code.
-
----
-
-## Documentation
-
-- Comment all non-obvious code, especially FH
+That’s it—keep it clean, secure, and maintainable.
