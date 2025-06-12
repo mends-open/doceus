@@ -18,7 +18,6 @@ class TagFactory extends Factory
         return [
             'organization_id' => Organization::factory(),
             'name' => $this->faker->word,
-            'description' => $this->faker->sentence,
             'color' => $this->faker->randomElement($colors),
         ];
     }

@@ -11,7 +11,6 @@ use App\Feature\Tags\Enums\TagColor;
  * @property int $id
  * @property int $organization_id
  * @property string $name
- * @property string|null $description
  * @property string $color
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -25,7 +24,6 @@ class Tag extends BaseModel
     protected $fillable = [
         'organization_id',
         'name',
-        'description',
         'color',
     ];
 
