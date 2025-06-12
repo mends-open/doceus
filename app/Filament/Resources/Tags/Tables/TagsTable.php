@@ -8,8 +8,6 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\ColorColumn;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
@@ -27,8 +25,6 @@ class TagsTable
                     ->limit(50)
                     ->toggleable(isToggledHiddenByDefault: true),
                 ColorColumn::make('color'),
-                IconColumn::make('icon')
-                    ->icon(fn(string|Heroicon|null $state) => $state instanceof Heroicon ? $state : Heroicon::tryFrom($state)),
                 TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
