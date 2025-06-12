@@ -6,13 +6,13 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Schema;
-use Filament\Support\Colors\Color;
+use App\Feature\Tags\Enums\TagColor;
 
 class TagForm
 {
     public static function configure(Schema $schema): Schema
     {
-        $colors = array_keys(Color::all());
+        $colors = array_column(TagColor::cases(), 'value');
 
         return $schema
             ->components([

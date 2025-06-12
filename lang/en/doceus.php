@@ -73,6 +73,9 @@ return [
         'other' => 'Other',
         'unknown' => 'Unknown',
     ],
+    'tag_color' => [
+        'label' => 'Color',
+    ],
     'birth_date' => 'Birth Date',
     'id_number' => 'ID Number',
     'settings' => 'Settings',
