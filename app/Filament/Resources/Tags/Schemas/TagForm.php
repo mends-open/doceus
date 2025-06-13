@@ -16,6 +16,7 @@ class TagForm
             ToggleButtons::make('color')
                 ->options(TagColor::class)
                 ->enum(TagColor::class)
+                ->required()
                 ->inline(),
         ];
     }
