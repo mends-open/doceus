@@ -1,34 +1,23 @@
 <?php
 
-namespace Tests\Feature;
-
-use App\Feature\Identity\Services\Pesel;
 use App\Feature\Identity\Enums\Gender;
-use Tests\TestCase;
+use App\Feature\Identity\Services\Pesel;
 use Carbon\Carbon;
 
-class PeselServiceTest extends TestCase
-{
-    public function test_extract_birth_date_from_valid_pesel(): void
-    {
-        $birthDate = Pesel::extractBirthDate('44051401359');
-        $this->assertInstanceOf(Carbon::class, $birthDate);
-        $this->assertSame('1944-05-14', $birthDate->format('Y-m-d'));
-    }
+it('extracts birth date from valid pesel', function () {
+    $birthDate = Pesel::extractBirthDate('44051401359');
+    expect($birthDate)->toBeInstanceOf(Carbon::class)
+        ->and($birthDate->format('Y-m-d'))->toBe('1944-05-14');
+});
 
-    public function test_extract_birth_date_returns_null_for_invalid_pesel(): void
-    {
-        $this->assertNull(Pesel::extractBirthDate('1234567890'));
-    }
+it('returns null for invalid pesel when extracting birth date', function () {
+    expect(Pesel::extractBirthDate('1234567890'))->toBeNull();
+});
 
-    public function test_extract_gender_from_valid_pesel(): void
-    {
-        $gender = Pesel::extractGender('44051401359');
-        $this->assertSame(Gender::Male, $gender);
-    }
+it('extracts gender from valid pesel', function () {
+    expect(Pesel::extractGender('44051401359'))->toBe(Gender::Male);
+});
 
-    public function test_extract_gender_returns_null_for_invalid_pesel(): void
-    {
-        $this->assertNull(Pesel::extractGender('invalid'));
-    }
-}
+it('returns null for invalid pesel when extracting gender', function () {
+    expect(Pesel::extractGender('invalid'))->toBeNull();
+});
