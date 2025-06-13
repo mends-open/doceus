@@ -1,21 +1,14 @@
 <?php
 
-namespace Tests\Feature;
-
 use App\Feature\Tags\Enums\TagColor;
 use App\Models\Tag;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 
-class TagColorTest extends TestCase
-{
-    use RefreshDatabase;
+uses(RefreshDatabase::class);
 
-    public function test_tag_color_casts_to_enum(): void
-    {
-        $tag = Tag::factory()->create(['color' => TagColor::Primary->value]);
+it('casts color to enum', function () {
+    $tag = Tag::factory()->create(['color' => TagColor::Primary->value]);
 
-        $this->assertInstanceOf(TagColor::class, $tag->color);
-        $this->assertSame(TagColor::Primary, $tag->color);
-    }
-}
+    expect($tag->color)->toBeInstanceOf(TagColor::class)
+        ->and($tag->color)->toBe(TagColor::Primary);
+});
