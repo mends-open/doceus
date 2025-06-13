@@ -1,57 +1,46 @@
 <?php
 
-namespace Tests\Feature;
-
 use App\Models\Person;
 use App\Models\User;
-use Tests\TestCase;
 
-class UserDisplayNameTest extends TestCase
-{
-    public function test_generates_name_from_first_and_last_name(): void
-    {
-        $user = new User;
-        $user->setRelation('person', Person::make([
-            'first_name' => 'john',
-            'last_name' => 'doe',
-        ]));
+it('generates name from first and last name', function () {
+    $user = new User();
+    $user->setRelation('person', Person::make([
+        'first_name' => 'john',
+        'last_name' => 'doe',
+    ]));
 
-        $this->assertSame('John Doe', $user->name);
-    }
+    expect($user->name)->toBe('John Doe');
+});
 
-    public function test_generates_name_from_first_name_only(): void
-    {
-        $user = new User;
-        $user->setRelation('person', Person::make([
-            'first_name' => 'jane',
-        ]));
+it('generates name from first name only', function () {
+    $user = new User();
+    $user->setRelation('person', Person::make([
+        'first_name' => 'jane',
+    ]));
 
-        $this->assertSame('Jane', $user->name);
-    }
+    expect($user->name)->toBe('Jane');
+});
 
-    public function test_generates_name_from_last_name_only(): void
-    {
-        $user = new User;
-        $user->setRelation('person', Person::make([
-            'last_name' => 'smith',
-        ]));
+it('generates name from last name only', function () {
+    $user = new User();
+    $user->setRelation('person', Person::make([
+        'last_name' => 'smith',
+    ]));
 
-        $this->assertSame('Smith', $user->name);
-    }
+    expect($user->name)->toBe('Smith');
+});
 
-    public function test_generates_name_from_email_when_no_name_fields(): void
-    {
-        $user = User::make([
-            'email' => 'john.smith@example.com',
-        ]);
+it('generates name from email when no name fields', function () {
+    $user = User::make([
+        'email' => 'john.smith@example.com',
+    ]);
 
-        $this->assertSame('John Smith', $user->name);
-    }
+    expect($user->name)->toBe('John Smith');
+});
 
-    public function test_generates_default_name_when_no_fields_present(): void
-    {
-        $user = new User;
+it('generates default name when no fields present', function () {
+    $user = new User();
 
-        $this->assertSame('User', $user->name);
-    }
-}
+    expect($user->name)->toBe('User');
+});
