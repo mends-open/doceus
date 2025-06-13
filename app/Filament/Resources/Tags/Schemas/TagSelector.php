@@ -6,8 +6,8 @@ use App\Feature\Tags\Enums\TagColor;
 use App\Models\Patient;
 use App\Models\Tag;
 use BackedEnum;
+use App\Filament\Resources\Tags\Schemas\TagForm;
 use Filament\Actions\Action;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Schemas\Components\Utilities\Get;
@@ -26,7 +26,7 @@ class TagSelector
         return Group::make()
             ->grow(false)
             ->schema([
-                Toggle::make('show_checked_only')
+                Toggle::make('show_selected_only')
                     ->label('Show selected only')
                     ->dehydrated(false)
                     ->live(),
@@ -38,13 +38,7 @@ class TagSelector
                         Action::make('createTag')
                             ->icon(Heroicon::Plus)
                             ->iconButton()
-                            ->form([
-                                TextInput::make('name')->required(),
-                                ToggleButtons::make('color')
-                                    ->options(TagColor::class)
-                                    ->enum(TagColor::class)
-                                    ->inline(),
-                            ])
+                            ->form(TagForm::schema())
                             ->action(function (array $data, Get $get, Set $set) {
                                 $organization = filament()->getTenant();
 
@@ -62,7 +56,7 @@ class TagSelector
                         ->map(fn (int $id) => (string) $id)
                         ->all())
                     ->options(fn (Get $get) => Tag::query()
-                        ->when($get('show_checked_only'), function ($query) use ($get) {
+                        ->when($get('show_selected_only'), function ($query) use ($get) {
                             $query->whereIn('id', $get('tag_ids') ?? []);
                         })
                         ->get()
@@ -70,7 +64,7 @@ class TagSelector
                             (string) $tag->id => $tag->name,
                         ])->toArray())
                     ->colors(fn (Get $get) => Tag::query()
-                        ->when($get('show_checked_only'), function ($query) use ($get) {
+                        ->when($get('show_selected_only'), function ($query) use ($get) {
                             $query->whereIn('id', $get('tag_ids') ?? []);
                         })
                         ->get()
