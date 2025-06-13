@@ -9,6 +9,7 @@ use App\Models\PractitionerQualification;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -49,5 +50,9 @@ class DatabaseSeeder extends Seeder
                 ->for($organization)
                 ->create();
         });
+
+        if (DB::getDriverName() === 'pgsql') {
+            DB::statement("SELECT setval('tags_id_seq', (SELECT MAX(id) FROM tags))");
+        }
     }
 }
