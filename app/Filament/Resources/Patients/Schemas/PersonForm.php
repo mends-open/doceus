@@ -22,7 +22,7 @@ class PersonForm
             ->relationship('person')
             ->schema([
                 Tabs::make()
-                    ->columns(2)
+                    ->columns()
                     ->tabs([
                         Tab::make('Personal Information')
                             ->schema([
