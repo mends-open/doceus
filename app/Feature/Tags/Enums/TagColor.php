@@ -15,8 +15,6 @@ enum TagColor: string
     case Warning = 'warning';
     case Danger = 'danger';
     case Info = 'info';
-    case Primary = 'primary';
-    case Gray = 'gray';
 
     protected function translationPrefix(): string
     {
