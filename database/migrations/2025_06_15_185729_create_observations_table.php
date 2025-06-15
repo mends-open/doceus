@@ -1,6 +1,7 @@
 <?php
 
-use App\Models\Appointment;
+use App\Models\Encounter;
+use App\Models\Patient;
 use App\Models\Practitioner;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -13,10 +14,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('encounters', function (Blueprint $table) {
+        Schema::create('observations', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Appointment::class);
-            $table->softDeletes();
+            $table->foreignIdFor(Encounter::class);
+            $table->softdeletes();
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('encounters');
+        Schema::dropIfExists('observations');
     }
 };
