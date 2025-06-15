@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Database\Factories\PersonFactory;
 use Illuminate\Database\Eloquent\Builder;
 use App\Feature\Identity\Enums\Gender;
+use App\Casts\EncryptedBinary;
 use App\Models\Practitioner;
 use App\Models\Patient;
 use App\Feature\Revision\Interfaces\Revisionable;
@@ -84,14 +85,14 @@ class Person extends BaseModel
     ];
 
     protected $casts = [
-        'first_name' => 'encrypted',
-        'last_name' => 'encrypted',
-        'pesel' => 'encrypted',
-        'id_number' => 'encrypted',
+        'first_name' => EncryptedBinary::class,
+        'last_name' => EncryptedBinary::class,
+        'pesel' => EncryptedBinary::class,
+        'id_number' => EncryptedBinary::class,
         'gender' => Gender::class,
         'birth_date' => 'date',
-        'email' => 'encrypted',
-        'phone_number' => 'encrypted',
+        'email' => EncryptedBinary::class,
+        'phone_number' => EncryptedBinary::class,
     ];
 
     public function organizations(): HasManyThrough
