@@ -10,7 +10,6 @@ use App\Filament\Resources\Patients\Resources\Appointments\Schemas\AppointmentFo
 use App\Filament\Resources\Patients\Resources\Appointments\Schemas\AppointmentInfolist;
 use App\Filament\Resources\Patients\Resources\Appointments\Tables\AppointmentsTable;
 use App\Models\Appointment;
-use App\Traits\BelongsToManyOrganizations;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
