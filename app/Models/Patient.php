@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -15,6 +16,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $deleted_at
  * @property-read Person $person
  * @property-read Collection<int, Organization> $organizations
+ * @property-read Collection<int, Appointment> $appointments
  */
 class Patient extends BaseModel
 {
@@ -34,5 +36,10 @@ class Patient extends BaseModel
     public function organizations(): BelongsToMany
     {
         return $this->belongsToMany(Organization::class)->using(OrganizationPatient::class);
+    }
+
+    public function appointments(): HasMany
+    {
+        return $this->hasMany(Appointment::class);
     }
 }
