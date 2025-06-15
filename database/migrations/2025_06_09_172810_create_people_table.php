@@ -32,6 +32,7 @@ return new class extends Migration
             $table->foreignIdFor(Person::class)
                 ->nullable()
                 ->after('id')
+                ->unique()
                 ->constrained()
                 ->nullOnDelete();
         });
