@@ -44,9 +44,7 @@ class PatientResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            ManageAppointments::class,
-        ];
+        return [];
     }
 
     public static function getPages(): array
