@@ -6,7 +6,6 @@ use App\Models\Organization;
 use App\Models\Person;
 use App\Models\Patient;
 use App\Models\PractitionerQualification;
-use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -46,13 +45,7 @@ class DatabaseSeeder extends Seeder
                     $patient->organizations()->attach($organization);
                 });
 
-            Tag::factory(random_int(2, 5))
-                ->for($organization)
-                ->create();
         });
 
-        if (DB::getDriverName() === 'pgsql') {
-            DB::statement("SELECT setval('tags_id_seq', (SELECT MAX(id) FROM tags))");
-        }
     }
 }

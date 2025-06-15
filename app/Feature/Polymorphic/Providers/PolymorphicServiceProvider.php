@@ -38,8 +38,6 @@ class PolymorphicServiceProvider extends ServiceProvider
             MorphType::OrganizationPatient->value => OrganizationPatient::class,
             MorphType::PatientPractitioner->value => OrganizationPractitioner::class,
             MorphType::PractitionerQualification->value => OrganizationPractitioner::class,
-            MorphType::Tag->value => \App\Models\Tag::class,
-            MorphType::Taggable->value => \App\Models\Taggable::class,
         ]);
     }
 }
