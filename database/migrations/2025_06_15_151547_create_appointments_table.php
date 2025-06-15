@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Encounter;
 use App\Models\Organization;
 use App\Models\Patient;
 use App\Models\Practitioner;
@@ -20,6 +19,7 @@ return new class extends Migration
             $table->foreignIdFor(Patient::class);
             $table->foreignIdFor(Practitioner::class);
             $table->foreignIdFor(Organization::class);
+            $table->timestamp('scheduled_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
