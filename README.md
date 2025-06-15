@@ -11,7 +11,9 @@ Zero-knowledge encryption. You own your data.
 
 - **Laravel 12+**
 - **PostgreSQL 17+**
-- **Filament 3**
+- **Filament 4**
+
+The `composer.json` file lists Laravel 12 and Filament v4 as core dependencies.
 
 ---
 
