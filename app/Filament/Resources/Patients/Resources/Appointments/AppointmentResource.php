@@ -5,12 +5,12 @@ namespace App\Filament\Resources\Patients\Resources\Appointments;
 use App\Filament\Resources\Patients\PatientResource;
 use App\Filament\Resources\Patients\Resources\Appointments\Pages\CreateAppointment;
 use App\Filament\Resources\Patients\Resources\Appointments\Pages\EditAppointment;
+use App\Filament\Resources\Patients\Resources\Appointments\Pages\ManageEncounters;
 use App\Filament\Resources\Patients\Resources\Appointments\Pages\ViewAppointment;
 use App\Filament\Resources\Patients\Resources\Appointments\Schemas\AppointmentForm;
 use App\Filament\Resources\Patients\Resources\Appointments\Schemas\AppointmentInfolist;
 use App\Filament\Resources\Patients\Resources\Appointments\Tables\AppointmentsTable;
 use App\Models\Appointment;
-use App\Traits\BelongsToManyOrganizations;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -46,9 +46,7 @@ class AppointmentResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
@@ -57,6 +55,7 @@ class AppointmentResource extends Resource
             'create' => CreateAppointment::route('/create'),
             'view' => ViewAppointment::route('/{record}'),
             'edit' => EditAppointment::route('/{record}/edit'),
+            'encounters' => ManageEncounters::route('/{record}/encounters'),
         ];
     }
 

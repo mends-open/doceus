@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Patients\Resources\Appointments\Tables;
+namespace App\Filament\Resources\Patients\Resources\Appointments\Resources\Encounters\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -12,13 +12,14 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 
-class AppointmentsTable
+class EncountersTable
 {
     public static function configure(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('scheduled_at')->dateTime()->sortable(),
+                TextColumn::make('notes')->limit(30),
+                TextColumn::make('created_at')->dateTime()->sortable(),
             ])
             ->filters([
                 TrashedFilter::make(),

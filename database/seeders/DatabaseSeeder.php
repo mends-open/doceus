@@ -2,14 +2,14 @@
 
 namespace Database\Seeders;
 
+use App\Models\Appointment;
+use App\Models\Encounter;
 use App\Models\Organization;
-use App\Models\Person;
 use App\Models\Patient;
+use App\Models\Person;
 use App\Models\PractitionerQualification;
-use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -40,19 +40,25 @@ class DatabaseSeeder extends Seeder
             Person::factory(random_int(5, 15))
                 ->create();
 
-            Patient::factory(random_int(3, 8))
+            $patients = Patient::factory(random_int(3, 8))
                 ->create()
                 ->each(function (Patient $patient) use ($organization) {
                     $patient->organizations()->attach($organization);
                 });
 
-            Tag::factory(random_int(2, 5))
-                ->for($organization)
-                ->create();
-        });
+            $patients->each(function (Patient $patient) use ($organization) {
+                Appointment::factory(random_int(1, 2))
+                    ->for($patient)
+                    ->for($organization)
+                    ->for($organization->practitioners->random())
+                    ->create()
+                    ->each(function (Appointment $appointment) {
+                        Encounter::factory(random_int(1, 3))
+                            ->for($appointment)
+                            ->create();
+                    });
+            });
 
-        if (DB::getDriverName() === 'pgsql') {
-            DB::statement("SELECT setval('tags_id_seq', (SELECT MAX(id) FROM tags))");
-        }
+        });
     }
 }
