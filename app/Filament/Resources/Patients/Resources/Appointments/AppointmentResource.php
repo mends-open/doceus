@@ -46,9 +46,7 @@ class AppointmentResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            ManageEncounters::class,
-        ];
+        return [];
     }
 
     public static function getPages(): array
