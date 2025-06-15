@@ -4,6 +4,8 @@ use App\Models\Organization;
 use App\Models\Person;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
+use App\Casts\EncryptedBinary;
 
 uses(RefreshDatabase::class);
 
@@ -25,4 +27,16 @@ it('encrypts organization name as binary', function () {
     expect($org->name)->toBe('Clinic')
         ->and($raw)->not->toBe('Clinic')
         ->and(base64_encode($raw))->not->toBe($raw);
+});
+
+it('decrypts resource values', function () {
+    $cast = new EncryptedBinary();
+    $encrypted = base64_decode(Crypt::encrypt('test'));
+    $stream = fopen('php://temp', 'r+');
+    fwrite($stream, $encrypted);
+    rewind($stream);
+
+    $value = $cast->get(new Person(), 'first_name', $stream, []);
+
+    expect($value)->toBe('test');
 });

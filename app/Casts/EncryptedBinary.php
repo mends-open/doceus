@@ -15,7 +15,12 @@ class EncryptedBinary implements CastsAttributes
             return null;
         }
 
-        // Value is stored as raw binary, re-encode to base64 for decryption
+        // Value is stored as raw binary; handle stream resources from PgSQL
+        if (is_resource($value)) {
+            $value = stream_get_contents($value);
+        }
+
+        // Re-encode to base64 for decryption
         try {
             return Crypt::decrypt(base64_encode($value));
         } catch (DecryptException) {
