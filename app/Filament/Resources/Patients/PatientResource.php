@@ -5,12 +5,12 @@ namespace App\Filament\Resources\Patients;
 use App\Filament\Resources\Patients\Pages\CreatePatient;
 use App\Filament\Resources\Patients\Pages\EditPatient;
 use App\Filament\Resources\Patients\Pages\ListPatients;
+use App\Filament\Resources\Patients\Pages\ManageAppointments;
 use App\Filament\Resources\Patients\Pages\ViewPatient;
 use App\Filament\Resources\Patients\Schemas\PatientForm;
 use App\Filament\Resources\Patients\Schemas\PatientInfolist;
 use App\Filament\Resources\Patients\Tables\PatientsTable;
 use App\Models\Patient;
-use App\Traits\BelongsToManyOrganizations;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -21,7 +21,6 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PatientResource extends Resource
 {
-
     protected static ?string $tenantOwnershipRelationshipName = 'organizations';
 
     protected static ?string $model = Patient::class;
@@ -46,7 +45,7 @@ class PatientResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ManageAppointments::class,
         ];
     }
 
@@ -57,6 +56,7 @@ class PatientResource extends Resource
             'create' => CreatePatient::route('/create'),
             'view' => ViewPatient::route('/{record}'),
             'edit' => EditPatient::route('/{record}/edit'),
+            'appointments' => ManageAppointments::route('/{record}/appointments'),
         ];
     }
 

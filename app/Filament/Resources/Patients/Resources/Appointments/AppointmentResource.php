@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Patients\Resources\Appointments;
 use App\Filament\Resources\Patients\PatientResource;
 use App\Filament\Resources\Patients\Resources\Appointments\Pages\CreateAppointment;
 use App\Filament\Resources\Patients\Resources\Appointments\Pages\EditAppointment;
+use App\Filament\Resources\Patients\Resources\Appointments\Pages\ManageEncounters;
 use App\Filament\Resources\Patients\Resources\Appointments\Pages\ViewAppointment;
 use App\Filament\Resources\Patients\Resources\Appointments\Schemas\AppointmentForm;
 use App\Filament\Resources\Patients\Resources\Appointments\Schemas\AppointmentInfolist;
@@ -46,7 +47,7 @@ class AppointmentResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ManageEncounters::class,
         ];
     }
 
@@ -56,6 +57,7 @@ class AppointmentResource extends Resource
             'create' => CreateAppointment::route('/create'),
             'view' => ViewAppointment::route('/{record}'),
             'edit' => EditAppointment::route('/{record}/edit'),
+            'encounters' => ManageEncounters::route('/{record}/encounters'),
         ];
     }
 
