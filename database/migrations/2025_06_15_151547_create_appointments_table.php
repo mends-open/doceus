@@ -1,5 +1,9 @@
 <?php
 
+use App\Models\Encounter;
+use App\Models\Organization;
+use App\Models\Patient;
+use App\Models\Practitioner;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,6 +17,10 @@ return new class extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Patient::class);
+            $table->foreignIdFor(Practitioner::class);
+            $table->foreignIdFor(Organization::class);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

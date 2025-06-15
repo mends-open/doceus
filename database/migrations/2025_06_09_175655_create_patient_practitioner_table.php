@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('patient_practitioner', function (Blueprint $table) {
             $table->foreignIdFor(Patient::class);
             $table->foreignIdFor(Practitioner::class);
-            $table->timestamps();
 
             $table->primary(['patient_id', 'practitioner_id']);
         });

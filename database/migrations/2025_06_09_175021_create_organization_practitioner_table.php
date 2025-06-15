@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('organization_practitioner', function (Blueprint $table) {
             $table->foreignIdFor(Organization::class);
             $table->foreignIdFor(Practitioner::class);
-            $table->timestamps();
 
             $table->primary(['organization_id', 'practitioner_id']);
         });
