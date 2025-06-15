@@ -47,6 +47,7 @@ class AppPanelProvider extends PanelProvider
                 'primary' => Color::Neutral,
             ])
             ->unsavedChangesAlerts()
+            ->sidebarCollapsibleOnDesktop()
             ->databaseTransactions()
             ->breadcrumbs(false)
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
