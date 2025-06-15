@@ -15,14 +15,13 @@ class EncryptedBinary implements CastsAttributes
             return null;
         }
 
-        // Value is stored as raw binary; handle stream resources from PgSQL
+        // Handle stream resources returned by PgSQL drivers
         if (is_resource($value)) {
             $value = stream_get_contents($value);
         }
 
-        // Re-encode to base64 for decryption
         try {
-            return Crypt::decrypt(base64_encode($value));
+            return Crypt::decrypt($value);
         } catch (DecryptException) {
             // Fallback for legacy plaintext values
             return $value;
@@ -35,6 +34,6 @@ class EncryptedBinary implements CastsAttributes
             return null;
         }
 
-        return base64_decode(Crypt::encrypt($value));
+        return Crypt::encrypt($value);
     }
 }

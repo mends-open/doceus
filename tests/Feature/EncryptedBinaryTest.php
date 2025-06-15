@@ -16,7 +16,7 @@ it('encrypts person fields as binary', function () {
 
     expect($person->first_name)->toBe('Alice')
         ->and($raw)->not->toBe('Alice')
-        ->and(base64_encode($raw))->not->toBe($raw);
+        ->and(Crypt::decrypt($raw))->toBe('Alice');
 });
 
 it('encrypts organization name as binary', function () {
@@ -26,12 +26,12 @@ it('encrypts organization name as binary', function () {
 
     expect($org->name)->toBe('Clinic')
         ->and($raw)->not->toBe('Clinic')
-        ->and(base64_encode($raw))->not->toBe($raw);
+        ->and(Crypt::decrypt($raw))->toBe('Clinic');
 });
 
 it('decrypts resource values', function () {
     $cast = new EncryptedBinary();
-    $encrypted = base64_decode(Crypt::encrypt('test'));
+    $encrypted = Crypt::encrypt('test');
     $stream = fopen('php://temp', 'r+');
     fwrite($stream, $encrypted);
     rewind($stream);
