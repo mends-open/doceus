@@ -7,8 +7,10 @@ use App\Models\Organization;
 use App\Models\OrganizationPatient;
 use App\Models\OrganizationPractitioner;
 use App\Models\Patient;
+use App\Models\PatientPractitioner;
 use App\Models\Person;
 use App\Models\Practitioner;
+use App\Models\PractitionerQualification;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
@@ -36,8 +38,8 @@ class PolymorphicServiceProvider extends ServiceProvider
             MorphType::Organization->value => Organization::class,
             MorphType::OrganizationPractitioner->value => OrganizationPractitioner::class,
             MorphType::OrganizationPatient->value => OrganizationPatient::class,
-            MorphType::PatientPractitioner->value => OrganizationPractitioner::class,
-            MorphType::PractitionerQualification->value => OrganizationPractitioner::class,
+            MorphType::PatientPractitioner->value => PatientPractitioner::class,
+            MorphType::PractitionerQualification->value => PractitionerQualification::class,
             MorphType::Tag->value => \App\Models\Tag::class,
             MorphType::Taggable->value => \App\Models\Taggable::class,
         ]);
