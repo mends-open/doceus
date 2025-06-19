@@ -107,7 +107,11 @@ class User extends Authenticatable implements FilamentUser, HasTenants, MustVeri
     protected function language(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => Language::from($value ?? config('app.locale')),
+            get: function ($value) {
+                $locale = $value ?? config('app.locale');
+
+                return Language::tryFrom($locale) ?? Language::English;
+            },
             set: fn ($value) => $value instanceof Language ? $value->value : $value,
         );
     }
