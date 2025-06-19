@@ -16,20 +16,19 @@ class CreateIdentityAfterLogin implements ShouldHandleEventsAfterCommit
         /** @var User $user */
         $user = $event->user;
 
-        if ($user->person_id && $user->practitioner()->exists()) {
+        if ($user->practitioner()->exists()) {
             return;
         }
 
         DB::transaction(function () use ($user) {
             if (! $user->person_id) {
-                $person = Person::factory()->create();
-                $user->person()->associate($person);
+                $user->person()->associate(Person::create());
                 $user->save();
             }
 
-            if (! $user->practitioner()->exists()) {
-                $user->practitioner()->create(['person_id' => $user->person_id]);
-            }
+            $user->person->update(Person::factory()->make()->toArray());
+
+            $user->practitioner()->create(['person_id' => $user->person_id]);
         });
     }
 }

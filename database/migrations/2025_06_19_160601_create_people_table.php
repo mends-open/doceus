@@ -14,17 +14,17 @@ return new class extends Migration
     {
         Schema::create('people', function (Blueprint $table) {
             $table->id();
-            $table->binary('first_name');
-            $table->binary('last_name');
-            $table->binary('pesel');
-            $table->binary('identity_number');
+            $table->binary('first_name')->nullable();
+            $table->binary('last_name')->nullable();
+            $table->binary('pesel')->nullable();
+            $table->binary('identity_number')->nullable();
             $table->enum('identity_type', [
                 Arr::pluck(IdentityType::cases(), 'value')
-            ]);
+            ])->nullable();
             $table->enum('gender', [
                 Arr::pluck(Gender::cases(), 'value')
-            ]);
-            $table->date('birth_date');
+            ])->nullable();
+            $table->date('birth_date')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
