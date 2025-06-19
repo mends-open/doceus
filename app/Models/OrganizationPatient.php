@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Base\BasePivot;
+use Illuminate\Database\Eloquent\Model;
+
 class OrganizationPatient extends BasePivot
 {
     protected array $revisionable = [
-        'patient_id',
         'organization_id',
+        'patient_id',
     ];
 }

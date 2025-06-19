@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Patient;
-use App\Models\Practitioner;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('patient_practitioner', function (Blueprint $table) {
-            $table->foreignIdFor(Patient::class);
-            $table->foreignIdFor(Practitioner::class);
-
-            $table->primary(['patient_id', 'practitioner_id']);
+        Schema::create('slots', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
         });
     }
 
@@ -26,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('patient_practitioner');
+        Schema::dropIfExists('slots');
     }
 };

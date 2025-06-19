@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Base;
 
 use App\Feature\Revision\Interfaces\Revisionable;
 use App\Feature\Revision\Observers\RevisionableObserver;
