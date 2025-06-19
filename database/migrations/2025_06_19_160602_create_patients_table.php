@@ -17,8 +17,8 @@ return new class extends Migration
             $table->foreignIdFor(Person::class)
                 ->constrained()
                 ->cascadeOnDelete();
-            $table->binary('email');
-            $table->binary('phone_number');
+            $table->text('email');
+            $table->text('phone_number');
             $table->timestamps();
             $table->softDeletes();
 

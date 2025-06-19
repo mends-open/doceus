@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Feature\Identity\Enums\Gender;
 use App\Feature\Identity\Enums\IdentityType;
-use App\Feature\Postgres\Casts\EncryptedBinary;
 use App\Models\Base\BaseModel;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -49,10 +48,10 @@ class Person extends BaseModel
 
     /* ────────────────────────────  Casts  ────────────────────────────── */
     protected $casts = [
-        'first_name'      => EncryptedBinary::class,
-        'last_name'       => EncryptedBinary::class,
-        'pesel'           => EncryptedBinary::class,
-        'identity_number' => EncryptedBinary::class,
+        'first_name'      => 'encrypted',
+        'last_name'       => 'encrypted',
+        'pesel'           => 'encrypted',
+        'identity_number' => 'encrypted',
         'identity_type'   => IdentityType::class,
         'gender'          => Gender::class,
         'birth_date'      => 'date',

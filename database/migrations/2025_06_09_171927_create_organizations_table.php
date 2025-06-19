@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('organizations', function (Blueprint $table) {
             $table->id();
             $table->enum('type', Arr::pluck(OrganizationType::cases(), 'value'));
-            $table->binary('name');
+            $table->text('name');
             $table->timestamps();
             $table->softDeletes();
         });
