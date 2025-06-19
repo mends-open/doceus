@@ -8,6 +8,23 @@ use App\Feature\Postgres\Casts\EncryptedBinary;
 use App\Models\Base\BaseModel;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * @property int $id
+ * @property string $first_name
+ * @property string $last_name
+ * @property string $pesel
+ * @property string $identity_number
+ * @property IdentityType $identity_type
+ * @property Gender $gender
+ * @property \Illuminate\Support\Carbon $birth_date
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ *
+ * @property-read Patient|null $patient
+ * @property-read Practitioner|null $practitioner
+ * @property-read User|null $user
+ */
 class Person extends BaseModel
 {
     protected $fillable = [
