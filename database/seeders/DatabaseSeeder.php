@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
     {
         $organizations = Organization::factory(5)->create();
 
-        $users = User::factory(5)->withoutPerson()->create();
+        $users = User::factory(5)->create();
 
         $users->each(function (User $user) use ($organizations) {
             event(new \Illuminate\Auth\Events\Login('web', $user, false));

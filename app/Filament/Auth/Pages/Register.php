@@ -3,6 +3,8 @@
 namespace App\Filament\Auth\Pages;
 
 use Exception;
+use Illuminate\Database\Eloquent\Model;
+use App\Models\Person;
 use Filament\Auth\Pages\Register as BaseRegister;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Component;
@@ -33,5 +35,18 @@ class Register extends BaseRegister
             ->label(__('doceus.user.phone'))
             ->tel()
             ->required();
+    }
+
+    /**
+     * Create an empty person record during registration.
+     *
+     * @param  array<string, mixed>  $data
+     */
+    protected function handleRegistration(array $data): Model
+    {
+        $person = Person::create();
+        $data['person_id'] = $person->id;
+
+        return $this->getUserModel()::create($data);
     }
 }

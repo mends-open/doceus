@@ -18,7 +18,7 @@ class UserFactory extends Factory
         $languages = array_map(fn ($lang) => $lang->value, Language::cases());
 
         return [
-            'person_id' => null,
+            'person_id' => Person::factory(),
             'email' => $this->faker->unique()->safeEmail,
             'password' => 'password', // Will be hashed automatically by your cast
             'language' => $this->faker->randomElement($languages),
