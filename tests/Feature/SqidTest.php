@@ -38,7 +38,7 @@ it('decodes sqid when resolving route binding query', function () {
     $organization = Organization::factory()->create();
 
     $query = Organization::query();
-    $resolved = (new Organization())->resolveRouteBindingQuery($query, $organization->sqid)->first();
+    $resolved = (new Organization)->resolveRouteBindingQuery($query, $organization->sqid)->first();
 
     expect($organization->is($resolved))->toBeTrue();
 });
@@ -61,7 +61,7 @@ it('decodes sqid with relation constraints', function () {
             ->whereNull('organizations.deleted_at');
     });
 
-    $resolved = (new Person())->resolveRouteBindingQuery($query, $person->sqid)->first();
+    $resolved = (new Person)->resolveRouteBindingQuery($query, $person->sqid)->first();
 
     expect($person->is($resolved))->toBeTrue();
 });

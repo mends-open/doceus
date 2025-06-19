@@ -4,7 +4,7 @@ use App\Models\Person;
 use App\Models\User;
 
 it('generates name from first and last name', function () {
-    $user = new User();
+    $user = new User;
     $user->setRelation('person', Person::make([
         'first_name' => 'john',
         'last_name' => 'doe',
@@ -14,7 +14,7 @@ it('generates name from first and last name', function () {
 });
 
 it('generates name from first name only', function () {
-    $user = new User();
+    $user = new User;
     $user->setRelation('person', Person::make([
         'first_name' => 'jane',
     ]));
@@ -23,7 +23,7 @@ it('generates name from first name only', function () {
 });
 
 it('generates name from last name only', function () {
-    $user = new User();
+    $user = new User;
     $user->setRelation('person', Person::make([
         'last_name' => 'smith',
     ]));
@@ -40,7 +40,7 @@ it('generates name from email when no name fields', function () {
 });
 
 it('generates default name when no fields present', function () {
-    $user = new User();
+    $user = new User;
 
     expect($user->name)->toBe('User');
 });

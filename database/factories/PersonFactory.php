@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Person;
 use App\Feature\Identity\Enums\Gender;
+use App\Models\Person;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PersonFactory extends Factory

@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\Encounter;
-use App\Models\Patient;
 use App\Models\Practitioner;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
