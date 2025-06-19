@@ -13,10 +13,20 @@ class EditPatient extends EditRecord
 {
     protected static string $resource = PatientResource::class;
 
-    protected function mutateFormDataBeforeSave(array $data): array
+    protected function mutateFormDataBeforeFill(array $data): array
     {
-        $personData = Arr::pull($data, 'person', []);
-        $this->record->person->update($personData);
+        $data['person'] = Arr::only(
+            $this->record->person->toArray(),
+            [
+                'first_name',
+                'last_name',
+                'pesel',
+                'identity_number',
+                'identity_type',
+                'gender',
+                'birth_date',
+            ]
+        );
 
         return $data;
     }
