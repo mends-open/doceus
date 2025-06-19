@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Feature\Identity\Enums\Language;
-use App\Feature\Postgres\Casts\EncryptedBinary;
 use App\Feature\Revision\Interfaces\Revisionable;
 use App\Feature\Revision\Observers\RevisionableObserver;
 use App\Feature\Revision\Traits\LogsRevisions;
@@ -99,7 +98,7 @@ class User extends Authenticatable implements FilamentUser, HasTenants, MustVeri
 
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'phone_number' => EncryptedBinary::class,
+        'phone_number' => 'encrypted',
         'password' => 'hashed',
     ];
 
