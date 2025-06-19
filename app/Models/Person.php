@@ -75,5 +75,10 @@ class Person extends BaseModel
         return $this->hasOne(User::class);
     }
 
+    public function isComplete(): bool
+    {
+        return filled($this->first_name) && filled($this->last_name);
+    }
+
 }
 

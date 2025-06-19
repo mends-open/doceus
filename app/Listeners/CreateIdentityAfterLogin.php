@@ -26,8 +26,6 @@ class CreateIdentityAfterLogin implements ShouldHandleEventsAfterCommit
                 $user->save();
             }
 
-            $user->person->update(Person::factory()->make()->toArray());
-
             $user->practitioner()->create(['person_id' => $user->person_id]);
         });
     }

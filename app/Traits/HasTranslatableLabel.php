@@ -6,11 +6,16 @@ use Illuminate\Support\Arr;
 
 trait HasTranslatableLabel
 {
-    public function label(): string
+    public function getLabel(): string
     {
         return __(
             Arr::join([$this->translationPrefix(), $this->value], '.')
         );
+    }
+
+    public function label(): string
+    {
+        return $this->getLabel();
     }
 
     // Each enum using this trait must implement this method
