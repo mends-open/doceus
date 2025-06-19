@@ -99,7 +99,6 @@ class User extends Authenticatable implements FilamentUser, HasTenants, MustVeri
 
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'language' => Language::class,
         'phone_number' => EncryptedBinary::class,
         'password' => 'hashed',
     ];
