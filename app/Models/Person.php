@@ -77,7 +77,9 @@ class Person extends BaseModel
 
     public function isComplete(): bool
     {
-        return filled($this->first_name) && filled($this->last_name);
+        return filled($this->first_name)
+            && filled($this->last_name)
+            && filled($this->pesel);
     }
 
 }
