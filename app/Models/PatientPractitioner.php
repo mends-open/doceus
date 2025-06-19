@@ -3,14 +3,13 @@
 namespace App\Models;
 
 use App\Models\Base\BasePivot;
-use Illuminate\Database\Eloquent\Model;
 
-class OrganizationPractitioner extends BasePivot
+class PatientPractitioner extends BasePivot
 {
     public $incrementing = true;
 
     protected array $revisionable = [
-        'organization_id',
+        'patient_id',
         'practitioner_id',
     ];
 }
