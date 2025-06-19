@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Feature\Identity\Enums\OrganizationType;
-use App\Feature\Postgres\Casts\EncryptedBinary;
 use App\Models\Base\BaseModel;
 use Database\Factories\OrganizationFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -46,7 +45,7 @@ class Organization extends BaseModel
 {
     protected $casts = [
         'type' => OrganizationType::class,
-        'name' => EncryptedBinary::class,
+        'name' => 'encrypted',
     ];
 
     protected $fillable = [

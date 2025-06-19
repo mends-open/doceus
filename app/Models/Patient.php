@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Feature\Postgres\Casts\EncryptedBinary;
 use App\Models\Base\BaseModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -34,8 +33,8 @@ class Patient extends BaseModel
     ];
 
     protected $casts = [
-        'email' => EncryptedBinary::class,
-        'phone_number' => EncryptedBinary::class,
+        'email' => 'encrypted',
+        'phone_number' => 'encrypted',
     ];
 
     public function person(): BelongsTo
