@@ -25,6 +25,10 @@ return [
         'individual' => 'Individual',
         'entity' => 'Entity',
     ],
+    'patient' => [
+        'label' => 'Patient',
+        'plural_label' => 'Patients',
+    ],
     'user_feature' => [
         'is_medical_doctor' => 'Medical doctor',
         'is_medical_assistant' => 'Medical assistant',
