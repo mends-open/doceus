@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Feature\Identity\Enums;
+
 enum ContactPointSystem: string
 {
     case Phone = 'phone';

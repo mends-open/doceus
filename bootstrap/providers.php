@@ -1,10 +1,10 @@
 <?php
 
+use App\Feature\Polymorphic\Providers\PolymorphicServiceProvider;
 use App\Providers\AppServiceProvider;
+use App\Providers\Filament\AppPanelProvider;
 use App\Providers\HorizonServiceProvider;
 use App\Providers\TelescopeServiceProvider;
-use App\Providers\Filament\AppPanelProvider;
-use App\Feature\Polymorphic\Providers\PolymorphicServiceProvider;
 
 return [
     AppServiceProvider::class,

@@ -2,17 +2,15 @@
 
 namespace App\Feature\Revision\Models;
 
-use Illuminate\Support\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use App\Models\Organization;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Carbon;
 
 /**
- *
- *
  * @property int $id
  * @property Carbon $dispatched_at
  * @property string $created_at
@@ -30,6 +28,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property-read Organization|null $organization
  * @property-read Model|\Eloquent|null $revisionable
  * @property-read User|null $user
+ *
  * @method static Builder<static>|Revision newModelQuery()
  * @method static Builder<static>|Revision newQuery()
  * @method static Builder<static>|Revision query()
@@ -47,6 +46,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @method static Builder<static>|Revision whereUrl($value)
  * @method static Builder<static>|Revision whereUserAgent($value)
  * @method static Builder<static>|Revision whereUserId($value)
+ *
  * @mixin \Eloquent
  */
 class Revision extends Model

@@ -2,41 +2,35 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Carbon;
-use Illuminate\Notifications\DatabaseNotificationCollection;
-use Illuminate\Notifications\DatabaseNotification;
-use Database\Factories\UserFactory;
-use Illuminate\Database\Eloquent\Builder;
 use App\Feature\Identity\Enums\Language;
-use App\Models\Person;
 use App\Feature\Revision\Interfaces\Revisionable;
 use App\Feature\Revision\Observers\RevisionableObserver;
 use App\Feature\Revision\Traits\LogsRevisions;
 use App\Feature\Sqid\Interfaces\Sqidable;
 use App\Feature\Sqid\Traits\HasSqids;
 use App\Traits\HasDisplayName;
-use App\Models\Organization;
-use App\Models\OrganizationPractitioner;
-use App\Models\Practitioner;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Database\Factories\UserFactory;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasTenants;
 use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
 /**
- *
- *
  * @property int $id
  * @property string $email
  * @property string|null $language
@@ -56,6 +50,7 @@ use Illuminate\Support\Collection;
  * @property-read Practitioner|null $practitioner
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Organization> $organizations
  * @property-read int|null $organizations_count
+ *
  * @method static UserFactory factory($count = null, $state = [])
  * @method static Builder<static>|User newModelQuery()
  * @method static Builder<static>|User newQuery()
@@ -72,6 +67,7 @@ use Illuminate\Support\Collection;
  * @method static Builder<static>|User whereUpdatedAt($value)
  * @method static Builder<static>|User withTrashed()
  * @method static Builder<static>|User withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 #[ObservedBy([RevisionableObserver::class])]

@@ -3,15 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
-use App\Feature\Revision\Interfaces\Revisionable;
-use App\Feature\Revision\Observers\RevisionableObserver;
-use App\Feature\Revision\Traits\LogsRevisions;
-use Illuminate\Database\Eloquent\Attributes\ObservedBy;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use App\Models\Organization;
-use App\Models\OrganizationPractitioner;
 
 /**
  * @property int $id

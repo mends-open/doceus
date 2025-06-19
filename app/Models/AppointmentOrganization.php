@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Relations\Pivot;
-
 class AppointmentOrganization extends BasePivot
 {
     //

@@ -70,7 +70,6 @@ class EditProfile extends BaseEditProfile
             ->options(Language::class);
     }
 
-
     /**
      * @throws Exception
      */
@@ -83,5 +82,4 @@ class EditProfile extends BaseEditProfile
                 $this->getLastNameFormComponent(),
             ]);
     }
-
 }

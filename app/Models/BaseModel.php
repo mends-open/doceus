@@ -15,5 +15,5 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 #[ObservedBy([RevisionableObserver::class])]
 class BaseModel extends Model implements Revisionable, Sqidable
 {
-    use LogsRevisions, HasSqids, HasFactory, SoftDeletes;
+    use HasFactory, HasSqids, LogsRevisions, SoftDeletes;
 }
