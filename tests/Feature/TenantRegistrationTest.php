@@ -15,6 +15,8 @@ it('redirects to organization registration when user has none', function () {
 
     event(new Login('web', $user, false));
 
+    $user->person->update(Person::factory()->make()->toArray());
+
     $this->actingAs($user)
         ->get('/')
         ->assertRedirect('/new');

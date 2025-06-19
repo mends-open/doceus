@@ -7,6 +7,7 @@ return [
         'email' => 'Email',
         'phone' => 'Telefon',
         'language' => 'Język',
+        'pesel' => 'PESEL',
     ],
     'auth' => [
         'first_name' => 'Imię',
