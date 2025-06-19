@@ -2,9 +2,25 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Carbon;
+
 use App\Feature\Identity\Enums\LocationType;
 use App\Models\Base\BaseModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+/**
+ * @property int $id
+ * @property int $organization_id
+ * @property string $name
+ * @property LocationType $type
+ * @property array|null $address
+ * @property string|null $description
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
+ *
+ * @property-read Organization $organization
+ */
 
 class Location extends BaseModel
 {
