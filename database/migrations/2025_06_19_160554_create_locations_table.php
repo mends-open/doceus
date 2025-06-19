@@ -17,9 +17,8 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
             $table->string('name');
-            $table->enum('type', [
-                Arr::pluck(LocationType::cases(), 'value')
-            ])->default('virtual');
+            $table->enum('type', Arr::pluck(LocationType::cases(), 'value'))
+                ->default(LocationType::Virtual->value);
             $table->jsonb('address')->nullable();
             $table->string('description')->nullable();
             $table->timestamps();

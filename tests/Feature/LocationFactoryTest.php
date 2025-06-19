@@ -1,0 +1,17 @@
+<?php
+
+use App\Feature\Identity\Enums\LocationType;
+use App\Models\Location;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
+
+it('defaults type to virtual when not provided', function () {
+    $attributes = Location::factory()->raw();
+    unset($attributes['type']);
+
+    $location = Location::create($attributes);
+    $location->refresh();
+
+    expect($location->type)->toBe(LocationType::Virtual);
+});
