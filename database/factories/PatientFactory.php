@@ -14,6 +14,8 @@ class PatientFactory extends Factory
     {
         return [
             'person_id' => Person::factory(),
+            'email' => $this->faker->unique()->safeEmail,
+            'phone_number' => $this->faker->phoneNumber,
         ];
     }
 }

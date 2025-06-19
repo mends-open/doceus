@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrganizationPatient extends BasePivot
 {
+    public $incrementing = true;
+
     protected array $revisionable = [
         'organization_id',
         'patient_id',
