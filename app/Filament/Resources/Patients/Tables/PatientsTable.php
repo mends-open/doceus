@@ -17,9 +17,10 @@ class PatientsTable
     {
         return $table
             ->columns([
-                TextColumn::make('person.id')
-                    ->numeric()
-                    ->sortable(),
+                TextColumn::make('person.first_name')
+                    ->label('First name'),
+                TextColumn::make('person.last_name')
+                    ->label('Last name'),
                 TextColumn::make('email'),
                 TextColumn::make('phone_number'),
                 TextColumn::make('created_at')
