@@ -12,6 +12,18 @@ use Filament\Facades\Filament;
 
 class CreateOrganization extends RegisterTenant
 {
+    public function mount(): void
+    {
+        $user = Filament::auth()->user();
+
+        if (! $user->person?->isComplete()) {
+            $this->redirect(route('filament.app.auth.profile'));
+            return;
+        }
+
+        parent::mount();
+    }
+
     public static function getLabel(): string
     {
         return __('Create organization');
@@ -23,7 +35,7 @@ class CreateOrganization extends RegisterTenant
             Select::make('type')
                 ->label(__('doceus.organization.type'))
                 ->options(collect(OrganizationType::cases())
-                    ->mapWithKeys(fn ($case) => [$case->value => $case->label()])
+                    ->mapWithKeys(fn ($case) => [$case->value => $case->getLabel()])
                     ->toArray())
                 ->required(),
             TextInput::make('name')
