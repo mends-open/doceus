@@ -16,6 +16,8 @@ return [
     'organization' => [
         'label' => 'Organizacja',
         'plural_label' => 'Organizacje',
+        'name' => 'Nazwa',
+        'type' => 'Typ',
     ],
     'organization_type' => [
         'label' => 'Typ organizacji',
