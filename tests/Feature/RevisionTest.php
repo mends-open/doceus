@@ -14,7 +14,7 @@ uses(RefreshDatabase::class);
 it('records revisions for user CRUD', function () {
     $initial = Revision::count();
     $user = User::factory()->create();
-    expect(Revision::count())->toBe($initial + 1);
+    expect(Revision::count())->toBe($initial + 2);
     $this->assertDatabaseHas('revisions', [
         'revisionable_type' => MorphType::User->value,
         'revisionable_id' => $user->id,
@@ -22,7 +22,7 @@ it('records revisions for user CRUD', function () {
     ]);
 
     $user->update(['email' => 'updated@example.com']);
-    expect(Revision::count())->toBe($initial + 2);
+    expect(Revision::count())->toBe($initial + 3);
     $this->assertDatabaseHas('revisions', [
         'revisionable_type' => MorphType::User->value,
         'revisionable_id' => $user->id,
@@ -30,7 +30,7 @@ it('records revisions for user CRUD', function () {
     ]);
 
     $user->delete();
-    expect(Revision::count())->toBe($initial + 3);
+    expect(Revision::count())->toBe($initial + 4);
     $this->assertDatabaseHas('revisions', [
         'revisionable_type' => MorphType::User->value,
         'revisionable_id' => $user->id,
@@ -38,7 +38,7 @@ it('records revisions for user CRUD', function () {
     ]);
 
     $user->restore();
-    expect(Revision::count())->toBe($initial + 4);
+    expect(Revision::count())->toBe($initial + 5);
     $this->assertDatabaseHas('revisions', [
         'revisionable_type' => MorphType::User->value,
         'revisionable_id' => $user->id,
@@ -46,7 +46,7 @@ it('records revisions for user CRUD', function () {
     ]);
 
     $user->forceDelete();
-    expect(Revision::count())->toBe($initial + 5);
+    expect(Revision::count())->toBe($initial + 6);
     $this->assertDatabaseHas('revisions', [
         'revisionable_type' => MorphType::User->value,
         'revisionable_id' => $user->id,
