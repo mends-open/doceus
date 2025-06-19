@@ -3,6 +3,7 @@
 use App\Feature\Identity\Enums\Gender;
 use App\Feature\Identity\Enums\Language;
 use App\Feature\Identity\Enums\OrganizationType;
+use App\Feature\Identity\Enums\PractitionerQualification;
 use App\Feature\Revision\Enums\RevisionType;
 
 it('translates gender labels', function () {
@@ -30,5 +31,12 @@ it('translates language labels', function () {
     app()->setLocale('en');
     foreach (Language::cases() as $lang) {
         expect($lang->label())->not->toBe('doceus.language.'.$lang->value);
+    }
+});
+
+it('translates practitioner qualification labels', function () {
+    app()->setLocale('en');
+    foreach (PractitionerQualification::cases() as $qual) {
+        expect($qual->label())->not->toBe('doceus.practitioner_qualification.'.$qual->value);
     }
 });

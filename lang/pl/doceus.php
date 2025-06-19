@@ -77,6 +77,11 @@ return [
         'other' => 'Inna',
         'unknown' => 'Nieznana',
     ],
+    'practitioner_qualification' => [
+        'label' => 'Kwalifikacja',
+        'general' => 'Ogólna',
+        'specialist' => 'Specjalistyczna',
+    ],
     'tag_color' => [
         'label' => 'Kolor',
         'success' => 'Sukces',

@@ -77,6 +77,11 @@ return [
         'other' => 'Other',
         'unknown' => 'Unknown',
     ],
+    'practitioner_qualification' => [
+        'label' => 'Qualification',
+        'general' => 'General',
+        'specialist' => 'Specialist',
+    ],
     'tag_color' => [
         'label' => 'Color',
         'success' => 'Success',

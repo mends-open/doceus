@@ -6,6 +6,7 @@ use App\Feature\Polymorphic\Enums\MorphType;
 use App\Models\Organization;
 use App\Models\OrganizationPatient;
 use App\Models\OrganizationPractitioner;
+use App\Models\Location;
 use App\Models\Patient;
 use App\Models\PatientPractitioner;
 use App\Models\Person;
@@ -34,6 +35,7 @@ class PolymorphicServiceProvider extends ServiceProvider
             MorphType::Person->value => Person::class,
             MorphType::Practitioner->value => Practitioner::class,
             MorphType::Patient->value => Patient::class,
+            MorphType::Location->value => Location::class,
             MorphType::Organization->value => Organization::class,
             MorphType::OrganizationPractitioner->value => OrganizationPractitioner::class,
             MorphType::OrganizationPatient->value => OrganizationPatient::class,
