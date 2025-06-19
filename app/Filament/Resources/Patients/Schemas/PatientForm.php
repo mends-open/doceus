@@ -14,7 +14,7 @@ class PatientForm
         return $schema
             ->components([
                 Group::make()
-                    ->statePath('person')
+                    ->relationship('person')
                     ->schema(PersonForm::configure(Schema::make())->getComponents()),
                 TextInput::make('email')
                     ->email()
