@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Feature\Identity\Enums\OrganizationType;
 use App\Feature\Postgres\Casts\EncryptedBinary;
+use App\Models\Base\BaseModel;
 use Database\Factories\OrganizationFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;

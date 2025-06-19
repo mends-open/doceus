@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-/**
- * @property int $organization_id
- * @property int $practitioner_id
- */
+use App\Models\Base\BasePivot;
+use Illuminate\Database\Eloquent\Model;
+
 class OrganizationPractitioner extends BasePivot
 {
     protected array $revisionable = [
