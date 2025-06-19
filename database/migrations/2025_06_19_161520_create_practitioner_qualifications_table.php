@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Organization;
+use App\Feature\Identity\Enums\PractitionerQualification as PractitionerQualificationEnum;
 use App\Models\Practitioner;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -8,31 +8,25 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('organization_practitioner', function (Blueprint $table) {
+        Schema::create('practitioner_qualifications', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Organization::class)
-                ->constrained()
-                ->cascadeOnDelete();
             $table->foreignIdFor(Practitioner::class)
                 ->constrained()
                 ->cascadeOnDelete();
+            $table->enum('qualification', array_column(PractitionerQualificationEnum::cases(), 'value'));
+            $table->date('valid_from')->nullable();
+            $table->date('valid_to')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
-            $table->unique(['organization_id', 'practitioner_id']);
+            $table->index('practitioner_id');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('organization_practitioner');
+        Schema::dropIfExists('practitioner_qualifications');
     }
 };

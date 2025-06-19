@@ -20,6 +20,16 @@ class Person extends BaseModel
         'birth_date',
     ];
 
+    protected array $revisionable = [
+        'first_name',
+        'last_name',
+        'pesel',
+        'identity_number',
+        'identity_type',
+        'gender',
+        'birth_date',
+    ];
+
     /* ────────────────────────────  Casts  ────────────────────────────── */
     protected $casts = [
         'first_name'      => EncryptedBinary::class,

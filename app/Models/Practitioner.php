@@ -2,9 +2,38 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Base\BaseModel;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Practitioner extends Model
+/**
+ * @property int $id
+ * @property int $person_id
+ */
+class Practitioner extends BaseModel
 {
-    //
+    protected $fillable = [
+        'person_id',
+        'qualifications',
+    ];
+
+    protected array $revisionable = [
+        'person_id',
+        'qualifications',
+    ];
+
+    protected $casts = [
+        'qualifications' => 'array',
+    ];
+
+    public function person(): BelongsTo
+    {
+        return $this->belongsTo(Person::class);
+    }
+
+    public function organizations(): BelongsToMany
+    {
+        return $this->belongsToMany(Organization::class)
+            ->using(OrganizationPractitioner::class);
+    }
 }
