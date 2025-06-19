@@ -8,7 +8,6 @@ enum MorphType: string
     case Patient = 'patient';
     case PatientPractitioner = 'patient_practitioner';
     case Practitioner = 'practitioner';
-    case PractitionerQualification = 'practitioner_qualification';
     case User = 'user';
     case Organization = 'organization';
     case OrganizationPractitioner = 'organization_practitioner';
