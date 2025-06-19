@@ -11,20 +11,15 @@ use SodiumException;
 class EncryptedBinary implements CastsAttributes
 {
     /** Postgres ↔️ base64 wrapper
-     * @throws SodiumException
      */
     private function pgDecrypt(string $cipher): mixed
     {
-        $binary = sodium_base642bin($cipher, SODIUM_BASE64_VARIANT_ORIGINAL_NO_PADDING);
-
-        return Crypt::decrypt($binary);   // default $unserialize = true
+        return Crypt::decrypt($cipher);
     }
 
     private function pgEncrypt(mixed $value): string
     {
-        $cipher = Crypt::encrypt($value); // default $serialize = true
-
-        return sodium_bin2base64($cipher, SODIUM_BASE64_VARIANT_ORIGINAL_NO_PADDING);
+        return Crypt::encrypt($value);
     }
 
     /** Streams → string, strings stay strings */
