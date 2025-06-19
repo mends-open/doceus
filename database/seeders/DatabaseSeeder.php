@@ -2,12 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Appointment;
-use App\Models\Encounter;
 use App\Models\Organization;
 use App\Models\Patient;
 use App\Models\Person;
-use App\Models\PractitionerQualification;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -29,10 +26,6 @@ class DatabaseSeeder extends Seeder
             // Attach user to a random subset of existing organizations
             $orgs = $organizations->random(random_int(1, $organizations->count()));
             $user->practitioner->organizations()->attach($orgs->pluck('id'));
-
-            PractitionerQualification::factory(random_int(1, 3))
-                ->for($user->practitioner)
-                ->create();
         });
 
         // Seed additional persons for each organization
@@ -45,19 +38,6 @@ class DatabaseSeeder extends Seeder
                 ->each(function (Patient $patient) use ($organization) {
                     $patient->organizations()->attach($organization);
                 });
-
-            $patients->each(function (Patient $patient) use ($organization) {
-                Appointment::factory(random_int(1, 2))
-                    ->for($patient)
-                    ->for($organization)
-                    ->for($organization->practitioners->random())
-                    ->create()
-                    ->each(function (Appointment $appointment) {
-                        Encounter::factory(random_int(1, 3))
-                            ->for($appointment)
-                            ->create();
-                    });
-            });
 
         });
     }
