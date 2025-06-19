@@ -2,8 +2,9 @@
 
 namespace App\Filament\Resources\Patients\Schemas;
 
-use Filament\Forms\Components\Select;
+use App\Filament\Resources\People\Schemas\PersonForm;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Group;
 use Filament\Schemas\Schema;
 
 class PatientForm
@@ -12,9 +13,9 @@ class PatientForm
     {
         return $schema
             ->components([
-                Select::make('person_id')
-                    ->relationship('person', 'id')
-                    ->required(),
+                Group::make()
+                    ->statePath('person')
+                    ->schema(PersonForm::configure(Schema::make())->getComponents()),
                 TextInput::make('email')
                     ->email()
                     ->required(),
