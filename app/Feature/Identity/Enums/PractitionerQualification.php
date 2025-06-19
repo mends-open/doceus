@@ -3,8 +3,9 @@
 namespace App\Feature\Identity\Enums;
 
 use App\Traits\HasTranslatableLabel;
+use Filament\Support\Contracts\HasLabel;
 
-enum PractitionerQualification: string
+enum PractitionerQualification: string implements HasLabel
 {
     use HasTranslatableLabel;
 

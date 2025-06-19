@@ -3,8 +3,9 @@
 namespace App\Feature\Identity\Enums;
 
 use App\Traits\HasTranslatableLabel;
+use Filament\Support\Contracts\HasLabel;
 
-enum Gender: string
+enum Gender: string implements HasLabel
 {
     use HasTranslatableLabel;
 

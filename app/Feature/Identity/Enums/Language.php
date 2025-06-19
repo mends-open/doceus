@@ -2,16 +2,23 @@
 
 namespace App\Feature\Identity\Enums;
 
-enum Language: string
+use Filament\Support\Contracts\HasLabel;
+
+enum Language: string implements HasLabel
 {
     case English = 'en';
     case Polish = 'pl';
 
-    public function label(): string
+    public function getLabel(): string
     {
         return match ($this) {
             self::English => __('doceus.language.en'),
             self::Polish => __('doceus.language.pl'),
         };
+    }
+
+    public function label(): string
+    {
+        return $this->getLabel();
     }
 }
