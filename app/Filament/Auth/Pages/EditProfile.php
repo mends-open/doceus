@@ -10,6 +10,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Component;
 use Filament\Schemas\Components\Group;
 use Filament\Schemas\Schema;
+use App\Feature\Identity\Rules\ValidPesel;
 
 class EditProfile extends BaseEditProfile
 {
@@ -20,12 +21,10 @@ class EditProfile extends BaseEditProfile
     {
         return $schema
             ->components([
-                $this->getEmailFormComponent(),
+                $this->getEmailFormComponent()->disabled()->dehydrated(false),
+                $this->getPhoneFormComponent()->disabled()->dehydrated(false),
                 $this->getLanguageFormComponent(),
                 $this->getPersonFormComponent(),
-                $this->getPasswordFormComponent(),
-                $this->getPasswordConfirmationFormComponent(),
-                $this->getCurrentPasswordFormComponent(),
             ]);
     }
 
@@ -49,6 +48,14 @@ class EditProfile extends BaseEditProfile
             ->required();
     }
 
+    protected function getPeselFormComponent(): Component
+    {
+        return TextInput::make('pesel')
+            ->label(__('doceus.user.pesel'))
+            ->required()
+            ->rule(new ValidPesel());
+    }
+
     /**
      * @throws Exception
      */
@@ -58,6 +65,13 @@ class EditProfile extends BaseEditProfile
             ->label(__('filament-panels::auth/pages/edit-profile.form.email.label'))
             ->email()
             ->required();
+    }
+
+    protected function getPhoneFormComponent(): Component
+    {
+        return TextInput::make('phone_number')
+            ->label(__('doceus.user.phone'))
+            ->tel();
     }
 
     /**
@@ -80,6 +94,12 @@ class EditProfile extends BaseEditProfile
             ->schema([
                 $this->getFirstNameFormComponent(),
                 $this->getLastNameFormComponent(),
+                $this->getPeselFormComponent(),
             ]);
+    }
+
+    protected function getRedirectUrl(): ?string
+    {
+        return '/';
     }
 }
