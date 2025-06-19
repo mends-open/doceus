@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
         $users = User::factory(5)->create();
 
         $users->each(function (User $user) use ($organizations) {
+            event(new \Illuminate\Auth\Events\Login('web', $user, false));
+
             // Each user creates their own organization and is attached automatically
             $user->createOrganization(Organization::factory()->make()->toArray());
 

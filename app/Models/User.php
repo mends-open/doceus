@@ -156,17 +156,8 @@ class User extends Authenticatable implements FilamentUser, HasTenants, MustVeri
 
     protected static function booted(): void
     {
-        static::creating(function (self $user) {
-            if (! $user->person_id) {
-                $user->person()->associate(Person::factory()->create());
-            }
-        });
-
-        static::created(function (self $user) {
-            if (! $user->practitioner()->exists()) {
-                $user->practitioner()->create(['person_id' => $user->person_id]);
-            }
-        });
+        // Creation of related Person and Practitioner is handled
+        // after the user's first login via an event listener.
     }
 
     /**

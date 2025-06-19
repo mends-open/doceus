@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Auth\Pages\EditProfile;
+use App\Filament\Auth\Pages\Register;
 use App\Http\Middleware\SetUserLocale;
 use App\Models\Organization;
 use Exception;
@@ -38,7 +39,7 @@ class AppPanelProvider extends PanelProvider
             ->tenantRoutePrefix('organization')
             ->passwordReset()
             ->profile(EditProfile::class)
-            ->registration()
+            ->registration(\App\Filament\Auth\Pages\Register::class)
             ->emailVerification()
             ->emailChangeVerification()
             ->login()
