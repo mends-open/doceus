@@ -179,3 +179,29 @@ it('records revisions for user organization relationships', function () {
         'type' => RevisionType::Created->value,
     ]);
 });
+
+it('records revisions for patient practitioner relationships', function () {
+    $patient = \App\Models\Patient::factory()->create();
+    $practitioner = \App\Models\Practitioner::factory()->create();
+
+    $initial = Revision::count();
+
+    $practitioner->patients()->attach($patient->id);
+    $pivot = \App\Models\PatientPractitioner::where('patient_id', $patient->id)
+        ->where('practitioner_id', $practitioner->id)
+        ->first();
+    expect($pivot)->not->toBeNull();
+    expect(Revision::count())->toBeGreaterThan($initial);
+    $this->assertDatabaseHas('revisions', [
+        'revisionable_type' => MorphType::PatientPractitioner->value,
+        'revisionable_id' => $pivot->id,
+        'type' => RevisionType::Created->value,
+    ]);
+
+    $practitioner->patients()->detach($patient->id);
+    $this->assertDatabaseHas('revisions', [
+        'revisionable_type' => MorphType::PatientPractitioner->value,
+        'revisionable_id' => $pivot->id,
+        'type' => RevisionType::Deleted->value,
+    ]);
+});
