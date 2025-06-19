@@ -27,3 +27,13 @@ it('allows access when person complete', function () {
     $response->assertStatus(302);
     expect($response->headers->get('Location'))->not->toBe(route('filament.app.auth.profile'));
 });
+
+it('allows email verification prompt when not verified', function () {
+    $user = User::factory()->unverified()->create();
+    $user->person->update(['pesel' => null]);
+    event(new Login('web', $user, false));
+
+    $response = $this->actingAs($user)->get(route('filament.app.auth.email-verification.prompt'));
+
+    $response->assertSuccessful();
+});

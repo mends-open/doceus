@@ -11,7 +11,7 @@ class EnsureProfileComplete
     {
         $user = $request->user();
 
-        if ($user && $user->person && ! $user->person->isComplete() && ! $request->routeIs('filament.app.auth.profile')) {
+        if ($user && $user->hasVerifiedEmail() && $user->person && ! $user->person->isComplete() && ! $request->routeIs('filament.app.auth.profile')) {
             return redirect()->route('filament.app.auth.profile');
         }
 
