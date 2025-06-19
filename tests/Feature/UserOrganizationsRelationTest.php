@@ -10,6 +10,9 @@ it('returns only practitioner organizations', function () {
     $user = User::factory()->create();
     $other = User::factory()->create();
 
+    event(new \Illuminate\Auth\Events\Login('web', $user, false));
+    event(new \Illuminate\Auth\Events\Login('web', $other, false));
+
     $org1 = Organization::factory()->create();
     $org2 = Organization::factory()->create();
 

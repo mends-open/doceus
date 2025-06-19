@@ -30,7 +30,10 @@ return new class extends Migration
         });
 
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignIdFor(Person::class)->after('id')->constrained();
+            $table->foreignIdFor(Person::class)
+                ->after('id')
+                ->nullable()
+                ->constrained();
         });
     }
 

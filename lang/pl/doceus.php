@@ -5,6 +5,7 @@ return [
         'first_name' => 'Imię',
         'last_name' => 'Nazwisko',
         'email' => 'Email',
+        'phone' => 'Telefon',
         'language' => 'Język',
     ],
     'auth' => [
