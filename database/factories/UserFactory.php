@@ -33,4 +33,11 @@ class UserFactory extends Factory
             'email_verified_at' => null,
         ]);
     }
+
+    public function withoutPerson(): UserFactory
+    {
+        return $this->state(fn () => [
+            'person_id' => null,
+        ]);
+    }
 }
