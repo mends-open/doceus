@@ -35,6 +35,7 @@ use Illuminate\Support\Collection;
  * @property int $id
  * @property string $email
  * @property string|null $language
+ * @property string|null $phone_number
  * @property int|null $person_id
  * @property Carbon|null $email_verified_at
  * @property string $password
