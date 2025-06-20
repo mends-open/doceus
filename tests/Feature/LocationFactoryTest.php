@@ -15,3 +15,9 @@ it('defaults type to virtual when not provided', function () {
 
     expect($location->type)->toBe(LocationType::Virtual);
 });
+
+it('allows name to be null', function () {
+    $location = Location::factory()->create(['name' => null]);
+
+    expect($location->name)->toBeNull();
+});

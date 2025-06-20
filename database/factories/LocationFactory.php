@@ -17,7 +17,7 @@ class LocationFactory extends Factory
 
         return [
             'organization_id' => Organization::factory(),
-            'name' => $this->faker->word,
+            'name' => $this->faker->optional()->word,
             'type' => $this->faker->randomElement($types),
             'address' => ['line' => [$this->faker->streetAddress]],
             'description' => $this->faker->sentence,

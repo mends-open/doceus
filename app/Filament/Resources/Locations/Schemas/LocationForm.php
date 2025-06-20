@@ -13,11 +13,7 @@ class LocationForm
     {
         return $schema
             ->components([
-                Select::make('organization_id')
-                    ->relationship('organization', 'name')
-                    ->required(),
-                TextInput::make('name')
-                    ->required(),
+                TextInput::make('name'),
                 Select::make('type')
                     ->options(LocationType::class)
                     ->default('virtual')

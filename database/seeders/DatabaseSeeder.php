@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Location;
 use App\Models\Organization;
 use App\Models\Patient;
 use App\Models\Person;
@@ -41,6 +42,10 @@ class DatabaseSeeder extends Seeder
                 ->each(function (Patient $patient) use ($organization) {
                     $patient->organizations()->attach($organization);
                 });
+
+            Location::factory(random_int(1, 3))
+                ->for($organization)
+                ->create();
 
         });
     }

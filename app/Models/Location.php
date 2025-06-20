@@ -10,7 +10,7 @@ use Illuminate\Support\Carbon;
 /**
  * @property int $id
  * @property int $organization_id
- * @property string $name
+ * @property string|null $name
  * @property LocationType $type
  * @property array|null $address
  * @property string|null $description
