@@ -13,4 +13,7 @@ enum MorphType: string
     case OrganizationPractitioner = 'organization_practitioner';
     case Location = 'location';
     case Person = 'person';
+    case Schedule = 'schedule';
+    case Slot = 'slot';
+    case Blockage = 'blockage';
 }
