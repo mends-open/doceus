@@ -4,11 +4,13 @@ namespace App\Filament\Auth\Pages;
 
 use Filament\Actions\Action;
 use Filament\Auth\Pages\EmailVerification\EmailVerificationPrompt as BaseEmailVerificationPrompt;
+use Filament\Facades\Filament;
 use Filament\Schemas\Components\Actions;
 use Filament\Schemas\Components\Text;
 use Filament\Schemas\Schema;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Support\Icons\Heroicon;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\HtmlString;
 
 class EmailVerificationPrompt extends BaseEmailVerificationPrompt
@@ -17,9 +19,18 @@ class EmailVerificationPrompt extends BaseEmailVerificationPrompt
     {
         return Action::make('logout')
             ->label(__('filament-panels::layout.actions.logout.label'))
-            ->icon(FilamentIcon::resolve('panels::user-menu.logout-button') ?? Heroicon::ArrowLeftOnRectangle)
-            ->url(filament()->getLogoutUrl())
-            ->postToUrl();
+            ->icon(
+                FilamentIcon::resolve('panels::user-menu.logout-button')
+                ?? Heroicon::ArrowLeftOnRectangle
+            )
+            ->action(function () {
+                Filament::auth()->logout();
+
+                Session::invalidate();
+                Session::regenerateToken();
+
+                return redirect()->route('filament.app.auth.login');
+            });
     }
 
     public function content(Schema $schema): Schema
