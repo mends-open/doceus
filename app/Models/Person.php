@@ -19,7 +19,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- *
  * @property-read Patient|null $patient
  * @property-read Practitioner|null $practitioner
  * @property-read User|null $user
@@ -48,13 +47,13 @@ class Person extends BaseModel
 
     /* ────────────────────────────  Casts  ────────────────────────────── */
     protected $casts = [
-        'first_name'      => 'encrypted',
-        'last_name'       => 'encrypted',
-        'pesel'           => 'encrypted',
+        'first_name' => 'encrypted',
+        'last_name' => 'encrypted',
+        'pesel' => 'encrypted',
         'identity_number' => 'encrypted',
-        'identity_type'   => IdentityType::class,
-        'gender'          => Gender::class,
-        'birth_date'      => 'date',
+        'identity_type' => IdentityType::class,
+        'gender' => Gender::class,
+        'birth_date' => 'date',
     ];
 
     /* ─────────────────────────  Relationships  ───────────────────────── */
@@ -80,6 +79,4 @@ class Person extends BaseModel
             && filled($this->last_name)
             && filled($this->pesel);
     }
-
 }
-

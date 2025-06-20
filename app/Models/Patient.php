@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property int $person_id
  * @property string $email
  * @property string $phone_number
- *
  * @property-read Person $person
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Organization> $organizations
  * @property-read int|null $organizations_count

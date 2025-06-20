@@ -3,11 +3,11 @@
 namespace App\Filament\Resources\Patients\Pages;
 
 use App\Filament\Resources\Patients\PatientResource;
-use Illuminate\Support\Arr;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\RestoreAction;
 use Filament\Resources\Pages\EditRecord;
+use Illuminate\Support\Arr;
 
 class EditPatient extends EditRecord
 {
