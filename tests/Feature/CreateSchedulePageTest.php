@@ -25,7 +25,7 @@ it('shows schedule fields on create schedule page', function () {
 
     Livewire::test(CreateSchedule::class)
         ->assertFormFieldExists('practitioner_id')
-        ->assertFormFieldExists('type')
+        ->assertFormFieldExists('is_blocking')
         ->assertFormFieldExists('start_date')
         ->assertFormFieldExists('start_time')
         ->assertFormFieldExists('end_time')
