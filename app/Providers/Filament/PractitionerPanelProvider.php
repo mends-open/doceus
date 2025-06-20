@@ -3,7 +3,6 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Auth\Pages\EditProfile;
-use App\Filament\Auth\Pages\EmailVerificationPrompt;
 use App\Http\Middleware\EnsureProfileComplete;
 use App\Http\Middleware\SetUserLocale;
 use App\Models\Organization;
@@ -16,7 +15,6 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\Width;
-use Filament\View\PanelsRenderHook;
 use Filament\Widgets\AccountWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -49,11 +47,6 @@ class PractitionerPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Neutral,
             ])
-            ->renderHook(
-                PanelsRenderHook::SIMPLE_PAGE_END,
-                fn (EmailVerificationPrompt $page) => $page->logoutAction()->toHtml(),
-                scopes: EmailVerificationPrompt::class,
-            )
             ->unsavedChangesAlerts()
             ->sidebarCollapsibleOnDesktop()
             ->databaseTransactions()
