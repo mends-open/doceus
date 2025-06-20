@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Feature\Scheduling\Enums\SlotStatus;
 use App\Models\Base\BaseModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Support\Carbon;
 
 /**
@@ -40,5 +41,10 @@ class Slot extends BaseModel
     public function schedule(): BelongsTo
     {
         return $this->belongsTo(Schedule::class);
+    }
+
+    public function organization(): HasOneThrough
+    {
+        return $this->hasOneThrough(Organization::class, Schedule::class);
     }
 }
