@@ -7,10 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 it('creates slots for a schedule', function () {
-    $schedule = Schedule::factory()->create([
-        'organization_id' => \App\Models\Organization::factory(),
-        'location_id' => \App\Models\Location::factory(),
-    ]);
+    $schedule = Schedule::factory()->create();
     $slot = Slot::factory()->create([
         'schedule_id' => $schedule->id,
     ]);
