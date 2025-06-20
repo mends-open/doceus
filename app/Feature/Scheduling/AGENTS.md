@@ -1,5 +1,5 @@
-- This feature stores practitioner schedules, slots and blockages.
+- This feature stores practitioner schedules and slots. Schedules can also act as blocking entries.
 - Keep models simple and FHIR friendly.
 - Schedules belong to practitioners, slots belong to schedules.
-- Use enums for repeat patterns, slot status, and day of week.
+- Use enums for repeat patterns, schedule type, slot status, and day of week.
 - Comment any FHIR specific fields directly in code.

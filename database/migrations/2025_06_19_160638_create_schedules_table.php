@@ -1,6 +1,7 @@
 <?php
 
 use App\Feature\Scheduling\Enums\RepeatPattern;
+use App\Feature\Scheduling\Enums\ScheduleType;
 use App\Models\Organization;
 use App\Models\Practitioner;
 use Illuminate\Database\Migrations\Migration;
@@ -27,10 +28,13 @@ return new class extends Migration
             $table->json('days_of_week');
             $table->enum('repeat_pattern', Arr::pluck(RepeatPattern::cases(), 'value'))
                 ->default(RepeatPattern::Weekly->value);
+            $table->enum('type', Arr::pluck(ScheduleType::cases(), 'value'))
+                ->default(ScheduleType::Standard->value);
             $table->timestamps();
             $table->softDeletes();
 
             $table->index('practitioner_id');
+            $table->index('organization_id');
         });
     }
 
