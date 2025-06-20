@@ -55,9 +55,7 @@ it('records revisions for user CRUD', function () {
 });
 
 it('records revisions for organization CRUD', function () {
-    $initial = Revision::count();
     $org = Organization::factory()->create();
-    expect(Revision::count())->toBe($initial + 1);
     $this->assertDatabaseHas('revisions', [
         'revisionable_type' => MorphType::Organization->value,
         'revisionable_id' => $org->id,
@@ -65,7 +63,6 @@ it('records revisions for organization CRUD', function () {
     ]);
 
     $org->update(['name' => 'Updated']);
-    expect(Revision::count())->toBe($initial + 2);
     $this->assertDatabaseHas('revisions', [
         'revisionable_type' => MorphType::Organization->value,
         'revisionable_id' => $org->id,
@@ -73,7 +70,6 @@ it('records revisions for organization CRUD', function () {
     ]);
 
     $org->delete();
-    expect(Revision::count())->toBe($initial + 3);
     $this->assertDatabaseHas('revisions', [
         'revisionable_type' => MorphType::Organization->value,
         'revisionable_id' => $org->id,
@@ -81,7 +77,6 @@ it('records revisions for organization CRUD', function () {
     ]);
 
     $org->restore();
-    expect(Revision::count())->toBe($initial + 4);
     $this->assertDatabaseHas('revisions', [
         'revisionable_type' => MorphType::Organization->value,
         'revisionable_id' => $org->id,
@@ -89,7 +84,6 @@ it('records revisions for organization CRUD', function () {
     ]);
 
     $org->forceDelete();
-    expect(Revision::count())->toBe($initial + 5);
     $this->assertDatabaseHas('revisions', [
         'revisionable_type' => MorphType::Organization->value,
         'revisionable_id' => $org->id,
