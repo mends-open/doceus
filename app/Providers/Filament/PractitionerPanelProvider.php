@@ -3,7 +3,6 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Auth\Pages\EditProfile;
-use App\Filament\Auth\Pages\Register;
 use App\Http\Middleware\EnsureProfileComplete;
 use App\Http\Middleware\SetUserLocale;
 use App\Models\Organization;
@@ -42,7 +41,7 @@ class PractitionerPanelProvider extends PanelProvider
             ->passwordReset()
             ->profile(EditProfile::class)
             ->registration(\App\Filament\Auth\Pages\Register::class)
-            ->emailVerification()
+            ->emailVerification(\App\Filament\Auth\Pages\EmailVerificationPrompt::class)
             ->emailChangeVerification()
             ->login()
             ->colors([
@@ -65,6 +64,7 @@ class PractitionerPanelProvider extends PanelProvider
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
                 SetUserLocale::class,
+                \App\Http\Middleware\EnsureEmailVerified::class,
                 EnsureProfileComplete::class,
                 AuthenticateSession::class,
                 ShareErrorsFromSession::class,
