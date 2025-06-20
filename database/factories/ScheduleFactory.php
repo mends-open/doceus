@@ -2,12 +2,11 @@
 
 namespace Database\Factories;
 
-use App\Feature\Scheduling\Enums\RepeatPattern;
+use App\Models\Location;
 use App\Models\Organization;
 use App\Models\Practitioner;
 use App\Models\Schedule;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Arr;
 
 class ScheduleFactory extends Factory
 {
@@ -15,19 +14,23 @@ class ScheduleFactory extends Factory
 
     public function definition(): array
     {
-        $repeat = Arr::random([RepeatPattern::None, RepeatPattern::Weekly]);
-        $isBlocking = $this->faker->boolean;
+        $entries = [
+            [
+                'type' => 'weekly',
+                'start_date' => $this->faker->date(),
+                'has_end_date' => true,
+                'end_date' => $this->faker->date(),
+                'start_time' => $this->faker->time('H:i'),
+                'end_time' => $this->faker->time('H:i'),
+                'days' => [1, 2, 3],
+            ],
+        ];
 
         return [
             'practitioner_id' => Practitioner::factory(),
             'organization_id' => Organization::factory(),
-            'start_date' => $this->faker->date(),
-            'start_time' => $this->faker->time('H:i'),
-            'end_time' => $this->faker->time('H:i'),
-            'repeat_until' => $repeat === RepeatPattern::Weekly ? $this->faker->date() : null,
-            'days_of_week' => [1, 2, 3],
-            'repeat_pattern' => $repeat->value,
-            'is_blocking' => $isBlocking,
+            'location_id' => Location::factory(),
+            'entries' => $entries,
         ];
     }
 }

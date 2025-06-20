@@ -7,6 +7,7 @@ use App\Models\Organization;
 use App\Models\Patient;
 use App\Models\Person;
 use App\Models\Practitioner;
+use App\Models\Schedule;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -47,6 +48,15 @@ class DatabaseSeeder extends Seeder
                 ->for($organization)
                 ->create();
 
+        });
+
+        // Create one schedule for each practitioner and location combination
+        $practitioners->each(function (Practitioner $practitioner) {
+            $practitioner->organizations->each(function (Organization $organization) use ($practitioner) {
+                $organization->locations->each(function (Location $location) use ($practitioner, $organization) {
+                    Schedule::factory()->for($practitioner)->for($organization)->for($location)->create();
+                });
+            });
         });
     }
 }
