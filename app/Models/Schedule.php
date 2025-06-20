@@ -6,6 +6,8 @@ use App\Feature\Scheduling\Enums\RepeatPattern;
 use App\Models\Base\BaseModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 
 /**
@@ -53,6 +55,11 @@ class Schedule extends BaseModel
     public function practitioner(): BelongsTo
     {
         return $this->belongsTo(Practitioner::class);
+    }
+
+    public function organization(): BelongsTo
+    {
+        return $this->belongsTo(Organization::class);
     }
 
     public function slots(): HasMany
