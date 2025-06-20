@@ -3,7 +3,6 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Auth\Pages\EditProfile;
-use App\Filament\Auth\Pages\Register;
 use App\Http\Middleware\EnsureProfileComplete;
 use App\Http\Middleware\SetUserLocale;
 use App\Models\Organization;
