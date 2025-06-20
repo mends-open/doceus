@@ -9,7 +9,7 @@ enum ScheduleType: string implements HasLabel
 {
     use HasTranslatableLabel;
 
-    case Standard = 'standard';
+    case Availability = 'availability';
     case Block = 'block';
 
     protected function translationPrefix(): string

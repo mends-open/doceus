@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\Schedules\Schemas;
 
 use App\Feature\Scheduling\Enums\DayOfWeek;
-use App\Feature\Scheduling\Enums\RepeatPattern;
 use App\Feature\Scheduling\Enums\ScheduleType;
 use App\Models\Practitioner;
 use Filament\Forms\Components\CheckboxList;
@@ -19,18 +18,25 @@ class ScheduleForm
     {
         return $schema
             ->components([
+                // temporary: allow selecting practitioners from any organization
                 Select::make('practitioner_id')
-                    ->relationship('practitioner', 'id')
-                    ->getOptionLabelFromRecordUsing(fn (Practitioner $record) => $record->person?->first_name.' '.$record->person?->last_name)
+                    ->options(
+                        Practitioner::with('person')->get()->mapWithKeys(
+                            fn (Practitioner $practitioner) => [
+                                $practitioner->id => $practitioner->person?->first_name.' '.$practitioner->person?->last_name,
+                            ],
+                        )
+                            ->toArray()
+                    )
                     ->searchable()
                     ->required(),
                 Select::make('type')
                     ->options(Collection::make(ScheduleType::cases())->mapWithKeys(fn ($case) => [$case->value => $case->getLabel()])->toArray())
-                    ->default(ScheduleType::Standard->value)
+                    ->default(ScheduleType::Availability->value)
                     ->required(),
                 DatePicker::make('start_date')
                     ->required(),
-                DatePicker::make('end_date'),
+                DatePicker::make('repeat_until'),
                 TimePicker::make('start_time')
                     ->seconds(false)
                     ->required(),
@@ -40,9 +46,6 @@ class ScheduleForm
                 CheckboxList::make('days_of_week')
                     ->options(Collection::make(DayOfWeek::cases())->mapWithKeys(fn ($case) => [$case->value => $case->getLabel()])->toArray())
                     ->columns(2)
-                    ->required(),
-                Select::make('repeat_pattern')
-                    ->options(Collection::make(RepeatPattern::cases())->mapWithKeys(fn ($case) => [$case->value => $case->getLabel()])->toArray())
                     ->required(),
             ]);
     }

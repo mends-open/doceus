@@ -10,7 +10,6 @@ enum RepeatPattern: string implements HasLabel
     use HasTranslatableLabel;
 
     case None = 'none';
-    case Daily = 'daily';
     case Weekly = 'weekly';
 
     protected function translationPrefix(): string

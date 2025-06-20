@@ -16,16 +16,16 @@ class ScheduleFactory extends Factory
 
     public function definition(): array
     {
-        $repeat = Arr::random(RepeatPattern::cases());
+        $repeat = Arr::random([RepeatPattern::None, RepeatPattern::Weekly]);
         $type = Arr::random(ScheduleType::cases());
 
         return [
             'practitioner_id' => Practitioner::factory(),
             'organization_id' => Organization::factory(),
             'start_date' => $this->faker->date(),
-            'end_date' => $this->faker->optional()->date(),
             'start_time' => $this->faker->time('H:i'),
             'end_time' => $this->faker->time('H:i'),
+            'repeat_until' => $repeat === RepeatPattern::Weekly ? $this->faker->date() : null,
             'days_of_week' => [1, 2, 3],
             'repeat_pattern' => $repeat->value,
             'type' => $type->value,
