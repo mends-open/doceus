@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Organization;
 use App\Models\Patient;
 use App\Models\Person;
+use App\Models\Practitioner;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -17,18 +18,18 @@ class DatabaseSeeder extends Seeder
     {
         $organizations = Organization::factory(5)->create();
 
-        $users = User::factory(5)->create();
+        $practitioners = Practitioner::factory(5)->create();
 
-        $users->each(function (User $user) use ($organizations) {
-            event(new \Illuminate\Auth\Events\Login('web', $user, false));
+        $practitioners->each(function (Practitioner $practitioner) use ($organizations) {
+            // Each practitioner creates their own organization and is attached automatically
+            $practitioner->createOrganization(Organization::factory()->make()->toArray());
 
-            // Each user creates their own organization and is attached automatically
-            $user->createOrganization(Organization::factory()->make()->toArray());
-
-            // Attach user to a random subset of existing organizations
+            // Attach practitioner to a random subset of existing organizations
             $orgs = $organizations->random(random_int(1, $organizations->count()));
-            $user->practitioner->organizations()->attach($orgs->pluck('id'));
+            $practitioner->organizations()->attach($orgs->pluck('id'));
         });
+
+        User::factory(5)->create();
 
         // Seed additional persons for each organization
         $organizations->each(function (Organization $organization) {
