@@ -16,7 +16,7 @@ use Filament\Tables\Table;
 
 class ScheduleResource extends Resource
 {
-    protected static ?string $tenantOwnershipRelationshipName = 'organizations';
+    protected static ?string $tenantOwnershipRelationshipName = 'organization';
 
     protected static ?string $model = Schedule::class;
 

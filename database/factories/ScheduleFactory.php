@@ -27,18 +27,13 @@ class ScheduleFactory extends Factory
         ];
 
         $organization = Organization::factory()->create();
+        $practitioner = Practitioner::factory()->create();
 
         return [
+            'organization_id' => $organization->id,
             'location_id' => Location::factory()->for($organization),
+            'practitioner_id' => $practitioner->id,
             'entries' => $entries,
         ];
-    }
-
-    public function configure(): static
-    {
-        return $this->afterCreating(function (Schedule $schedule) {
-            $schedule->organizations()->attach($schedule->location->organization_id);
-            $schedule->practitioners()->attach(Practitioner::factory()->create());
-        });
     }
 }

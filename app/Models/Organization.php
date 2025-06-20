@@ -70,10 +70,9 @@ class Organization extends BaseModel
         return $this->hasMany(Location::class);
     }
 
-    public function schedules(): BelongsToMany
+    public function schedules(): HasMany
     {
-        return $this->belongsToMany(Schedule::class)
-            ->using(OrganizationSchedule::class);
+        return $this->hasMany(Schedule::class);
     }
 
     protected static function booted(): void
