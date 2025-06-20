@@ -8,6 +8,7 @@ use App\Filament\Resources\Practitioners\Pages\ListPractitioners;
 use App\Filament\Resources\Practitioners\Schemas\PractitionerForm;
 use App\Filament\Resources\Practitioners\Tables\PractitionersTable;
 use App\Models\Practitioner;
+use App\Traits\BelongsToManyOrganizations;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -18,6 +19,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PractitionerResource extends Resource
 {
+    use BelongsToManyOrganizations;
     protected static ?string $model = Practitioner::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
