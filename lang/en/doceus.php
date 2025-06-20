@@ -96,10 +96,8 @@ return [
         'none' => 'None',
         'weekly' => 'Weekly',
     ],
-    'schedule_type' => [
-        'label' => 'Schedule Type',
-        'availability' => 'Availability',
-        'block' => 'Block',
+    'is_blocking' => [
+        'label' => 'Blocking',
     ],
     'slot_status' => [
         'label' => 'Status',

@@ -1,7 +1,6 @@
 <?php
 
 use App\Feature\Scheduling\Enums\RepeatPattern;
-use App\Feature\Scheduling\Enums\ScheduleType;
 use App\Models\Organization;
 use App\Models\Practitioner;
 use Illuminate\Database\Migrations\Migration;
@@ -28,8 +27,7 @@ return new class extends Migration
             $table->json('days_of_week')->nullable();
             $table->enum('repeat_pattern', Arr::pluck(RepeatPattern::cases(), 'value'))
                 ->default(RepeatPattern::Weekly->value);
-            $table->enum('type', Arr::pluck(ScheduleType::cases(), 'value'))
-                ->default(ScheduleType::Availability->value);
+            $table->boolean('is_blocking')->default(false);
             $table->timestamps();
             $table->softDeletes();
 
