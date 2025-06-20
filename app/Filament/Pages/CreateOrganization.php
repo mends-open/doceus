@@ -4,11 +4,11 @@ namespace App\Filament\Pages;
 
 use App\Feature\Identity\Enums\OrganizationType;
 use App\Models\Organization;
+use Filament\Facades\Filament;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Pages\Tenancy\RegisterTenant;
 use Filament\Schemas\Schema;
-use Filament\Facades\Filament;
 
 class CreateOrganization extends RegisterTenant
 {
@@ -18,6 +18,7 @@ class CreateOrganization extends RegisterTenant
 
         if (! $user->person?->isComplete()) {
             $this->redirect(route('filament.app.auth.profile'));
+
             return;
         }
 

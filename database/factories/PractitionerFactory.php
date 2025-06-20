@@ -5,8 +5,8 @@ namespace Database\Factories;
 use App\Feature\Identity\Enums\Language;
 use App\Models\Person;
 use App\Models\Practitioner;
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class PractitionerFactory extends Factory
 {

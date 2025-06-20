@@ -2,13 +2,13 @@
 
 namespace App\Filament\Auth\Pages;
 
-use Exception;
-use Illuminate\Database\Eloquent\Model;
 use App\Models\Person;
+use Exception;
 use Filament\Auth\Pages\Register as BaseRegister;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Component;
 use Filament\Schemas\Schema;
+use Illuminate\Database\Eloquent\Model;
 
 class Register extends BaseRegister
 {

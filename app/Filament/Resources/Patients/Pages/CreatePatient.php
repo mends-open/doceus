@@ -4,9 +4,9 @@ namespace App\Filament\Resources\Patients\Pages;
 
 use App\Filament\Resources\Patients\PatientResource;
 use App\Models\Person;
+use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
-use Filament\Resources\Pages\CreateRecord;
 
 class CreatePatient extends CreateRecord
 {

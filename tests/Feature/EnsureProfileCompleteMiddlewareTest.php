@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Middleware\EnsureProfileComplete;
 use App\Models\Practitioner;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 

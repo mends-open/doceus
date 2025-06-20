@@ -23,5 +23,4 @@ class LocationFactory extends Factory
             'description' => $this->faker->sentence,
         ];
     }
-
 }

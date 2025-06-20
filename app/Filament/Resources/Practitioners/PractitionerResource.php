@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class PractitionerResource extends Resource
 {
     use BelongsToManyOrganizations;
+
     protected static ?string $model = Practitioner::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;

@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Carbon;
-
 use App\Feature\Identity\Enums\LocationType;
 use App\Models\Base\BaseModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
@@ -18,10 +17,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
- *
  * @property-read Organization $organization
  */
-
 class Location extends BaseModel
 {
     protected $fillable = [
@@ -40,9 +37,9 @@ class Location extends BaseModel
     ];
 
     protected $casts = [
-        'type'    => LocationType::class,
+        'type' => LocationType::class,
         'address' => 'array',
-        'active'  => 'boolean',
+        'active' => 'boolean',
     ];
 
     public function organization(): BelongsTo

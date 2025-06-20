@@ -8,5 +8,4 @@ trait BelongsToOneOrganization
     {
         return 'organization';
     }
-
 }
