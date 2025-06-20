@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\Schedules\Tables;
 
-use App\Feature\Scheduling\Enums\DayOfWeek;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -19,22 +18,11 @@ class SchedulesTable
                     ->label('First name'),
                 TextColumn::make('practitioner.person.last_name')
                     ->label('Last name'),
-                TextColumn::make('start_date')
-                    ->date(),
-                TextColumn::make('start_time'),
-                TextColumn::make('end_time'),
-                TextColumn::make('repeat_until')
-                    ->date()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('days_of_week')
-                    ->formatStateUsing(fn ($state) => collect($state)->map(fn ($day) => DayOfWeek::from($day)->label())->join(', '))
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('repeat_pattern')
-                    ->badge(),
-                TextColumn::make('is_blocking')
-                    ->label('Blocking')
-                    ->formatStateUsing(fn ($state) => $state ? 'Yes' : 'No')
-                    ->badge(),
+                TextColumn::make('location.name')
+                    ->label('Location'),
+                TextColumn::make('entries')
+                    ->label('Entries')
+                    ->formatStateUsing(fn ($state) => is_array($state) ? count($state) : 0),
             ])
             ->filters([
                 //
