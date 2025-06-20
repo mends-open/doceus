@@ -3,10 +3,10 @@
 namespace App\Feature\Polymorphic\Providers;
 
 use App\Feature\Polymorphic\Enums\MorphType;
+use App\Models\Location;
 use App\Models\Organization;
 use App\Models\OrganizationPatient;
 use App\Models\OrganizationPractitioner;
-use App\Models\Location;
 use App\Models\Patient;
 use App\Models\PatientPractitioner;
 use App\Models\Person;
@@ -40,6 +40,9 @@ class PolymorphicServiceProvider extends ServiceProvider
             MorphType::OrganizationPractitioner->value => OrganizationPractitioner::class,
             MorphType::OrganizationPatient->value => OrganizationPatient::class,
             MorphType::PatientPractitioner->value => PatientPractitioner::class,
+            MorphType::Schedule->value => \App\Models\Schedule::class,
+            MorphType::Slot->value => \App\Models\Slot::class,
+            MorphType::Blockage->value => \App\Models\Blockage::class,
         ]);
     }
 }
