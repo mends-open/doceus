@@ -1,25 +1,22 @@
 <?php
 
-use App\Feature\Scheduling\Enums\SlotStatus;
 use App\Models\Schedule;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('slots', function (Blueprint $table) {
+        Schema::create('blockages', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Schedule::class)
                 ->constrained()
                 ->cascadeOnDelete();
             $table->dateTime('start_at');
             $table->dateTime('end_at');
-            $table->enum('status', Arr::pluck(SlotStatus::cases(), 'value'))
-                ->default(SlotStatus::Free->value);
+            $table->text('reason')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
@@ -29,6 +26,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('slots');
+        Schema::dropIfExists('blockages');
     }
 };
