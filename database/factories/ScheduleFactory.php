@@ -26,11 +26,11 @@ class ScheduleFactory extends Factory
             ],
         ];
 
-        $organization = Organization::factory();
+        $organization = Organization::factory()->create();
 
         return [
             'practitioner_id' => Practitioner::factory(),
-            'organization_id' => $organization,
+            'organization_id' => $organization->id,
             'location_id' => Location::factory()->for($organization),
             'entries' => $entries,
         ];
