@@ -3,7 +3,9 @@
 namespace App\Filament\Resources\Schedules\Schemas;
 
 use App\Feature\Scheduling\Enums\DayOfWeek;
+use App\Models\Location;
 use App\Models\Practitioner;
+use Filament\Facades\Filament;
 use Filament\Forms\Components\Builder;
 use Filament\Forms\Components\Builder\Block;
 use Filament\Forms\Components\CheckboxList;
@@ -34,8 +36,19 @@ class ScheduleForm
                     ->searchable()
                     ->required(),
                 Select::make('location_id')
-                    ->relationship('location', 'name')
+                    ->options(function () {
+                        $tenant = Filament::getTenant();
+
+                        return Location::query()
+                            ->when($tenant, fn ($query) => $query->where('organization_id', $tenant->id))
+                            ->get()
+                            ->mapWithKeys(fn (Location $location) => [
+                                $location->id => $location->name ?? 'Location '.$location->id,
+                            ])
+                            ->toArray();
+                    })
                     ->searchable()
+                    ->preload()
                     ->required(),
                 Builder::make('entries')
                     ->required()
