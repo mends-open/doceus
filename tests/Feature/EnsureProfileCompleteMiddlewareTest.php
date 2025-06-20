@@ -1,39 +1,35 @@
 <?php
 
 use App\Http\Middleware\EnsureProfileComplete;
-use App\Models\User;
-use Illuminate\Auth\Events\Login;
+use App\Models\Practitioner;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
 it('redirects to profile when person incomplete', function () {
-    $user = User::factory()->create();
-    $user->person->update(['pesel' => null]);
-    event(new Login('web', $user, false));
+    $practitioner = Practitioner::factory()->create();
+    $practitioner->person->update(['pesel' => null]);
 
-    $response = $this->actingAs($user)->get('/');
+    $response = $this->actingAs($practitioner)->get('/');
 
     $response->assertRedirect(route('filament.app.auth.profile'));
 });
 
 it('allows access when person complete', function () {
-    $user = User::factory()->create();
-    event(new Login('web', $user, false));
-    $user->createOrganization(\App\Models\Organization::factory()->make()->toArray());
+    $practitioner = Practitioner::factory()->create();
+    $practitioner->createOrganization(\App\Models\Organization::factory()->make()->toArray());
 
-    $response = $this->actingAs($user)->get('/');
+    $response = $this->actingAs($practitioner)->get('/');
 
     $response->assertStatus(302);
     expect($response->headers->get('Location'))->not->toBe(route('filament.app.auth.profile'));
 });
 
 it('allows email verification prompt when not verified', function () {
-    $user = User::factory()->unverified()->create();
-    $user->person->update(['pesel' => null]);
-    event(new Login('web', $user, false));
+    $practitioner = Practitioner::factory()->unverified()->create();
+    $practitioner->person->update(['pesel' => null]);
 
-    $response = $this->actingAs($user)->get(route('filament.app.auth.email-verification.prompt'));
+    $response = $this->actingAs($practitioner)->get(route('filament.app.auth.email-verification.prompt'));
 
     $response->assertSuccessful();
 });

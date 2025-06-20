@@ -22,7 +22,7 @@ it('creates person record when registering', function () {
         ])
         ->call('register');
 
-    $user = \App\Models\User::where('email', 'new@example.com')->first();
-    expect($user)->not->toBeNull();
-    expect($user->person)->not->toBeNull();
+    $practitioner = \App\Models\Practitioner::where('email', 'new@example.com')->first();
+    expect($practitioner)->not->toBeNull();
+    expect($practitioner->person)->not->toBeNull();
 });

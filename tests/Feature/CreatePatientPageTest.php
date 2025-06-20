@@ -2,9 +2,8 @@
 
 use App\Filament\Resources\Patients\Pages\CreatePatient;
 use App\Models\Organization;
-use App\Models\User;
+use App\Models\Practitioner;
 use Filament\Facades\Filament;
-use Illuminate\Auth\Events\Login;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 
@@ -16,9 +15,8 @@ function setTenantForTests(Organization $organization): void
 }
 
 it('shows person and patient fields on create patient page', function () {
-    $user = User::factory()->create();
-    event(new Login('web', $user, false));
-    Livewire::actingAs($user);
+    $practitioner = Practitioner::factory()->create();
+    Livewire::actingAs($practitioner);
 
     $organization = Organization::factory()->create();
     setTenantForTests($organization);
