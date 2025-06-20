@@ -17,9 +17,6 @@ class LocationsTable
     {
         return $table
             ->columns([
-                TextColumn::make('organization.name')
-                    ->numeric()
-                    ->sortable(),
                 TextColumn::make('name')
                     ->searchable(),
                 TextColumn::make('type')

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignIdFor(Organization::class)
                 ->constrained()
                 ->cascadeOnDelete();
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->enum('type', Arr::pluck(LocationType::cases(), 'value'))
                 ->default(LocationType::Virtual->value);
             $table->jsonb('address')->nullable();

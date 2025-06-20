@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Feature\Identity\Enums\LocationType;
 use App\Feature\Identity\Enums\OrganizationType;
 use App\Models\Base\BaseModel;
+use App\Models\Location;
 use Database\Factories\OrganizationFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -62,6 +64,20 @@ class Organization extends BaseModel
     {
         return $this->belongsToMany(Practitioner::class)
             ->using(OrganizationPractitioner::class);
+    }
+
+    public function locations(): HasMany
+    {
+        return $this->hasMany(Location::class);
+    }
+
+    protected static function booted(): void
+    {
+        static::created(function (Organization $organization) {
+            $organization->locations()->create([
+                'type' => LocationType::Virtual,
+            ]);
+        });
     }
 
     public function people(): HasMany
