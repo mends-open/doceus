@@ -144,7 +144,7 @@ it('records revisions for user organization relationships', function () {
     $user = User::factory()->create();
     $org = Organization::factory()->create();
 
-    event(new \Illuminate\Auth\Events\Login('web', $user, false));
+    \App\Models\Practitioner::factory()->for($user->person)->create();
 
     $initial = Revision::count();
 
