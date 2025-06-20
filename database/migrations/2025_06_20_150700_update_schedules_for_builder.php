@@ -19,7 +19,11 @@ return new class extends Migration
                 'repeat_pattern',
                 'is_blocking',
             ]);
-            $table->foreignIdFor(Location::class)->after('organization_id');
+            $table->foreignIdFor(Location::class)
+                ->after('organization_id')
+                ->constrained()
+                ->cascadeOnDelete()
+                ->index();
             $table->jsonb('entries');
             $table->unique(['practitioner_id', 'location_id']);
         });
@@ -29,7 +33,8 @@ return new class extends Migration
     {
         Schema::table('schedules', function (Blueprint $table) {
             $table->dropUnique(['practitioner_id', 'location_id']);
-            $table->dropColumn(['entries', 'location_id']);
+            $table->dropColumn('entries');
+            $table->dropConstrainedForeignId('location_id');
             $table->date('start_date');
             $table->time('start_time');
             $table->time('end_time');
