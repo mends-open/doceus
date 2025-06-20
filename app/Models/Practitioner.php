@@ -136,6 +136,12 @@ class Practitioner extends Authenticatable implements FilamentUser, HasTenants, 
             ->using(PatientPractitioner::class);
     }
 
+    public function schedules(): BelongsToMany
+    {
+        return $this->belongsToMany(Schedule::class)
+            ->using(PractitionerSchedule::class);
+    }
+
     public function createOrganization(array $attributes): Organization
     {
         $organization = Organization::create($attributes);

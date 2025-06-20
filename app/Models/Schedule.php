@@ -3,30 +3,27 @@
 namespace App\Models;
 
 use App\Models\Base\BaseModel;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
- * @property int $practitioner_id
  * @property int $location_id
  * @property array $entries
- * @property-read Practitioner $practitioner
+ * @property-read Practitioner|null $practitioner
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Slot> $slots
  * @property-read int|null $slots_count
  */
 class Schedule extends BaseModel
 {
     protected $fillable = [
-        'practitioner_id',
-        'organization_id',
         'location_id',
         'entries',
     ];
 
     protected array $revisionable = [
-        'practitioner_id',
-        'organization_id',
         'location_id',
         'entries',
     ];
@@ -35,14 +32,16 @@ class Schedule extends BaseModel
         'entries' => 'array',
     ];
 
-    public function practitioner(): BelongsTo
+    public function practitioners(): BelongsToMany
     {
-        return $this->belongsTo(Practitioner::class);
+        return $this->belongsToMany(Practitioner::class)
+            ->using(PractitionerSchedule::class);
     }
 
-    public function organization(): BelongsTo
+    public function organizations(): BelongsToMany
     {
-        return $this->belongsTo(Organization::class);
+        return $this->belongsToMany(Organization::class)
+            ->using(OrganizationSchedule::class);
     }
 
     public function location(): BelongsTo
@@ -53,5 +52,12 @@ class Schedule extends BaseModel
     public function slots(): HasMany
     {
         return $this->hasMany(Slot::class);
+    }
+
+    protected function practitionerId(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->practitioners()->first()?->id,
+        );
     }
 }
