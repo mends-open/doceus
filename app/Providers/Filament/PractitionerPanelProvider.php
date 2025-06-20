@@ -64,7 +64,6 @@ class PractitionerPanelProvider extends PanelProvider
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
                 SetUserLocale::class,
-                \App\Http\Middleware\EnsureEmailVerified::class,
                 EnsureProfileComplete::class,
                 AuthenticateSession::class,
                 ShareErrorsFromSession::class,
