@@ -28,6 +28,7 @@ it('shows schedule fields on create schedule page', function () {
         ->assertFormFieldExists('type')
         ->assertFormFieldExists('start_date')
         ->assertFormFieldExists('start_time')
-        ->assertFormFieldExists('days_of_week')
-        ->assertFormFieldExists('repeat_pattern');
+        ->assertFormFieldExists('end_time')
+        ->assertFormFieldExists('repeat_until')
+        ->assertFormFieldExists('days_of_week');
 });

@@ -22,14 +22,14 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
             $table->date('start_date');
-            $table->date('end_date')->nullable();
             $table->time('start_time');
             $table->time('end_time');
-            $table->json('days_of_week');
+            $table->date('repeat_until')->nullable();
+            $table->json('days_of_week')->nullable();
             $table->enum('repeat_pattern', Arr::pluck(RepeatPattern::cases(), 'value'))
                 ->default(RepeatPattern::Weekly->value);
             $table->enum('type', Arr::pluck(ScheduleType::cases(), 'value'))
-                ->default(ScheduleType::Standard->value);
+                ->default(ScheduleType::Availability->value);
             $table->timestamps();
             $table->softDeletes();
 

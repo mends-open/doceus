@@ -94,12 +94,11 @@ return [
     'repeat_pattern' => [
         'label' => 'Repeat',
         'none' => 'None',
-        'daily' => 'Daily',
         'weekly' => 'Weekly',
     ],
     'schedule_type' => [
         'label' => 'Schedule Type',
-        'standard' => 'Standard',
+        'availability' => 'Availability',
         'block' => 'Block',
     ],
     'slot_status' => [
