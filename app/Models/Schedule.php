@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Feature\Scheduling\Enums\RepeatPattern;
-use App\Feature\Scheduling\Enums\ScheduleType;
 use App\Models\Base\BaseModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -18,7 +17,7 @@ use Illuminate\Support\Carbon;
  * @property string $end_time
  * @property array $days_of_week
  * @property RepeatPattern $repeat_pattern
- * @property ScheduleType $type
+ * @property bool $is_blocking
  * @property-read Practitioner $practitioner
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Slot> $slots
  * @property-read int|null $slots_count
@@ -33,7 +32,7 @@ class Schedule extends BaseModel
         'repeat_until',
         'days_of_week',
         'repeat_pattern',
-        'type',
+        'is_blocking',
     ];
 
     protected array $revisionable = [
@@ -44,7 +43,7 @@ class Schedule extends BaseModel
         'repeat_until',
         'days_of_week',
         'repeat_pattern',
-        'type',
+        'is_blocking',
     ];
 
     protected $casts = [
@@ -52,7 +51,7 @@ class Schedule extends BaseModel
         'repeat_until' => 'date',
         'days_of_week' => 'array',
         'repeat_pattern' => RepeatPattern::class,
-        'type' => ScheduleType::class,
+        'is_blocking' => 'boolean',
     ];
 
     public function practitioner(): BelongsTo

@@ -3,12 +3,12 @@
 namespace App\Filament\Resources\Schedules\Schemas;
 
 use App\Feature\Scheduling\Enums\DayOfWeek;
-use App\Feature\Scheduling\Enums\ScheduleType;
 use App\Models\Practitioner;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TimePicker;
+use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Collection;
 
@@ -30,10 +30,8 @@ class ScheduleForm
                     )
                     ->searchable()
                     ->required(),
-                Select::make('type')
-                    ->options(Collection::make(ScheduleType::cases())->mapWithKeys(fn ($case) => [$case->value => $case->getLabel()])->toArray())
-                    ->default(ScheduleType::Availability->value)
-                    ->required(),
+                Toggle::make('is_blocking')
+                    ->label('Blocking entry'),
                 DatePicker::make('start_date')
                     ->required(),
                 DatePicker::make('repeat_until'),

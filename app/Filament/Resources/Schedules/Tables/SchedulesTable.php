@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\Schedules\Tables;
 
 use App\Feature\Scheduling\Enums\DayOfWeek;
-use App\Feature\Scheduling\Enums\ScheduleType;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -32,8 +31,9 @@ class SchedulesTable
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('repeat_pattern')
                     ->badge(),
-                TextColumn::make('type')
-                    ->formatStateUsing(fn ($state) => ScheduleType::from($state)->label())
+                TextColumn::make('is_blocking')
+                    ->label('Blocking')
+                    ->formatStateUsing(fn ($state) => $state ? 'Yes' : 'No')
                     ->badge(),
             ])
             ->filters([

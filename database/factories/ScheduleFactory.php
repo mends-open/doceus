@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Feature\Scheduling\Enums\RepeatPattern;
-use App\Feature\Scheduling\Enums\ScheduleType;
 use App\Models\Organization;
 use App\Models\Practitioner;
 use App\Models\Schedule;
@@ -17,7 +16,7 @@ class ScheduleFactory extends Factory
     public function definition(): array
     {
         $repeat = Arr::random([RepeatPattern::None, RepeatPattern::Weekly]);
-        $type = Arr::random(ScheduleType::cases());
+        $isBlocking = $this->faker->boolean;
 
         return [
             'practitioner_id' => Practitioner::factory(),
@@ -28,7 +27,7 @@ class ScheduleFactory extends Factory
             'repeat_until' => $repeat === RepeatPattern::Weekly ? $this->faker->date() : null,
             'days_of_week' => [1, 2, 3],
             'repeat_pattern' => $repeat->value,
-            'type' => $type->value,
+            'is_blocking' => $isBlocking,
         ];
     }
 }
