@@ -33,8 +33,7 @@ class ScheduleForm
                         )
                             ->toArray()
                     )
-                    ->searchable()
-                    ->required(),
+                    ->searchable(),
                 Select::make('location_id')
                     ->options(function () {
                         $tenant = Filament::getTenant();
@@ -48,8 +47,7 @@ class ScheduleForm
                             ->toArray();
                     })
                     ->searchable()
-                    ->preload()
-                    ->required(),
+                    ->preload(),
                 Builder::make('entries')
                     ->required()
                     ->blocks([

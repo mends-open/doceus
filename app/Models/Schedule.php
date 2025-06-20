@@ -8,26 +8,27 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
- * @property int $practitioner_id
- * @property int $location_id
+ * @property int $organization_id
+ * @property int|null $location_id
+ * @property int|null $practitioner_id
  * @property array $entries
- * @property-read Practitioner $practitioner
+ * @property-read Practitioner|null $practitioner
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Slot> $slots
  * @property-read int|null $slots_count
  */
 class Schedule extends BaseModel
 {
     protected $fillable = [
-        'practitioner_id',
         'organization_id',
         'location_id',
+        'practitioner_id',
         'entries',
     ];
 
     protected array $revisionable = [
-        'practitioner_id',
         'organization_id',
         'location_id',
+        'practitioner_id',
         'entries',
     ];
 

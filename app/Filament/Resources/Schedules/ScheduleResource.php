@@ -8,7 +8,6 @@ use App\Filament\Resources\Schedules\Pages\ListSchedules;
 use App\Filament\Resources\Schedules\Schemas\ScheduleForm;
 use App\Filament\Resources\Schedules\Tables\SchedulesTable;
 use App\Models\Schedule;
-use App\Traits\BelongsToOneOrganization;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -17,7 +16,7 @@ use Filament\Tables\Table;
 
 class ScheduleResource extends Resource
 {
-    use BelongsToOneOrganization;
+    protected static ?string $tenantOwnershipRelationshipName = 'organization';
 
     protected static ?string $model = Schedule::class;
 
