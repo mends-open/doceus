@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Models\Base\BaseModel;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -19,12 +18,16 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Schedule extends BaseModel
 {
     protected $fillable = [
+        'organization_id',
         'location_id',
+        'practitioner_id',
         'entries',
     ];
 
     protected array $revisionable = [
+        'organization_id',
         'location_id',
+        'practitioner_id',
         'entries',
     ];
 
@@ -32,16 +35,14 @@ class Schedule extends BaseModel
         'entries' => 'array',
     ];
 
-    public function practitioners(): BelongsToMany
+    public function practitioner(): BelongsTo
     {
-        return $this->belongsToMany(Practitioner::class)
-            ->using(PractitionerSchedule::class);
+        return $this->belongsTo(Practitioner::class);
     }
 
-    public function organizations(): BelongsToMany
+    public function organization(): BelongsTo
     {
-        return $this->belongsToMany(Organization::class)
-            ->using(OrganizationSchedule::class);
+        return $this->belongsTo(Organization::class);
     }
 
     public function location(): BelongsTo
@@ -57,7 +58,7 @@ class Schedule extends BaseModel
     protected function practitionerId(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->practitioners()->first()?->id,
+            get: fn () => $this->practitioner?->id,
         );
     }
 }

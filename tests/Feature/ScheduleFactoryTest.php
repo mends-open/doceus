@@ -11,5 +11,5 @@ it('creates location in same organization', function () {
     $schedule->refresh();
 
     expect($schedule->location->organization_id)
-        ->toBe($schedule->organizations->first()->id);
+        ->toBe($schedule->organization_id);
 });
