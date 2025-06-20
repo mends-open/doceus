@@ -1,18 +1,16 @@
 <?php
 
 use App\Filament\Auth\Pages\EditProfile;
-use App\Models\User;
-use Illuminate\Auth\Events\Login;
+use App\Models\Practitioner;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 
 uses(RefreshDatabase::class);
 
 it('shows disabled email and phone fields', function () {
-    $user = User::factory()->create();
-    event(new Login('web', $user, false));
+    $practitioner = Practitioner::factory()->create();
 
-    Livewire::actingAs($user)
+    Livewire::actingAs($practitioner)
         ->test(EditProfile::class)
         ->assertFormFieldExists('email')
         ->assertFormFieldDisabled('email')
@@ -22,10 +20,9 @@ it('shows disabled email and phone fields', function () {
 });
 
 it('requires pesel and redirects to dashboard after save', function () {
-    $user = User::factory()->create();
-    event(new Login('web', $user, false));
+    $practitioner = Practitioner::factory()->create();
 
-    Livewire::actingAs($user)
+    Livewire::actingAs($practitioner)
         ->test(EditProfile::class)
         ->fillForm([
             'language' => 'en',

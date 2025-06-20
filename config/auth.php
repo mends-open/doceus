@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Practitioner;
 use App\Models\User;
 
 return [
@@ -17,7 +18,7 @@ return [
 
     'defaults' => [
         'guard' => env('AUTH_GUARD', 'web'),
-        'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
+        'passwords' => env('AUTH_PASSWORD_BROKER', 'practitioners'),
     ],
 
     /*
@@ -40,7 +41,7 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'practitioners',
         ],
     ],
 
@@ -62,9 +63,13 @@ return [
     */
 
     'providers' => [
+        'practitioners' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', Practitioner::class),
+        ],
         'users' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', User::class),
+            'model' => User::class,
         ],
 
         // 'users' => [
@@ -93,8 +98,8 @@ return [
     */
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
+        'practitioners' => [
+            'provider' => 'practitioners',
             'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
             'expire' => 15,
             'throttle' => 60,

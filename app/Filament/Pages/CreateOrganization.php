@@ -49,7 +49,6 @@ class CreateOrganization extends RegisterTenant
         $organization = Organization::create($data);
 
         Filament::auth()->user()
-            ->practitioner
             ->organizations()
             ->attach($organization);
 
