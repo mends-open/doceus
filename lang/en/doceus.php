@@ -97,6 +97,11 @@ return [
         'daily' => 'Daily',
         'weekly' => 'Weekly',
     ],
+    'schedule_type' => [
+        'label' => 'Schedule Type',
+        'standard' => 'Standard',
+        'block' => 'Block',
+    ],
     'slot_status' => [
         'label' => 'Status',
         'free' => 'Free',
