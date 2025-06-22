@@ -23,7 +23,7 @@ class ScheduleResource extends Resource
     /**
      * Scope schedules by their owning organization.
      */
-    protected static ?string $tenantOwnershipRelationshipName = 'organization';
+    protected static ?string $tenantOwnershipRelationshipName = 'organizations';
 
     public static function form(Schema $schema): Schema
     {

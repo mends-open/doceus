@@ -21,7 +21,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -137,9 +136,10 @@ class Practitioner extends Authenticatable implements FilamentUser, HasTenants, 
             ->using(PatientPractitioner::class);
     }
 
-    public function schedules(): HasMany
+    public function schedules(): BelongsToMany
     {
-        return $this->hasMany(Schedule::class);
+        return $this->belongsToMany(Schedule::class)
+            ->using(PractitionerSchedule::class);
     }
 
     public function createOrganization(array $attributes): Organization
