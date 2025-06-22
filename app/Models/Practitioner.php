@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -137,9 +137,9 @@ class Practitioner extends Authenticatable implements FilamentUser, HasTenants, 
             ->using(PatientPractitioner::class);
     }
 
-    public function schedules(): MorphMany
+    public function schedules(): HasMany
     {
-        return $this->morphMany(Schedule::class, 'schedulable');
+        return $this->hasMany(Schedule::class);
     }
 
     public function createOrganization(array $attributes): Organization
