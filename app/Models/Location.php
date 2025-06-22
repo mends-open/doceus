@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Feature\Identity\Enums\LocationType;
 use App\Models\Base\BaseModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
@@ -45,5 +45,10 @@ class Location extends BaseModel
     public function organization(): BelongsTo
     {
         return $this->belongsTo(Organization::class);
+    }
+
+    public function schedules(): HasMany
+    {
+        return $this->hasMany(Schedule::class);
     }
 }
