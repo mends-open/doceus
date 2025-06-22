@@ -1,6 +1,7 @@
 <?php
 
-use App\Models\Location;
+use App\Models\Practitioner;
+use App\Models\Schedule;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -9,24 +10,23 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('schedules', function (Blueprint $table) {
+        Schema::create('practitioner_schedule', function (Blueprint $table) {
             $table->id();
-            $table->morphs('schedulable');
-            $table->foreignIdFor(Location::class)
+            $table->foreignIdFor(Schedule::class)
                 ->constrained()
                 ->cascadeOnDelete();
-            $table->jsonb('entries');
+            $table->foreignIdFor(Practitioner::class)
+                ->constrained()
+                ->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
 
-            $table->index('schedulable_id');
-            $table->index('schedulable_type');
-            $table->index('location_id');
+            $table->unique(['schedule_id', 'practitioner_id']);
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('schedules');
+        Schema::dropIfExists('practitioner_schedule');
     }
 };

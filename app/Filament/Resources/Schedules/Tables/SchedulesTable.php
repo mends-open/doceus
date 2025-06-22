@@ -14,10 +14,9 @@ class SchedulesTable
     {
         return $table
             ->columns([
-                TextColumn::make('practitioner.person.first_name')
-                    ->label('First name'),
-                TextColumn::make('practitioner.person.last_name')
-                    ->label('Last name'),
+                TextColumn::make('schedulable_type')
+                    ->label('Schedulable')
+                    ->formatStateUsing(fn ($state) => class_basename($state)),
                 TextColumn::make('location.name')
                     ->label('Location'),
                 TextColumn::make('entries')
