@@ -20,6 +20,11 @@ class ScheduleResource extends Resource
 
     protected static ?string $parentResource = PractitionerResource::class;
 
+    /**
+     * Use the organizations pivot for tenancy scoping.
+     */
+    protected static ?string $tenantOwnershipRelationshipName = 'organizations';
+
     public static function form(Schema $schema): Schema
     {
         return ScheduleForm::configure($schema, ['practitionerField' => false]);

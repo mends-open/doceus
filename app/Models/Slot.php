@@ -44,6 +44,6 @@ class Slot extends BaseModel
 
     public function organization(): ?Organization
     {
-        return $this->schedule?->location?->organization;
+        return $this->schedule?->organizations->first();
     }
 }
