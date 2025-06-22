@@ -19,3 +19,9 @@ it('attaches practitioner pivot on create', function () {
 
     expect($schedule->practitioners()->exists())->toBeTrue();
 });
+
+it('attaches location pivot on create', function () {
+    $schedule = Schedule::factory()->withDefaultAssociations()->create();
+
+    expect($schedule->locations()->exists())->toBeTrue();
+});
