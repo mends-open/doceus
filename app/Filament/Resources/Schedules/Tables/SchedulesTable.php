@@ -15,12 +15,14 @@ class SchedulesTable
     {
         return $table
             ->columns([
-                TextColumn::make('practitioners.person.first_name')
+                TextColumn::make('practitioner')
                     ->label('Practitioner')
-                    ->formatStateUsing(fn ($state, $record) => $record->practitioners->first()?->person?->first_name.' '.$record->practitioners->first()?->person?->last_name),
-                TextColumn::make('locations.name')
+                    ->state(fn ($record) => $record->practitioners->first()?->person?->first_name.' '.$record->practitioners->first()?->person?->last_name)
+                    ->searchable(),
+                TextColumn::make('location')
                     ->label('Location')
-                    ->formatStateUsing(fn ($state, $record) => $record->locations->first()?->name),
+                    ->state(fn ($record) => $record->locations->first()?->name)
+                    ->searchable(),
                 TextColumn::make('entries')
                     ->label('Entries')
                     ->formatStateUsing(fn ($state) => is_array($state) ? count($state) : 0),
