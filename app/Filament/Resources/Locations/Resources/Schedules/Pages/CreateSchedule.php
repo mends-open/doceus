@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\Locations\Resources\Schedules\Pages;
 
 use App\Filament\Resources\Locations\Resources\Schedules\ScheduleResource;
-use App\Models\Organization;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateSchedule extends CreateRecord
@@ -15,15 +14,15 @@ class CreateSchedule extends CreateRecord
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $this->location = $this->getParentRecord();
-        $data['schedulable_type'] = Organization::class;
-        $data['schedulable_id'] = $this->location->organization_id;
+        $data['location_id'] = $this->location->id;
+        $data['organization_id'] = $this->location->organization_id;
+        $data['practitioner_id'] = null;
 
         return $data;
     }
 
     protected function afterCreate(): void
     {
-        $this->record->locations()->attach($this->location);
-        $this->record->organizations()->attach($this->location->organization_id);
+        //
     }
 }
