@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
 
             // Attach practitioner to a random subset of existing organizations
             $orgs = $organizations->random(random_int(1, $organizations->count()));
-            $practitioner->organizations()->attach($orgs->pluck('id'));
+            $practitioner->organizations()->syncWithoutDetaching($orgs->pluck('id'));
         });
 
         User::factory(5)->create();
@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
             $patients = Patient::factory(random_int(3, 8))
                 ->create()
                 ->each(function (Patient $patient) use ($organization) {
-                    $patient->organizations()->attach($organization);
+                    $patient->organizations()->syncWithoutDetaching($organization->id);
                 });
 
             Location::factory(random_int(1, 3))
