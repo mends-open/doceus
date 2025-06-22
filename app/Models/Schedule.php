@@ -50,6 +50,39 @@ class Schedule extends BaseModel
             ->using(OrganizationSchedule::class);
     }
 
+    /**
+     * Attach an organization without creating duplicate pivot entries.
+     */
+    public function attachOrganization(int $organizationId): void
+    {
+        OrganizationSchedule::firstOrCreate([
+            'schedule_id' => $this->id,
+            'organization_id' => $organizationId,
+        ]);
+    }
+
+    /**
+     * Attach a practitioner without creating duplicate pivot entries.
+     */
+    public function attachPractitioner(int $practitionerId): void
+    {
+        PractitionerSchedule::firstOrCreate([
+            'schedule_id' => $this->id,
+            'practitioner_id' => $practitionerId,
+        ]);
+    }
+
+    /**
+     * Attach a location without creating duplicate pivot entries.
+     */
+    public function attachLocation(int $locationId): void
+    {
+        LocationSchedule::firstOrCreate([
+            'schedule_id' => $this->id,
+            'location_id' => $locationId,
+        ]);
+    }
+
     public function slots(): HasMany
     {
         return $this->hasMany(Slot::class);

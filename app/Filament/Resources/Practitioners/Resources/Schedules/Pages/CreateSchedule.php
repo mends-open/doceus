@@ -30,13 +30,13 @@ class CreateSchedule extends CreateRecord
     {
         $schedule = $this->record;
         if ($this->organizationId) {
-            $schedule->organizations()->syncWithoutDetaching([$this->organizationId]);
+            $schedule->attachOrganization($this->organizationId);
         }
 
-        $schedule->practitioners()->syncWithoutDetaching([$this->getParentRecord()->id]);
+        $schedule->attachPractitioner($this->getParentRecord()->id);
 
         if ($this->locationId) {
-            $schedule->locations()->syncWithoutDetaching([$this->locationId]);
+            $schedule->attachLocation($this->locationId);
         }
     }
 }

@@ -35,15 +35,15 @@ class ScheduleFactory extends Factory
     {
         return $this->afterCreating(function (Schedule $schedule) use ($organization, $practitioner, $location) {
             if ($organization) {
-                $schedule->organizations()->syncWithoutDetaching($organization->id);
+                $schedule->attachOrganization($organization->id);
             }
 
             if ($practitioner) {
-                $schedule->practitioners()->syncWithoutDetaching($practitioner->id);
+                $schedule->attachPractitioner($practitioner->id);
             }
 
             if ($location) {
-                $schedule->locations()->syncWithoutDetaching($location->id);
+                $schedule->attachLocation($location->id);
             }
         });
     }
