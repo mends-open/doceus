@@ -21,8 +21,7 @@ class CreateSchedule extends CreateRecord
         $this->locationId = $data['location_id'] ?? null;
         $this->organizationId = Filament::getTenant()?->id;
 
-        $data['schedulable_type'] = $practitioner::class;
-        $data['schedulable_id'] = $practitioner->id;
+        unset($data['location_id'], $data['practitioner_id']);
 
         return $data;
     }
@@ -33,6 +32,9 @@ class CreateSchedule extends CreateRecord
         if ($this->organizationId) {
             $schedule->organizations()->attach($this->organizationId);
         }
-        $schedule->practitioners()->attach($schedule->schedulable_id);
+        $schedule->practitioners()->attach($this->getParentRecord()->id);
+        if ($this->locationId) {
+            $schedule->locations()->attach($this->locationId);
+        }
     }
 }

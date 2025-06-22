@@ -14,15 +14,15 @@ class CreateSchedule extends CreateRecord
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $this->location = $this->getParentRecord();
-        $data['location_id'] = $this->location->id;
-        $data['schedulable_type'] = $this->location::class;
-        $data['schedulable_id'] = $this->location->id;
+
+        unset($data['location_id'], $data['practitioner_id']);
 
         return $data;
     }
 
     protected function afterCreate(): void
     {
+        $this->record->locations()->attach($this->location->id);
         $this->record->organizations()->attach($this->location->organization_id);
     }
 }
