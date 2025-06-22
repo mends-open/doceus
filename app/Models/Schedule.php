@@ -3,32 +3,27 @@
 namespace App\Models;
 
 use App\Models\Base\BaseModel;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * @property int $id
- * @property int $organization_id
- * @property int|null $location_id
- * @property int|null $practitioner_id
+ * @property int $schedulable_id
+ * @property string $schedulable_type
  * @property array $entries
- * @property-read Practitioner|null $practitioner
+ * @property-read Model|null $schedulable
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Slot> $slots
  * @property-read int|null $slots_count
  */
 class Schedule extends BaseModel
 {
     protected $fillable = [
-        'organization_id',
-        'location_id',
-        'practitioner_id',
         'entries',
     ];
 
     protected array $revisionable = [
-        'organization_id',
-        'location_id',
-        'practitioner_id',
         'entries',
     ];
 
@@ -36,19 +31,23 @@ class Schedule extends BaseModel
         'entries' => 'array',
     ];
 
-    public function practitioner(): BelongsTo
+    public function schedulable(): MorphTo
     {
-        return $this->belongsTo(Practitioner::class);
+        return $this->morphTo();
     }
 
-    public function organization(): BelongsTo
+    public function organizations(): BelongsToMany
     {
-        return $this->belongsTo(Organization::class);
+        return $this->belongsToMany(Organization::class)
+            ->using(OrganizationSchedule::class)
+            ->withTimestamps();
     }
 
-    public function location(): BelongsTo
+    public function locations(): BelongsToMany
     {
-        return $this->belongsTo(Location::class);
+        return $this->belongsToMany(Location::class)
+            ->using(LocationSchedule::class)
+            ->withTimestamps();
     }
 
     public function slots(): HasMany
