@@ -38,7 +38,7 @@ class PractitionerResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            \App\Filament\Resources\Practitioners\RelationManagers\SchedulesRelationManager::class,
         ];
     }
 
