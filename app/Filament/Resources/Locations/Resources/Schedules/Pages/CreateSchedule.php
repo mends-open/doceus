@@ -22,7 +22,7 @@ class CreateSchedule extends CreateRecord
 
     protected function afterCreate(): void
     {
-        $this->record->locations()->attach($this->location->id);
-        $this->record->organizations()->attach($this->location->organization_id);
+        $this->record->locations()->syncWithoutDetaching([$this->location->id]);
+        $this->record->organizations()->syncWithoutDetaching([$this->location->organization_id]);
     }
 }
