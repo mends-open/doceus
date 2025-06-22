@@ -20,9 +20,17 @@ class ScheduleResource extends Resource
 
     protected static ?string $parentResource = LocationResource::class;
 
+    /**
+     * Use the organizations pivot for tenancy scoping.
+     */
+    protected static ?string $tenantOwnershipRelationshipName = 'organizations';
+
     public static function form(Schema $schema): Schema
     {
-        return ScheduleForm::configure($schema, ['locationField' => false]);
+        return ScheduleForm::configure($schema, [
+            'locationField' => false,
+            'practitionerField' => false,
+        ]);
     }
 
     public static function table(Table $table): Table
