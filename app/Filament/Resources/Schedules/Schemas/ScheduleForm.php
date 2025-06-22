@@ -19,11 +19,19 @@ use Illuminate\Support\Collection;
 
 class ScheduleForm
 {
-    public static function configure(Schema $schema): Schema
+    /**
+     * Configure the schedule form schema.
+     *
+     * @param  array{practitionerField?: bool, locationField?: bool}  $options
+     */
+    public static function configure(Schema $schema, array $options = []): Schema
     {
+        $showPractitioner = $options['practitionerField'] ?? true;
+        $showLocation = $options['locationField'] ?? true;
+
         return $schema
             ->components([
-                // temporary: allow selecting practitioners from any organization
+                // allow selecting practitioners from any organization
                 Select::make('practitioner_id')
                     ->options(
                         Practitioner::with('person')->get()->mapWithKeys(
@@ -33,7 +41,10 @@ class ScheduleForm
                         )
                             ->toArray()
                     )
-                    ->searchable(),
+                    ->searchable()
+                    ->hidden(! $showPractitioner)
+                    ->disabled(! $showPractitioner)
+                    ->required($showPractitioner),
                 Select::make('location_id')
                     ->options(function () {
                         $tenant = Filament::getTenant();
@@ -47,7 +58,10 @@ class ScheduleForm
                             ->toArray();
                     })
                     ->searchable()
-                    ->preload(),
+                    ->preload()
+                    ->hidden(! $showLocation)
+                    ->disabled(! $showLocation)
+                    ->required($showLocation),
                 Builder::make('entries')
                     ->required()
                     ->blocks([
