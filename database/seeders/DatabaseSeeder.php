@@ -54,14 +54,11 @@ class DatabaseSeeder extends Seeder
         $practitioners->each(function (Practitioner $practitioner) {
             $practitioner->organizations->each(function (Organization $organization) use ($practitioner) {
                 $organization->locations->each(function (Location $location) use ($practitioner, $organization) {
-                    $schedule = Schedule::factory()->create([
-                        'schedulable_type' => Practitioner::class,
-                        'schedulable_id' => $practitioner->id,
-                        'location_id' => $location->id,
-                    ]);
+                    $schedule = Schedule::factory()->create();
 
-                    $schedule->organizations()->attach($organization->id);
-                    $schedule->practitioners()->attach($practitioner->id);
+                    $schedule->organizations()->sync([$organization->id]);
+                    $schedule->practitioners()->sync([$practitioner->id]);
+                    $schedule->locations()->sync([$location->id]);
                 });
             });
         });

@@ -26,14 +26,7 @@ class ScheduleFactory extends Factory
             ],
         ];
 
-        $organization = Organization::factory()->create();
-        $practitioner = Practitioner::factory()->create();
-        $location = Location::factory()->for($organization)->create();
-
         return [
-            'schedulable_type' => Practitioner::class,
-            'schedulable_id' => $practitioner->id,
-            'location_id' => $location->id,
             'entries' => $entries,
         ];
     }
@@ -41,11 +34,13 @@ class ScheduleFactory extends Factory
     public function configure(): static
     {
         return $this->afterCreating(function (Schedule $schedule) {
-            $organizationId = $schedule->location->organization_id;
-            $schedule->organizations()->attach($organizationId);
-            if ($schedule->schedulable_type === Practitioner::class) {
-                $schedule->practitioners()->attach($schedule->schedulable_id);
-            }
+            $organization = Organization::factory()->create();
+            $practitioner = Practitioner::factory()->create();
+            $location = Location::factory()->for($organization)->create();
+
+            $schedule->organizations()->attach($organization->id);
+            $schedule->practitioners()->attach($practitioner->id);
+            $schedule->locations()->attach($location->id);
         });
     }
 }

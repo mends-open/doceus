@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Location;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,17 +10,9 @@ return new class extends Migration
     {
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
-            $table->morphs('schedulable');
-            $table->foreignIdFor(Location::class)
-                ->constrained()
-                ->cascadeOnDelete();
             $table->jsonb('entries');
             $table->timestamps();
             $table->softDeletes();
-
-            $table->index('schedulable_id');
-            $table->index('schedulable_type');
-            $table->index('location_id');
         });
     }
 

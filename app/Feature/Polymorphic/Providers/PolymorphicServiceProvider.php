@@ -44,6 +44,7 @@ class PolymorphicServiceProvider extends ServiceProvider
             MorphType::Slot->value => \App\Models\Slot::class,
             MorphType::PractitionerSchedule->value => \App\Models\PractitionerSchedule::class,
             MorphType::OrganizationSchedule->value => \App\Models\OrganizationSchedule::class,
+            MorphType::LocationSchedule->value => \App\Models\LocationSchedule::class,
         ]);
     }
 }
