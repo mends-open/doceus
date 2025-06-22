@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Feature\Identity\Enums\LocationType;
 use App\Models\Base\BaseModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
@@ -47,10 +47,8 @@ class Location extends BaseModel
         return $this->belongsTo(Organization::class);
     }
 
-    public function schedules(): BelongsToMany
+    public function schedules(): HasMany
     {
-        return $this->belongsToMany(Schedule::class)
-            ->using(LocationSchedule::class)
-            ->withTimestamps();
+        return $this->hasMany(Schedule::class);
     }
 }

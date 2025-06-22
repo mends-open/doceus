@@ -3,27 +3,34 @@
 namespace App\Models;
 
 use App\Models\Base\BaseModel;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * @property int $id
- * @property int $schedulable_id
- * @property string $schedulable_type
+ * @property int $practitioner_id
+ * @property int $organization_id
+ * @property int $location_id
  * @property array $entries
- * @property-read Model|null $schedulable
+ * @property-read Practitioner $practitioner
+ * @property-read Organization $organization
+ * @property-read Location $location
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Slot> $slots
  * @property-read int|null $slots_count
  */
 class Schedule extends BaseModel
 {
     protected $fillable = [
+        'practitioner_id',
+        'organization_id',
+        'location_id',
         'entries',
     ];
 
     protected array $revisionable = [
+        'practitioner_id',
+        'organization_id',
+        'location_id',
         'entries',
     ];
 
@@ -31,23 +38,19 @@ class Schedule extends BaseModel
         'entries' => 'array',
     ];
 
-    public function schedulable(): MorphTo
+    public function practitioner(): BelongsTo
     {
-        return $this->morphTo();
+        return $this->belongsTo(Practitioner::class);
     }
 
-    public function organizations(): BelongsToMany
+    public function organization(): BelongsTo
     {
-        return $this->belongsToMany(Organization::class)
-            ->using(OrganizationSchedule::class)
-            ->withTimestamps();
+        return $this->belongsTo(Organization::class);
     }
 
-    public function locations(): BelongsToMany
+    public function location(): BelongsTo
     {
-        return $this->belongsToMany(Location::class)
-            ->using(LocationSchedule::class)
-            ->withTimestamps();
+        return $this->belongsTo(Location::class);
     }
 
     public function slots(): HasMany
