@@ -31,16 +31,31 @@ class ScheduleFactory extends Factory
         ];
     }
 
-    public function configure(): static
+    public function withAssociations(?Organization $organization = null, ?Practitioner $practitioner = null, ?Location $location = null): static
     {
-        return $this->afterCreating(function (Schedule $schedule) {
-            $organization = Organization::factory()->create();
-            $practitioner = Practitioner::factory()->create();
-            $location = Location::factory()->for($organization)->create();
+        return $this->afterCreating(function (Schedule $schedule) use ($organization, $practitioner, $location) {
+            if ($organization) {
+                $schedule->organizations()->attach($organization->id);
+            }
 
-            $schedule->organizations()->attach($organization->id);
-            $schedule->practitioners()->attach($practitioner->id);
-            $schedule->locations()->attach($location->id);
+            if ($practitioner) {
+                $schedule->practitioners()->attach($practitioner->id);
+            }
+
+            if ($location) {
+                $schedule->locations()->attach($location->id);
+            }
         });
+    }
+
+    public function withDefaultAssociations(): static
+    {
+        $organization = Organization::factory()->create();
+
+        return $this->withAssociations(
+            $organization,
+            Practitioner::factory()->create(),
+            Location::factory()->for($organization)->create()
+        );
     }
 }

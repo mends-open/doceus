@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 it('creates location in same organization', function () {
-    $schedule = Schedule::factory()->create();
+    $schedule = Schedule::factory()->withDefaultAssociations()->create();
 
     $organizationId = $schedule->organizations()->first()->id;
     $location = $schedule->locations()->first();
@@ -15,7 +15,7 @@ it('creates location in same organization', function () {
 });
 
 it('attaches practitioner pivot on create', function () {
-    $schedule = Schedule::factory()->create();
+    $schedule = Schedule::factory()->withDefaultAssociations()->create();
 
     expect($schedule->practitioners()->exists())->toBeTrue();
 });
