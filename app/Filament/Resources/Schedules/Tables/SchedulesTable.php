@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Schedules\Tables;
 
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
@@ -29,6 +30,9 @@ class SchedulesTable
             ])
             ->recordActions([
                 EditAction::make(),
+            ])
+            ->headerActions([
+                CreateAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
