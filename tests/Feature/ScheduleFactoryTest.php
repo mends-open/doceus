@@ -25,3 +25,20 @@ it('attaches location pivot on create', function () {
 
     expect($schedule->locations()->exists())->toBeTrue();
 });
+
+it('avoids duplicate pivots when attaching again', function () {
+    $schedule = Schedule::factory()->withDefaultAssociations()->create();
+
+    $orgId = $schedule->organizations()->first()->id;
+    $practitionerId = $schedule->practitioners()->first()->id;
+    $locationId = $schedule->locations()->first()->id;
+
+    // Attach the same pivots a second time
+    $schedule->attachOrganization($orgId);
+    $schedule->attachPractitioner($practitionerId);
+    $schedule->attachLocation($locationId);
+
+    expect($schedule->organizations()->count())->toBe(1)
+        ->and($schedule->practitioners()->count())->toBe(1)
+        ->and($schedule->locations()->count())->toBe(1);
+});
