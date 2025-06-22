@@ -10,13 +10,30 @@ class CreateSchedule extends CreateRecord
 {
     protected static string $resource = ScheduleResource::class;
 
+    protected ?int $locationId = null;
+
+    protected ?int $organizationId = null;
+
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         /** @var \App\Models\Practitioner $practitioner */
         $practitioner = $this->getParentRecord();
-        $data['practitioner_id'] = $practitioner->id;
-        $data['organization_id'] = Filament::getTenant()?->id;
+        $this->locationId = $data['location_id'] ?? null;
+        $this->organizationId = Filament::getTenant()?->id;
+
+        $data['schedulable_type'] = $practitioner::class;
+        $data['schedulable_id'] = $practitioner->id;
 
         return $data;
+    }
+
+    protected function afterCreate(): void
+    {
+        if ($this->locationId) {
+            $this->record->locations()->attach($this->locationId);
+        }
+        if ($this->organizationId) {
+            $this->record->organizations()->attach($this->organizationId);
+        }
     }
 }

@@ -8,8 +8,8 @@ uses(RefreshDatabase::class);
 it('creates location in same organization', function () {
     $schedule = Schedule::factory()->create();
 
-    $schedule->refresh();
+    $location = $schedule->locations->first();
+    $organization = $schedule->organizations->first();
 
-    expect($schedule->location->organization_id)
-        ->toBe($schedule->organization_id);
+    expect($location->organization_id)->toBe($organization->id);
 });
