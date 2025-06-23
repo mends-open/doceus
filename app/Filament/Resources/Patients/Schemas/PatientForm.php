@@ -17,13 +17,14 @@ class PatientForm
             ->components([
                 Tabs::make('Patient')
                     ->key(null)
+                    ->persistTabInQueryString()
                     ->tabs([
                         Tab::make('Personal')
                             ->key(null)
                             ->schema([
                                 Group::make()
                                     ->relationship('person')
-                                    ->schema(PersonForm::configure(Schema::make())->getComponents()),
+                                    ->schema(PersonForm::configure(Schema::make($schema->getLivewire()))->getComponents()),
                             ]),
                         Tab::make('Contact')
                             ->key(null)
