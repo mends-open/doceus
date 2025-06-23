@@ -7,6 +7,8 @@ use App\Filament\Resources\People\Schemas\PersonForm;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
 
 class PractitionerForm
@@ -15,16 +17,28 @@ class PractitionerForm
     {
         return $schema
             ->components([
-                Group::make()
-                    ->relationship('person')
-                    ->schema(PersonForm::configure(Schema::make())->getComponents()),
-                TextInput::make('email')
-                    ->email()
-                    ->required(),
-                TextInput::make('phone_number')
-                    ->tel(),
-                Select::make('language')
-                    ->options(Language::class),
+                Tabs::make('Practitioner')
+                    ->key(null)
+                    ->tabs([
+                        Tab::make('Personal')
+                            ->key(null)
+                            ->schema([
+                                Group::make()
+                                    ->relationship('person')
+                                    ->schema(PersonForm::configure(Schema::make())->getComponents()),
+                            ]),
+                        Tab::make('Contact')
+                            ->key(null)
+                            ->schema([
+                                TextInput::make('email')
+                                    ->email()
+                                    ->required(),
+                                TextInput::make('phone_number')
+                                    ->tel(),
+                                Select::make('language')
+                                    ->options(Language::class),
+                            ]),
+                    ]),
             ]);
     }
 }
