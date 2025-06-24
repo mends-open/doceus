@@ -27578,6 +27578,30 @@ namespace Livewire\Features\SupportTesting {
             }
     }
 
+namespace Filament {
+    /**
+     * 
+     *
+     */
+    class Panel {
+            }
+    }
+
+namespace Filament\Support\Components {
+    /**
+     * 
+     *
+     */
+    class Component {
+            }
+    /**
+     * 
+     *
+     */
+    class ViewComponent {
+            }
+    }
+
 namespace Illuminate\View {
     /**
      * 
@@ -27731,6 +27755,24 @@ namespace Illuminate\View {
             return \Illuminate\View\View::response($callback);
         }
 
+            }
+    }
+
+namespace Filament\Forms\Components {
+    /**
+     * 
+     *
+     */
+    class Field {
+            }
+    }
+
+namespace Filament\Schemas\Components {
+    /**
+     * 
+     *
+     */
+    class Component {
             }
     }
 

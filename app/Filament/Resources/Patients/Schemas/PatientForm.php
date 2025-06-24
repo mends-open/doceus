@@ -2,40 +2,45 @@
 
 namespace App\Filament\Resources\Patients\Schemas;
 
-use App\Filament\Resources\People\Schemas\PersonForm;
+use App\Feature\Identity\Enums\Gender;
+use App\Feature\Identity\Enums\IdentityType;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Tabs;
-use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Forms\Components\ToggleButtons;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class PatientForm
 {
+    /**
+     * @throws \Exception
+     */
     public static function configure(Schema $schema): Schema
     {
         return $schema
             ->components([
-                Tabs::make('Patient')
-                    ->key(null)
-                    ->tabs([
-                        Tab::make('Personal')
-                            ->key(null)
-                            ->schema([
-                                Group::make()
-                                    ->relationship('person')
-                                    ->schema(PersonForm::configure(Schema::make())->getComponents()),
-                            ]),
-                        Tab::make('Contact')
-                            ->key(null)
-                            ->schema([
-                                TextInput::make('email')
-                                    ->email()
-                                    ->required(),
-                                TextInput::make('phone_number')
-                                    ->tel()
-                                    ->required(),
-                            ]),
-                    ]),
+                Section::make([
+                    TextInput::make('first_name'),
+                    TextInput::make('last_name'),
+                ])
+                    ->relationship('person'),
+                Section::make([
+                    TextInput::make('pesel'),
+                    TextInput::make('identity_number'),
+                    Select::make('identity_type')
+                        ->options(IdentityType::class),
+                    ToggleButtons::make('gender')
+                        ->inline()
+                        ->options(Gender::class),
+                ])
+                    ->relationship('person'),
+                Section::make([
+                    TextInput::make('email')
+                        ->email()
+                        ->required(),
+                    TextInput::make('phone_number')
+                        ->tel(),
+                ]),
             ]);
     }
 }

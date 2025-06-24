@@ -13,7 +13,6 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Panel;
 use Filament\PanelProvider;
-use Filament\Support\Colors\Color;
 use Filament\Support\Enums\Width;
 use Filament\Widgets\AccountWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
@@ -33,6 +32,7 @@ class PractitionerPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->maxContentWidth(Width::Full)
+            ->topNavigation()
             ->id('app')
             ->path('')
             ->tenant(Organization::class)
@@ -44,11 +44,6 @@ class PractitionerPanelProvider extends PanelProvider
             ->emailVerification(\App\Filament\Auth\Pages\EmailVerificationPrompt::class)
             ->emailChangeVerification()
             ->login()
-            ->colors([
-                'primary' => Color::Neutral,
-            ])
-            ->unsavedChangesAlerts()
-            ->sidebarCollapsibleOnDesktop()
             ->databaseTransactions()
             ->breadcrumbs(false)
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
